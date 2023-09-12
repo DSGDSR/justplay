@@ -1,10 +1,9 @@
 import Elysia from "elysia"
-import gameController from "./games"
 
 const v1 = new Elysia({
     name: 'v1',
-    prefix: '/v1'
+    prefix: '/v1/'
 })
-.use(gameController)
+.use(import('./games'))
 
 export default v1

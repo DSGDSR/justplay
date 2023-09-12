@@ -1,4 +1,5 @@
 import { IGDBEndpoints } from "../enums/endpoints";
+import { AuthToken } from "../interfaces/auth";
 import { IHttpError } from "../interfaces/error";
 
 export const IGDBError = (error: any): IHttpError => ({
@@ -8,6 +9,7 @@ export const IGDBError = (error: any): IHttpError => ({
 
 const fetchIGDB = (
     endpoint: IGDBEndpoints,
+    token: AuthToken | null,
     init?: FetchRequestInit | undefined,
     method = 'GET',
 ): Promise<Response> => fetch(`https://api.igdb.com/v4/${endpoint}`, {
@@ -15,15 +17,16 @@ const fetchIGDB = (
     method,
     headers: {
         'Accept': 'application/json',
-        'Client-ID': 'bsann4zap6kt3upxgvebup15fyifo3',
-        'Authorization': 'Bearer dvkns7bj0qhkkkbnbr1hsp8dj03pcb',
+        'Client-ID': Bun.env.SERVER_TWITCH_CLIENT_ID ?? 'no-client-id',
+        'Authorization': `Bearer ${token?.access_token ?? 'no-token'}`,
         ...init?.headers
     }
 })
 
 export const postIGDB = (
     endpoint: IGDBEndpoints,
+    token: AuthToken | null,
     body?: BodyInit | null
-): Promise<Response> => fetchIGDB(endpoint, { body }, 'POST')
+): Promise<Response> => fetchIGDB(endpoint, token, { body }, 'POST')
 
 export const getIGDB = fetchIGDB

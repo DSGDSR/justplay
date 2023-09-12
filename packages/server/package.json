@@ -7,7 +7,8 @@
   },
   "dependencies": {
     "elysia": "latest",
-    "@elysiajs/swagger": "latest"
+    "@elysiajs/swagger": "latest",
+    "@elysiajs/cron": "latest"
   },
   "devDependencies": {
     "bun-types": "latest"

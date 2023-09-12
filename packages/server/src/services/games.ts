@@ -3,9 +3,10 @@ import { postIGDB, IGDBError } from "../common/utils/igdb"
 import { IHttpResponse } from "../common/interfaces/response"
 import { HttpResponse } from "../common/utils/response"
 import { IGDBEndpoints } from "../common/enums/endpoints"
+import { AuthToken } from "../common/interfaces/auth"
 
-export const getGameById = async (id: string): Promise<IHttpResponse> => {
-    return await postIGDB(IGDBEndpoints.Game,
+export const getGameById = async (id: string, auth: AuthToken): Promise<IHttpResponse> => {
+    return await postIGDB(IGDBEndpoints.Game, auth,
         `fields *; where id=${id};`
     ).then(async (response) => {
         if (!response.ok) {
@@ -20,8 +21,8 @@ export const getGameById = async (id: string): Promise<IHttpResponse> => {
     .catch(err => HttpResponse(null, false, IGDBError(err)))
 }
 
-export const searchGames = async (query: string): Promise<IHttpResponse> => {
-    return await postIGDB(IGDBEndpoints.Game,
+export const searchGames = async (query: string, auth: AuthToken): Promise<IHttpResponse> => {
+    return await postIGDB(IGDBEndpoints.Game, auth,
         `fields *; search "${query}"; where version_parent = null;`
     ).then(async (response) => {
         if (!response.ok) {
