@@ -1,0 +1,7 @@
+{
+  "name": "wtp-scraper",
+  "main": "index.ts",
+  "dependencies": {
+    "node-html-parser": "^6.1.9"
+  }
+}
