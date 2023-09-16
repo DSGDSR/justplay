@@ -1,6 +1,6 @@
-import { IGDBEndpoints } from "../enums/endpoints";
-import { AuthToken } from "../interfaces/auth";
-import { IHttpError } from "../interfaces/error";
+import { IGDBEndpoints } from "../../../common/enums/endpoints";
+import { AuthToken } from "../common/interfaces/auth";
+import { IHttpError } from "../common/interfaces/error";
 
 export const IGDBError = (error: any): IHttpError => ({
     status: 500,

@@ -1,8 +1,6 @@
-import type { OpenAPIV3 } from 'openapi-types'
+import { DocSchemas } from '../../src/common/interfaces/docs'
 
-export const schemas: {
-    [key: string]: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-} = {
+export const schemas: DocSchemas = {
     Search: {
         type: 'object',
         required: ['query'],

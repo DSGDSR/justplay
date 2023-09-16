@@ -1,7 +1,7 @@
-import Elysia from "elysia"
 import { AuthToken } from "../common/interfaces/auth"
-import { CustomStore } from "../common/interfaces/store"
+import { APIClass, CustomStore } from "../common/interfaces/store"
 import cron from "@elysiajs/cron"
+import { log } from "../utils/logger"
 
 export const getTwitchToken = async (): Promise<AuthToken> => {
     const { SERVER_TWITCH_CLIENT_ID, SERVER_TWITCH_CLIENT_SECRET } = Bun.env
@@ -25,25 +25,24 @@ export const getTwitchToken = async (): Promise<AuthToken> => {
     return response as AuthToken
 }
 
-export const checkToken = async (auth: AuthToken | null, store: CustomStore) => {
+export const refreshToken = (app: APIClass) => cron({
+    name: 'refreshToken',
+    pattern: '0 * * * *',
+    run: async() => {
+        const token = await getTwitchToken()
+        app.store.auth = token
+        log(`🔑 New token generated: ${token?.access_token}`)
+    }
+})
+
+/*export const checkToken = async (auth: AuthToken | null, store: CustomStore) => {
     if (!auth) return null
 
     if ((Date.now() - 10000) >= auth.expire_date) {
-        console.log('token outdated')
         auth = await getTwitchToken()
         store.auth = auth
         return { auth }
     } else {
-        console.log('token useful')
         return { auth }
     }
-}
-
-export const refreshToken = (app: Elysia) => cron({
-    name: 'refreshToken',
-    pattern: '*/30 * * * *',
-    run: async() => {
-        (app.store as CustomStore).auth = await getTwitchToken()
-        console.debug('New token generated: ', (app.store as CustomStore).auth)
-    }
-})
+}*/

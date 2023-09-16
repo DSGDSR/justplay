@@ -1,4 +1,4 @@
-import { IHttpError } from "../interfaces/error"
+import { IHttpError } from "../common/interfaces/error"
 
 export const MissingBodyError: IHttpError = {
     status: 400,

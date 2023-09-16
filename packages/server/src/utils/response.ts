@@ -1,5 +1,5 @@
-import { IHttpError } from "../interfaces/error";
-import { IHttpResponse } from "../interfaces/response";
+import { IHttpError } from "../common/interfaces/error";
+import { IHttpResponse } from "../../../common/interfaces/response";
 
 export const HttpResponse = (
     data: any,

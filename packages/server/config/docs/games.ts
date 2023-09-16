@@ -1,5 +1,5 @@
-import { Endpoints } from '../common/enums/endpoints'
-import { ApiDocs } from '../common/interfaces/docs'
+import { Endpoints } from '../../../common/enums/endpoints'
+import { ApiDocs } from '../../src/common/interfaces/docs'
 
 export const gamesDocs: ApiDocs = {
     [Endpoints.GameById]: {
