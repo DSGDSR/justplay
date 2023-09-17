@@ -1,10 +1,10 @@
-import { HttpResponse } from "../utils/response"
-import { MissingBodyError, MissingParamsError } from "../utils/errors"
+import { HttpResponse } from "../../utils/response"
+import { MissingBodyError, MissingParamsError } from "../../utils/errors"
 import { getGameById, searchGames } from "../services/games"
-import { gamesDocs } from "../../config/docs/games"
-import { SearchModel } from "../common/models/games"
-import { Endpoints } from "../../../common/enums/endpoints"
-import { APIClass } from "../common/interfaces/store"
+import { gamesDocs } from "../../../config/docs/games"
+import { SearchModel } from "../../common/models/games"
+import { Endpoints } from "../../../../common/enums/endpoints"
+import { APIClass } from "../../common/interfaces/store"
 
 const ROUTE = 'games'
 

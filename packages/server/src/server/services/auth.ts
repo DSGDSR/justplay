@@ -1,7 +1,7 @@
-import { AuthToken } from "../common/interfaces/auth"
-import { APIClass, CustomStore } from "../common/interfaces/store"
+import { AuthToken } from "../../common/interfaces/auth"
+import { APIClass, CustomStore } from "../../common/interfaces/store"
 import cron from "@elysiajs/cron"
-import { log } from "../utils/logger"
+import { log } from "../../utils/logger"
 
 export const getTwitchToken = async (): Promise<AuthToken> => {
     const { SERVER_TWITCH_CLIENT_ID, SERVER_TWITCH_CLIENT_SECRET } = Bun.env

@@ -1,10 +1,10 @@
-import { NotFoundError, ResponseError } from "../utils/errors"
-import { postIGDB, IGDBError } from "../utils/igdb"
-import { IHttpResponse } from "../../../common/interfaces/response"
-import { HttpResponse } from "../utils/response"
-import { IGDBEndpoints } from "../../../common/enums/endpoints"
-import { AuthToken } from "../common/interfaces/auth"
-import { IGame, IGameSearch } from "../../../common/interfaces/game"
+import { NotFoundError, ResponseError } from "../../utils/errors"
+import { postIGDB, IGDBError } from "../../utils/igdb"
+import { IHttpResponse } from "../../../../common/interfaces/response"
+import { HttpResponse } from "../../utils/response"
+import { IGDBEndpoints } from "../../../../common/enums/endpoints"
+import { AuthToken } from "../../common/interfaces/auth"
+import { IGame, IGameSearch } from "../../../../common/interfaces/game"
 
 export const getGameById = async (id: string, auth: AuthToken): Promise<IHttpResponse<IGame>> => {
     return await postIGDB(IGDBEndpoints.Game, auth,
