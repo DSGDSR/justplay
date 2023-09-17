@@ -1,8 +1,8 @@
 {
   "name": "wheretoplay",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "workspaces": ["packages/*"],
   "scripts": {
-    "run:server": "bun run --watch packages/server/src/index.ts"
+    "server:run": "cd ./packages/server && npm run dev"
   }
 }
