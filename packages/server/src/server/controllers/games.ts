@@ -1,5 +1,5 @@
-import { HttpResponse } from "../../utils/response"
-import { MissingBodyError, MissingParamsError } from "../../utils/errors"
+import { HttpResponse } from "../utils/response"
+import { MissingBodyError, MissingParamsError } from "../utils/errors"
 import { getGameById, searchGames } from "../services/games"
 import { gamesDocs } from "../../../config/docs/games"
 import { SearchModel } from "../../common/models/games"
@@ -15,6 +15,13 @@ const gameController = (app: APIClass) => app.group(ROUTE, app => app
 
         return getGameById(params.id, store.auth)
     }, { detail: gamesDocs[Endpoints.GameById] })
+
+    // GET GAME BY SLUG
+    .get('/slug/:id', async ({params, store}) => {
+        if (!params?.id) return HttpResponse(null, false, MissingParamsError)
+
+        return getGameById(params.id, store.auth, 'slug')
+    }, { detail: gamesDocs[Endpoints.GameBySlug] })
 
     // SEARCH GAMES
     .post('/search', async ({body, store}) => {
