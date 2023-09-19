@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "bun run --watch ./src/index.tsx",
     "build": "bun build ./src/index.tsx --outdir ./build",
+    "build:styles": "npx tailwindcss build src/client/styles/styles.css -o src/client/styles/output.css --watch",
     "test": "bun test --watch"
   },
   "dependencies": {
@@ -16,14 +17,24 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@elysiajs/eden": "^0.6.5",
-    "zustand": "^4.4.1",
     "react-router": "^6.16.0",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "tailwindcss-animate": "^1.0.7",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^1.14.0",
+    "@radix-ui/react-dialog": "^1.0.4",
+    "@radix-ui/react-dropdown-menu": "^2.0.5",
+    "@clerk/clerk-react": "^4.24.2",
+    "@clerk/themes": "^1.7.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "tailwindcss": "^3.3.3",
+    "postcss": "^8.4.29",
+    "autoprefixer": "^10.4.15"
   },
   "module": "src/index.js"
 }
