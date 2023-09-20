@@ -13,6 +13,17 @@ export const gamesDocs: ApiDocs = {
             }
         }]
     },
+    [Endpoints.GameBySlug]: {
+        summary: 'Get a game by IGDB slug',
+        tags: ['Games'],
+        parameters: [{
+            name: 'id',
+            in: 'path',
+            schema: {
+                default: 'sea-of-stars' // Sea of stars
+            }
+        }]
+    },
     [Endpoints.SearchGames]: {
         summary: 'Search games',
         tags: ['Games'],

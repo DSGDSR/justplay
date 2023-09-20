@@ -4,13 +4,17 @@ import v1 from "./server/controllers"
 import { swaggerConfig } from "../config/swagger"
 import { getTwitchToken, refreshToken } from "./server/services/auth"
 import { APIClass } from "./common/interfaces/store"
-import { log } from "./utils/logger"
+import { log } from "./server/utils/logger"
 import cors from "@elysiajs/cors";
 import serveClient from "./client/serve";
+import { bundleClient } from "./client/build";
 
 const development = Bun.env.SERVER_DEV_MODE === "true"
 const port = Bun.env.SERVER_PORT ?? 3000
 const app: APIClass = new Elysia()
+
+// bundle client side react-code each time the server starts
+await bundleClient()
 
 export const runServer = async(logging = true) => {
   return app

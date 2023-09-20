@@ -1,18 +1,14 @@
 // src/react/App.tsx
-import React, { Suspense, useState } from "react"
-import Counter from "./components/counter"
-import Counter2 from "./components/counter copy"
+import { Suspense, lazy } from "react"
 import { Route, Routes } from "react-router"
+import Nav from "./components/Nav"
+import { ClerkProvider } from "@clerk/clerk-react"
+import {dark} from "@clerk/themes"
+import HomePage from "./pages/Home"
+import GamePage from "./pages/Game"
 
-export interface AppProps {
-  title?: string
-}
-//const cat = await (await fetch('https://catfact.ninja/fact')).json()
+const clerkKey = Bun.env.REACT_APP_CLERK_PUBLISHABLE_KEY ?? ''
 
-const routes = [
-  { path: "/", Component: Counter },
-  { path: "/2", Component: Counter2 },
-];
 export default function App() {
   return (
     <html>
@@ -21,18 +17,18 @@ export default function App() {
         <title>Title</title>
         <meta name="description" content="Bun, Elysia & React" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/styles" />
       </head>
       <body>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>  
-            { routes.map((page) => (
-              <Route key={page.path} path={page.path} element={(
-                <page.Component/>
-              )}/>
-            ))}
-          </Routes>
-        </Suspense>
-        <script src="/bundle.js" />
+        <ClerkProvider publishableKey={clerkKey} appearance={{baseTheme: dark}}>
+          <Nav/>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<HomePage/>} />
+              <Route path="/game/:slug" element={<GamePage/>} />
+            </Routes>
+          </Suspense>
+        </ClerkProvider>
       </body>
     </html>
   )

@@ -1,23 +1,23 @@
 import staticPlugin from '@elysiajs/static'
 import Elysia from 'elysia'
-import { renderToString } from 'react-dom/server'
+import { renderToReadableStream, renderToString } from 'react-dom/server'
 import App from './App'
-import React from 'react'
 import { edenFetch, edenTreaty } from '@elysiajs/eden'
 import { APP } from '../index'
 import { StaticRouter } from 'react-router-dom/server'
-import { bundle } from './build'
 
 const port = Bun.env.SERVER_PORT ?? 3000
 export const fetchApi = edenFetch<APP>(`http://localhost:${port}/v1`)
-export const appp = edenTreaty(`localhost:${port}/v1`)
+export const appp = edenTreaty(`http://localhost:${port}/v1/`)
 
 const renderApp = async (path: string) => {
     // render the app component to a readable stream
-    const stream = await renderToString(
+    const stream = await renderToReadableStream(
         <StaticRouter location={path}>
-          <App />
-        </StaticRouter>
+            <App />
+        </StaticRouter>, {
+            bootstrapScripts: ['/public/client.js']
+        }
     )
 
     // output the stream as the response
@@ -28,14 +28,16 @@ const renderApp = async (path: string) => {
 
 const serveClient = new Elysia({ name: 'client' })
     .use(staticPlugin())
-    .get('/bundle.js', async() => {
-        const clientBundle = await bundle();
-        console.log(clientBundle)
-        return new Response(clientBundle, {
+    .get('/styles', async() => {
+        const styles = await Bun.file('./src/client/styles/output.css').text();
+        return new Response(styles, {
             headers: {
-                'Content-Type': 'application/javascript'
+                'Content-Type': 'text/css'
             }
         })
+    })
+    .get('/clerk', async() => {
+        return new Response(Bun.env.REACT_APP_CLERK_PUBLISHABLE_KEY)
     })
     .get('*', async (req) => renderApp(req.path))
 
