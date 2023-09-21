@@ -1,0 +1,1 @@
+export const apiUrl = `${Bun.env.SERVER_HOST}:${Bun.env.SERVER_PORT}/v1`
