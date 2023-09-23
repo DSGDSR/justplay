@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 1% 10%;
+    --foreground: 0 0% 98%;
+    --card: 240 1% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 1% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --radius: 0.5rem;
+  }
+}
+
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.focused {
+  @apply bg-accent text-accent-foreground;
+}
+.focused:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
+  height: 100%;
+  width: 0.15rem;
+}
+
+.cl-modalBackdrop {
+  backdrop-filter: blur(4px);
+  align-items: center;
+}
+
+.cl-userButton-root, .cl-userButtonBox, .cl-userButtonTrigger, .cl-userButtonAvatarBox {
+  outline: none;
+}
+
+.cl-userButtonTrigger:focus {
+  box-shadow: none;
+}
+
+.cl-userButtonPopoverCard {
+  box-shadow: rgba(0, 0, 0, .25) 0px 0px 15px;
+}
