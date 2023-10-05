@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "start": "bun run build:styles && bun ./src/index.ts",
-    "dev": "bun run --watch ./src/index.tsx",
-    "build": "bun build ./src/index.tsx --outdir ./build",
+    "dev": "bun run --watch ./src/index.ts",
+    "build": "bun build ./src/index.ts --outdir ./build",
     "build:styles": "npx tailwindcss build -i src/client/styles/styles.css -o src/client/styles/output.css",
     "build:vercel": "bun run build:styles && bun scripts/transform-paths.ts",
     "build:styles:watch": "npm run build:styles --watch",
