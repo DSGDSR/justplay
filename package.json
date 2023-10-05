@@ -5,6 +5,7 @@
   "scripts": {
     "app:dev": "cd ./packages/server && npm run dev",
     "app:build": "cd ./packages/server && npm run build:styles",
+    "app:build:vercel": "cd ./packages/server && npm run build:vercel",
     "app:start": "cd ./packages/server && npm run start"
   }
 }
