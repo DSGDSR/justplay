@@ -1,6 +1,6 @@
 export enum IGDBEndpoints {
     Game = 'games',
-    Covers = 'covers'
+    Search = 'search'
 }
 
 export enum Endpoints {

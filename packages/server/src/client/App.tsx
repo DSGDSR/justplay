@@ -1,15 +1,16 @@
 // src/react/App.tsx
-import { Suspense, lazy } from "react"
+import { Suspense } from "react"
 import { Route, Routes } from "react-router"
 import Nav from "./components/Nav"
 import { ClerkProvider } from "@clerk/clerk-react"
 import {dark} from "@clerk/themes"
 import HomePage from "./pages/Home"
 import GamePage from "./pages/Game"
+import '@shoelace-style/shoelace/dist/themes/dark.css'
 
 const clerkKey = Bun.env.REACT_APP_CLERK_PUBLISHABLE_KEY ?? ''
 
-export default function App() {
+export default () => {
   return (
     <html>
       <head>
@@ -22,7 +23,7 @@ export default function App() {
       <body>
         <ClerkProvider publishableKey={clerkKey} appearance={{baseTheme: dark}}>
           <Nav/>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Loading...</div> /* LOADING TODO */}>
             <Routes>
               <Route path="/" element={<HomePage/>} />
               <Route path="/game/:slug" element={<GamePage/>} />

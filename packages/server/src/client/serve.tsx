@@ -36,9 +36,6 @@ const serveClient = new Elysia({ name: 'client' })
             }
         })
     })
-    .get('/clerk', async() => {
-        return new Response(Bun.env.REACT_APP_CLERK_PUBLISHABLE_KEY)
-    })
     .get('*', async (req) => renderApp(req.path))
 
 export default serveClient

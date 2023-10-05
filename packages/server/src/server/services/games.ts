@@ -25,7 +25,9 @@ export const getGameById = async (id: string, auth: AuthToken, by: 'id' | 'slug'
 export const searchGames = async (query: string, auth: AuthToken): Promise<IHttpResponse<IGameSearch[]>> => {
     const terms = query.split(' ');
     return await postIGDB(IGDBEndpoints.Game, auth,
-        `fields id,name,cover.*,genres.*,slug; where ${terms.map(t => `name ~ *"${t}"*`).join(' & ')} & version_parent = null & parent_game = null; limit 5;`
+        `fields id,name,cover.*,genres.*,slug;
+         search "${query}"; where version_parent = null & parent_game = null;
+         limit 5;`
     ).then(async (response) => {
         if (!response.ok) {
             return HttpResponse(null, false, ResponseError(response))
