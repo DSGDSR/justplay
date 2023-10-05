@@ -5,7 +5,8 @@
     "start": "bun run build:styles && bun ./src/index.ts",
     "dev": "bun run --watch ./src/index.tsx",
     "build": "bun build ./src/index.tsx --outdir ./build",
-    "build:styles": "npx tailwindcss build -i src/client/styles/styles.css -o src/client/styles/output.css --watch",
+    "build:styles": "npx tailwindcss build -i src/client/styles/styles.css -o src/client/styles/output.css",
+    "build:styles:watch": "npm run build:styles --watch",
     "test": "bun test --watch"
   },
   "dependencies": {
