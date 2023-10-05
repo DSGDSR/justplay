@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "workspaces": ["packages/*"],
   "scripts": {
-    "server:run": "cd ./packages/server && npm run dev"
+    "app:dev": "cd ./packages/server && npm run dev",
+    "app:build": "cd ./packages/server && npm run build:styles",
+    "app:start": "cd ./packages/server && npm run start"
   }
 }
