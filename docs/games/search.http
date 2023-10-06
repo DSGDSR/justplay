@@ -1,0 +1,6 @@
+POST http://localhost:3000/api/games/search
+
+{
+    "query": "mario",
+    //"limit": 10
+}
