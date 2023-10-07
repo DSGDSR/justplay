@@ -1,5 +1,6 @@
 import { ICover } from "./cover";
 import { IGenre } from "./genre";
+import { IScreenshot, IVideo } from "./media";
 
 export interface IPrimitiveGame {
     id: number
@@ -42,8 +43,10 @@ export interface IPrimitiveGame {
     language_supports: number[]
 }
 
-export interface IGame extends Omit<IPrimitiveGame, 'cover'>  {
+export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'videos'>  {
     cover: ICover
+    screenshots: IScreenshot[]
+    videos: IVideo[]
 }
 
 export interface IGameSearch {

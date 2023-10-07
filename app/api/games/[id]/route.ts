@@ -1,8 +1,14 @@
-import { IGDBEndpoints } from "@/lib/enums/endpoints"
+import { IGDBEndpoints } from "@/lib/enums"
 import { IGame } from "@/lib/models/game"
-import { InvalidParams, MissingParamsError, NotFoundError, ResponseError } from "@/lib/utils/errors"
-import { IGDBError, postIGDB } from "@/lib/utils/igdb"
-import { HttpResponse } from "@/lib/utils/response"
+import {
+    InvalidParams,
+    MissingParamsError,
+    NotFoundError,
+    ResponseError,
+    IGDBError,
+    postIGDB,
+    HttpResponse
+} from "@/lib/utils"
 import { NextRequest } from "next/server"
 
 interface GETGameByIdQuery {

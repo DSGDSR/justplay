@@ -4,14 +4,13 @@ import { Dialog, DialogTrigger, DialogContent } from "../Dialog"
 import clsx from "clsx"
 import { useState, useEffect } from "react"
 import { IGameSearch } from "@/lib/models/game"
-import cleanQuery from "@/lib/utils/clean-query"
-import debounce from "@/lib/utils/debounce"
 import Kbd from "../Kbd"
 import Spinner from "../icons/Spinner"
 import SearchFooter from "./footer"
 import SearchList from "./list"
 import SearchIcon from "../icons/Search"
-import { Endpoints } from "@/lib/enums/endpoints"
+import { Endpoints } from "@/lib/enums"
+import { debounce, cleanQuery, apiUrl } from "@/lib/utils"
 
 interface Props {
 }
@@ -39,10 +38,10 @@ const SearchBox = ({}: Props) => {
         }
     }
     
-    const searchGames = async (query: string) => {
-        const response = await fetch(Endpoints.SearchGames, {
+    const searchGames = async (query: string, fastSearch = false) => {
+        const response = await fetch(`${apiUrl}${Endpoints.SearchGames}`, {
             method: 'POST',
-            body: JSON.stringify({ query }),
+            body: JSON.stringify({ query, fastSearch }),
             headers: {
               'Content-Type': 'application/json'
             }
@@ -54,7 +53,7 @@ const SearchBox = ({}: Props) => {
     const debouncedSearch = debounce(async (query: string) => {
         if (!!query) {
             setIsSearching(true)
-            loadGames(await searchGames(cleanQuery(query)))
+            loadGames(await searchGames(cleanQuery(query), true))
         } else {
             setGames(null)
         }
@@ -69,6 +68,11 @@ const SearchBox = ({}: Props) => {
             window.removeEventListener('keydown', keyHandler);
         }
     }, [])
+
+    const clear = () => {
+        setIsOpen(false)
+        setGames(null)
+    }
 
     return (
         <Dialog open={isOpen}>
@@ -105,12 +109,11 @@ const SearchBox = ({}: Props) => {
                     </div>
                 </header>
 
-                <SearchList games={games}/>
+                <SearchList games={games} onNavigate={clear}/>
 
                 <SearchFooter />
             </DialogContent>
         </Dialog>
-
     );
 }
 

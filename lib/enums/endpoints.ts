@@ -5,7 +5,7 @@ export enum IGDBEndpoints {
 
 export enum Endpoints {
     // GAMES
-    GameById = '/api/games/:id',
-    GameBySlug = '/api/games/slug/:slug',
-    SearchGames = '/api/games/search',
+    GameById = '/games/:id',
+    GameBySlug = '/games/slug/:slug',
+    SearchGames = '/games/search',
 }

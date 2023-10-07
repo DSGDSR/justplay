@@ -1,9 +1,10 @@
 import Nav from '@/components/Nav'
-import './globals.css'
+import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import {dark} from "@clerk/themes"
+import { Suspense } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,9 +21,13 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{baseTheme: dark}}>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={`${inter.className} dark`}>
           <Nav />
-          {children}
+          <main>
+            <Suspense fallback={<div>Loading...</div>}>
+              {children}
+            </Suspense>
+          </main>
         </body>
       </html>
     </ClerkProvider>

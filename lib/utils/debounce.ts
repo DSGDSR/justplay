@@ -1,9 +1,9 @@
-export default function debounce(
+export function debounce(
     func: Function,
     delay: number,
     immediate = false
 ): (...args: any[]) => void {
-    let timeout: Timer | null
+    let timeout: NodeJS.Timeout | null
 
     return function (this: any) {
         const context = this, args = arguments

@@ -3,12 +3,14 @@ import clsx from "clsx"
 import DefaultThumb from "../icons/DefaultThumb"
 import { useRouter } from "next/navigation"
 import { IGameSearch } from "@/lib/models/game"
+import Link from "next/link"
 
 interface Props {
     games: IGameSearch[] | null
+    onNavigate: () => void
 }
 
-const SearchList = ({ games }: Props) => {
+const SearchList = ({ games, onNavigate }: Props) => {
     const [cursor, setCursor] = useState(-1)
     const { push } = useRouter()
 
@@ -26,8 +28,9 @@ const SearchList = ({ games }: Props) => {
         } else if (event.code === 'Enter') {
             // Open game page
             setCursor(c => {
-                push(games[c].slug)  
-                return c
+                onNavigate()
+                push(`/game/${games[c].slug}`)  
+                return -1
             })
         }
     }
@@ -53,7 +56,7 @@ const SearchList = ({ games }: Props) => {
                     cursor === index && 'focused',
                     cursor === -1 && 'hover:bg-accent hover:text-accent-foreground'
                 )}>
-                    <a className="flex items-center" href={`/game/${game.slug}`}>
+                    <Link className="flex items-center" href={`/game/${game.slug}`} onClick={onNavigate}>
                         { game.cover?.url
                             ? <img src={game.cover?.url} alt={game.name} className="h-10 w-10 rounded-md mr-3"/>
                             : <DefaultThumb className="h-10 w-10 rounded-md mr-3"/> }
@@ -63,7 +66,7 @@ const SearchList = ({ games }: Props) => {
                                 <span className="text-xs text-muted-foreground">{game.genres?.map(g => g.name).join(', ')}</span>
                             }
                         </div>
-                    </a>
+                    </Link>
                 </li>
             )) }
         </ul> : <p key={0} className="px-3.5 py-3 text-sm text-gray-400">

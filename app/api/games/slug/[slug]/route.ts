@@ -1,8 +1,13 @@
-import { IGDBEndpoints } from "@/lib/enums/endpoints"
+import { IGDBEndpoints } from "@/lib/enums"
 import { IGame } from "@/lib/models/game"
-import { InvalidParams, MissingParamsError, NotFoundError, ResponseError } from "@/lib/utils/errors"
-import { IGDBError, postIGDB } from "@/lib/utils/igdb"
-import { HttpResponse } from "@/lib/utils/response"
+import {
+    MissingParamsError,
+    NotFoundError,
+    ResponseError,
+    IGDBError,
+    postIGDB,
+    HttpResponse
+} from "@/lib/utils"
 import { NextRequest } from "next/server"
 
 interface GETGameBySlugQuery {
@@ -17,7 +22,7 @@ export async function GET(_request: NextRequest, query: GETGameBySlugQuery) {
 
     return await postIGDB(
         IGDBEndpoints.Game,
-        `fields *; where slug="${slug}";`
+        `fields *,screenshots.*,cover.*,videos.*; where slug="${slug}";`
     ).then(async (response) => {
         if (!response.ok) {
             return HttpResponse(null, false, ResponseError(response))
