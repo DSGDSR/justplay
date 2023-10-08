@@ -1,5 +1,5 @@
 
-export default (props: {
+const ArrowUp = (props: {
     size?: number;
     color?: string;
 }) => {
@@ -11,3 +11,5 @@ export default (props: {
         <path d="M6 11l6 -6" />
     </svg>
 }
+
+export default ArrowUp

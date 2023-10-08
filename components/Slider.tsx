@@ -8,11 +8,11 @@ interface Props {
 }
 
 const Slider = ({ screenshots }: Props) => {
-    const [slide, setSlide] = useState(1)
+    const [slide, setSlide] = useState<string>(screenshots[0]?.image_id)
 
     return <div className="flex flex-col items-center aspect-video">
         <div className="w-full bg-white rounded overflow-x-hidden flex snap-x h-full">
-            { screenshots.map((s, idx) => <div className="snap-start w-full h-full flex-shrink-0" id={`slide-${idx}`}>
+            { screenshots.map(s => <div key={s.image_id} className="snap-start w-full h-full flex-shrink-0" id={s.image_id}>
                 <Image
                     className="w-full h-full object-cover"
                     src={`https://${s.url.slice(2).replace('t_thumb', 't_720p')}`}
@@ -25,7 +25,12 @@ const Slider = ({ screenshots }: Props) => {
         </div>
     
         <div className="flex absolute bottom-5 gap-3 bg-white rounded-full py-2 px-3 opacity-70 hover:opacity-100 transition-all">
-            { screenshots.map((s, idx) => <SliderControl id={`slide-${idx}`} selected={slide === idx} onClick={() => setSlide(idx)} /> )}
+            { screenshots.map(s  => <SliderControl
+                key={`control-${s.image_id}`}
+                id={s.image_id}
+                selected={slide === s.image_id}
+                onClick={() => setSlide(s.image_id)}
+            /> )}
         </div>
     </div>
 }

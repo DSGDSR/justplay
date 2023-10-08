@@ -1,5 +1,5 @@
 
-export default (props: {
+const User = (props: {
     size?: number;
     color?: string;
 }) => {
@@ -10,3 +10,5 @@ export default (props: {
         <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
     </svg>
 }
+
+export default User

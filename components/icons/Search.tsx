@@ -1,5 +1,5 @@
 
-export default (props: {
+const Search = (props: {
     size?: number;
     color?: string;
 }) => {
@@ -10,3 +10,5 @@ export default (props: {
         <path d="M21 21l-6 -6" />
     </svg>
 }
+
+export default Search

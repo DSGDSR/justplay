@@ -1,5 +1,5 @@
 
-export default (props: {
+const Spinner = (props: {
     size?: number;
     color?: string;
 }) => {
@@ -9,3 +9,5 @@ export default (props: {
         <path d="M12 3a9 9 0 1 0 9 9" />
     </svg>
 }
+
+export default Spinner

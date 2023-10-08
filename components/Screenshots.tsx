@@ -20,12 +20,17 @@ const ScreenshotsButton = (props: ButtonProps) => {
 const Screenshots = ({ screenshots }: Props) => {
     const [isOpen, setIsOpen] = useState(false)
     const [isClient, setIsClient] = useState(false)
+
+    const toggleDialog = (state: boolean) => {
+        !state && window.history.replaceState(null, '', window.location.pathname)
+        setIsOpen(state)
+    }
    
     useEffect(() => {
       setIsClient(true)
     }, [])
 
-    return isClient ? <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    return isClient ? <Dialog open={isOpen} onOpenChange={toggleDialog}>
         <ScreenshotsButton onClick={() => setIsOpen(true)} />
         <DialogContent
             size={'embed'}

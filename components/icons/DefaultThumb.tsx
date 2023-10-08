@@ -1,5 +1,4 @@
-
-export default (props: any) => <svg viewBox="0 0 176 176" {...props}>
+const DefaultThumb = (props: any) => <svg viewBox="0 0 176 176" {...props}>
     <g>
         <g>
             <rect width="176" height="176" fill="#afafaf"/>
@@ -13,3 +12,5 @@ export default (props: any) => <svg viewBox="0 0 176 176" {...props}>
         </g>
     </g>
 </svg>
+
+export default DefaultThumb
