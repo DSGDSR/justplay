@@ -1,5 +1,6 @@
 import Skeleton from "@/components/Skeleton";
-import GamePage from "@/pages/GamePage";
+import GamePage from "@/components/pages/GamePage";
+import { CoverSkeleton, ThumbSkeleton } from "@/components/pages/GamePage/skeletons";
 import { Suspense } from "react";
 
 interface Props {
@@ -38,10 +39,4 @@ const GamePageSkeleton = () => {
             </header>
         </section>
     </>
-}    
-
-export const ThumbSkeleton = () => <div className="relative thumb-filter blur opacity-70">
-    <Skeleton className="w-full h-[22rem] rounded-none" />
-</div>
-
-export const CoverSkeleton = () => <Skeleton className="w-full h-full" />
+}

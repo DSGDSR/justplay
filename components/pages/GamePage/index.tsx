@@ -1,4 +1,4 @@
-import { CoverSkeleton, ThumbSkeleton } from "@/app/game/[slug]/page"
+import { CoverSkeleton, ThumbSkeleton } from "./skeletons"
 import PreloadedImage from "@/components/PreloadedImage"
 import Screenshots from "@/components/Screenshots"
 import Skeleton from "@/components/Skeleton"
