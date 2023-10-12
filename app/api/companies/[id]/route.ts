@@ -1,6 +1,7 @@
 import { IGDBEndpoints } from "@/lib/enums"
-import { IGame } from "@/lib/models/game"
+import { ICompany } from "@/lib/models/company"
 import {
+    InvalidParams,
     MissingParamsError,
     NotFoundError,
     ResponseError,
@@ -10,25 +11,26 @@ import {
 } from "@/lib/utils"
 import { NextRequest } from "next/server"
 
-interface GETGameBySlugQuery {
+interface GETCompanyByIdQuery {
     params: {
-        slug: string
+        id: string
     }
 }
 
-export async function GET(_request: NextRequest, query: GETGameBySlugQuery) {
-    if (!query?.params?.slug) return HttpResponse(null, false, MissingParamsError)
-    const { slug } = query.params
+export async function GET(_request: NextRequest, query: GETCompanyByIdQuery) {
+    if (!query?.params?.id) return HttpResponse(null, false, MissingParamsError)
+    if (isNaN(Number(query.params.id))) return HttpResponse(null, false, InvalidParams)
+    const id = Number(query.params.id)
 
     return await postIGDB(
-        IGDBEndpoints.Games,
-        `fields *,screenshots.*,cover.*,videos.*,genres.*,involved_companies.*,platforms.*; where slug="${slug}";`
+        IGDBEndpoints.Companies,
+        `fields *; where id=${id};`
     ).then(async (response) => {
         if (!response.ok) {
             return HttpResponse(null, false, ResponseError(response))
         }
 
-        const results: IGame[] = await response.json()
+        const results: ICompany[] = await response.json()
         return results.length
             ? HttpResponse(results[0])
             : HttpResponse(null, false, NotFoundError)

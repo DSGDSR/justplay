@@ -23,7 +23,7 @@ export async function GET(_request: NextRequest, query: GETGameByIdQuery) {
     const id = Number(query.params.id)
 
     return await postIGDB(
-        IGDBEndpoints.Game,
+        IGDBEndpoints.Games,
         `fields *; where id=${id};`
     ).then(async (response) => {
         if (!response.ok) {

@@ -1,6 +1,8 @@
+import { IInvolvedCompany } from "./company";
 import { ICover } from "./cover";
 import { IGenre } from "./genre";
 import { IScreenshot, IVideo } from "./media";
+import { IPlatform } from "./platform";
 
 export interface IPrimitiveGame {
     id: number
@@ -43,10 +45,13 @@ export interface IPrimitiveGame {
     language_supports: number[]
 }
 
-export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'videos'>  {
+export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'videos' | 'genres' | 'involved_companies' | 'platforms'>  {
     cover: ICover
+    genres: IGenre[]
     screenshots: IScreenshot[]
     videos: IVideo[]
+    involved_companies: IInvolvedCompany[]
+    platforms: IPlatform[]
 }
 
 export interface IGameSearch {

@@ -6,15 +6,21 @@ import { useEffect, useState } from "react"
 import Slider from "./Slider"
 import { IScreenshot } from "@/lib/models/media"
 import Photo from "./icons/Photo"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip"
 
 interface Props {
     screenshots: IScreenshot[]
 }
 
 const ScreenshotsButton = (props: ButtonProps) => {
-    return <Button {...props}>
-        <Photo className="-ml-1 mr-2 h-4 w-4"/> Gallery
-    </Button>
+    return <Tooltip>
+        <TooltipTrigger asChild>
+            <Button {...props} className="group" size="bubble" variant="secondary">
+                <Photo />
+            </Button>
+        </TooltipTrigger>
+        <TooltipContent sideOffset={7.5}>Screenshots</TooltipContent>
+    </Tooltip>
 }
 
 const Screenshots = ({ screenshots }: Props) => {

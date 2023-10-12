@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import {dark} from "@clerk/themes"
 import { Suspense } from 'react'
+import { TooltipProvider } from '@/components/Tooltip'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,16 +21,18 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider appearance={{baseTheme: dark}}>
-      <html lang="en">
-        <body className={`${inter.className} dark`}>
-          <Nav />
-          <main>
-            <Suspense fallback={<div>Loading...</div>}>
-              {children}
-            </Suspense>
-          </main>
-        </body>
-      </html>
+      <TooltipProvider delayDuration={100}>
+        <html lang="en">
+          <body className={`${inter.className} dark`}>
+            <Nav />
+            <main>
+              <Suspense fallback={<div>Loading...</div>}>
+                {children}
+              </Suspense>
+            </main>
+          </body>
+        </html>
+      </TooltipProvider>
     </ClerkProvider>
   )
 }

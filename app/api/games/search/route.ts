@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     const { query, limit, fastSearch } = body
 
     return await postIGDB(
-        IGDBEndpoints.Game,
+        IGDBEndpoints.Games,
         `fields id,name,cover.*,genres.*,slug;
          search "${query}"; where parent_game = null & cover != null & genres != null ${fastSearch ? '& rating_count > 0' : ''};
          limit ${+limit || '5'};`

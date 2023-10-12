@@ -1,3 +1,4 @@
+import { Badge } from "@/components/Badge";
 import Skeleton from "@/components/Skeleton";
 import GamePage from "@/components/pages/GamePage";
 import { CoverSkeleton, ThumbSkeleton } from "@/components/pages/GamePage/skeletons";
@@ -20,16 +21,22 @@ export default function Page({ params: { slug } }: Props) {
 const GamePageSkeleton = () => {
     return <>
         <ThumbSkeleton />
-        <section className="container game-page relative -top-[16.5rem]">
+        <section className="container game-page relative -top-[18.5rem]">
             <header className="flex gap-8">
-                <figure className="aspect-[9/12] w-80 shadow-md rounded-sm">
-                    <CoverSkeleton />
-                </figure>
+                <div className="w-[22rem]">
+                    <figure className="aspect-[9/12] shadow-md rounded-md">
+                        <CoverSkeleton />
+                    </figure>
+                </div>
                 <div className="main-details w-full flex flex-col justify-end">
-                    <hgroup className="flex flex-col gap-4 w-full">
-                        <Skeleton className="h-14 mb-3 w-3/5" />
-                        <Skeleton className="h-9 w-2/5" />
-                        <Skeleton className="h-8 w-1/4" />
+                    <hgroup className="flex flex-col gap-1 w-full">
+                        <Skeleton className="h-14 mb-5 w-3/5" />
+                        <div className="genres flex gap-3 mb-6">
+                            <Badge variant={'skeleton'}>Skeleton te</Badge>
+                            <Badge variant={'skeleton'}>Skele</Badge>
+                            <Badge variant={'skeleton'}>Skeleton</Badge>
+                        </div>
+                        <Skeleton className="h-7 w-1/4" />
                     </hgroup>
                     <div className="actions mt-12 flex gap-5">
                         <Skeleton className="h-10 w-32" />

@@ -5,6 +5,7 @@ import { Button, ButtonProps } from "./Button"
 import Play from "./icons/Play"
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./Tooltip"
 
 interface Props {
     name: string
@@ -12,9 +13,14 @@ interface Props {
 }
 
 const TrailerButton = (props: ButtonProps) => {
-    return <Button {...props}>
-        <Play className="-ml-1 mr-2 h-4 w-4"/> Play trailer
-    </Button>
+    return <Tooltip>
+        <TooltipTrigger asChild>
+            <Button className="group" size="bubble" variant="secondary" {...props}>
+                <Play />
+            </Button>
+        </TooltipTrigger>
+        <TooltipContent sideOffset={7.5}>Watch trailer</TooltipContent>
+    </Tooltip>
 }
 
 const Trailer = ({ name, id }: Props) => {
@@ -40,7 +46,7 @@ const Trailer = ({ name, id }: Props) => {
                 allowFullScreen
             ></iframe>
         </DialogContent>
-    </Dialog> : <Link target="_blank" href={`https://www.youtube.com/results?search_query=${name}+trailer`}>
+    </Dialog> : <Link target="_blank" href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${name} trailer`)}`}>
         <TrailerButton />
     </Link>
 }

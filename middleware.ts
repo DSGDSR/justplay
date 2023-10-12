@@ -11,6 +11,7 @@ export default authMiddleware({
 
         // Public API routes
         '/api/games/(.*)',
+        '/api/companies/(.*)',
     ],
 });
  
