@@ -6,6 +6,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import {dark} from "@clerk/themes"
 import { Suspense } from 'react'
 import { TooltipProvider } from '@/components/Tooltip'
+import { Toaster } from '@/components/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,6 +31,7 @@ export default function RootLayout({
                 {children}
               </Suspense>
             </main>
+            <Toaster />
           </body>
         </html>
       </TooltipProvider>

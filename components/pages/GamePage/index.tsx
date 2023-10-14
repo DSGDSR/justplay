@@ -107,7 +107,7 @@ export default async function GamePage({ slug }: Props) {
                 </article>
             </main>
         </section>
-        {JSON.stringify(game.platforms, null, 2)
+        {JSON.stringify(game, null, 2)
         }
     </>
 }
