@@ -12,6 +12,7 @@ import { cn, formatList } from "@/lib/utils";
 import GameCube from "./icons/platforms/GameCube";
 import Wii from "./icons/platforms/Wii";
 import WiiU from "./icons/platforms/WiiU";
+import { Platform } from "@/lib/enums/platforms";
 
 interface Props {
   platforms: IPlatform[];
@@ -55,44 +56,44 @@ const groupPlatforms = (platforms: IPlatform[]) => {
 }
 
 const PlatformGroups: Record<string, number[]> = {
-    'Windows': [6, 74, 161, 405],
-    'PS': [8, 9, 38, 46, 48, 165, 167, 390],
-    'XBOX': [11, 12, 49, 169],
-    'Mac': [14, 75, 115],
-    'Linux': [3],
-    'NintendoSwitch': [130],
-    'Android': [34],
-    'NintendoDS': [20],
-    'Nintendo3DS': [37, 137],
-    'NintendoDSi': [159],
-    'Nintendo64': [4, 416],
-    'GameCube': [21],
-    'NES': [18, 131],
-    'SNES': [19],
-    'iOS': [39],
-    'Wii': [5], // TODO
-    'WiiU': [41] // TODO
+    [Platform.Windows]: [6, 74, 161, 405],
+    [Platform.PS]: [8, 9, 38, 46, 48, 165, 167, 390],
+    [Platform.XBOX]: [11, 12, 49, 169],
+    [Platform.Mac]: [14, 75, 115],
+    [Platform.Linux]: [3],
+    [Platform.NintendoSwitch]: [130],
+    [Platform.Android]: [34],
+    [Platform.NintendoDS]: [20],
+    [Platform.Nintendo3DS]: [37, 137],
+    [Platform.NintendoDSi]: [159],
+    [Platform.Nintendo64]: [4, 416],
+    [Platform.GameCube]: [21],
+    [Platform.NES]: [18, 131],
+    [Platform.SNES]: [19],
+    [Platform.iOS]: [39],
+    [Platform.Wii]: [5], // TODO
+    [Platform.WiiU]: [41] // TODO
 }
 
 const IconClasses = 'w-6 h-6 fill-current text-md cursor-default'
 const PlatformIcons: Record<string, ReactNode> = {
-    'Windows': <Windows className={IconClasses} style={{transform: 'scale(.9)'}}/>,
-    'PS': <PlayStation className={IconClasses} />, //PS VITA (46) & PSP (38) TODO change?
-    'XBOX': <Xbox className={IconClasses} style={{transform: 'scale(.85)'}}/>,
-    'Mac': <Mac className={IconClasses} />,
-    'Linux': <Linux className={IconClasses} />,
-    'NintendoSwitch': <NintendoSwitch className={IconClasses} style={{transform: 'scale(.85)'}}/>,
-    'Android': <Android className={IconClasses} />,
-    'NintendoDS': <strong className={IconClasses}>DS</strong>,
-    'Nintendo3DS': <strong className={IconClasses}>3DS</strong>,
-    'NintendoDSi': <strong className={IconClasses}>DSi</strong>,
-    'Nintendo64': <strong className={IconClasses}>N64</strong>,
-    'GameCube': <GameCube className={IconClasses} />,
-    'NES': <strong className={IconClasses}>NES</strong>,
-    'SNES': <strong className={IconClasses}>SNES</strong>,
-    'iOS': <strong className={IconClasses}>iOS</strong>,
-    'Wii': <Wii className={cn(IconClasses, 'w-7')} />,
-    'WiiU': <WiiU className={cn(IconClasses, 'w-11')}/>,
+    [Platform.Windows]: <Windows className={IconClasses} style={{transform: 'scale(.9)'}}/>,
+    [Platform.PS]: <PlayStation className={IconClasses} />, //PS VITA (46) & PSP (38) TODO change?
+    [Platform.XBOX]: <Xbox className={IconClasses} style={{transform: 'scale(.85)'}}/>,
+    [Platform.Mac]: <Mac className={IconClasses} />,
+    [Platform.Linux]: <Linux className={IconClasses} />,
+    [Platform.NintendoSwitch]: <NintendoSwitch className={IconClasses} style={{transform: 'scale(.85)'}}/>,
+    [Platform.Android]: <Android className={IconClasses} />,
+    [Platform.NintendoDS]: <strong className={IconClasses}>DS</strong>,
+    [Platform.Nintendo3DS]: <strong className={IconClasses}>3DS</strong>,
+    [Platform.NintendoDSi]: <strong className={IconClasses}>DSi</strong>,
+    [Platform.Nintendo64]: <strong className={IconClasses}>N64</strong>,
+    [Platform.GameCube]: <GameCube className={IconClasses} />,
+    [Platform.NES]: <strong className={IconClasses}>NES</strong>,
+    [Platform.SNES]: <strong className={IconClasses}>SNES</strong>,
+    [Platform.iOS]: <strong className={IconClasses}>iOS</strong>,
+    [Platform.Wii]: <Wii className={cn(IconClasses, 'w-7')} />,
+    [Platform.WiiU]: <WiiU className={cn(IconClasses, 'w-11')}/>,
 }
 
 export default Platforms
