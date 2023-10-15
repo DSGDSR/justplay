@@ -38,7 +38,7 @@ const GameActions = () => {
 
 
     return <div className="flex flex-col gap-3.5 w-full">
-        <WarningDialog open={listWarning} onOpenChange={setListWarning} />
+        <WarningDialog open={listWarning} onOpenChange={setListWarning} updateList={updateList} />
 
         <div className="flex gap-3.5">
             <ListButton onClick={() => updateList(ListType.Favorite)} tooltip={
@@ -77,7 +77,7 @@ const ListButton = ({ className, children, tooltip, ...props }: any) => <Tooltip
     <TooltipContent sideOffset={7.5}>{ tooltip }</TooltipContent>
 </Tooltip>
 
-const WarningDialog = ({ open, onOpenChange }: any) => {
+const WarningDialog = ({ open, onOpenChange, updateList }: any) => {
     return <AlertDialog open={open} onOpenChange={onOpenChange}>
         <AlertDialogContent>
             <AlertDialogHeader>
