@@ -6,7 +6,7 @@ import {
 import { VercelPoolClient, db } from "@vercel/postgres"
 import { NextRequest } from "next/server"
 
-export const get = async (userId: string, gameId: number, client: VercelPoolClient): Promise<Response> => {
+export const getList = async (userId: string, gameId: number, client: VercelPoolClient): Promise<Response> => {
     if (!userId || !gameId) return HttpResponse(null, false, MissingBodyError)
     const { rows } = await client.query(
         `SELECT * FROM list_item WHERE user_id = $1 AND game = $2;`,
@@ -75,7 +75,7 @@ export async function POST(_request: NextRequest) {
     const actions: Record<ListAction, () => Promise<Response>> = {
         [ListAction.Add]: () => add(userId, gameId, listId, listType, client),
         [ListAction.Remove]: () => remove(userId, gameId, listId, listType, client),
-        [ListAction.Get]: () => get(userId, gameId, client)
+        [ListAction.Get]: () => getList(userId, gameId, client)
     }
 
     try {
