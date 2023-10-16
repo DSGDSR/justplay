@@ -13,5 +13,6 @@ export enum ListState {
 
 export enum ListAction {
     Add = 1,
-    Remove = 2
+    Remove = 2,
+    Get = 3
 }

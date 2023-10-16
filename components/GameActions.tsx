@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { use, useEffect, useState } from "react"
 import { Button } from "./Button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip"
 import Gamepad from "./icons/Gamepad"
@@ -15,7 +15,20 @@ import { cn } from "@/lib/utils"
 import { IHttpResponse } from "@/lib/models/response"
 import Spinner from "./icons/Spinner"
 import { ListsState } from "@/lib/models/lists"
-import { list } from "postcss"
+
+const getList = async (userId: string, gameId: number): Promise<IHttpResponse<ListsState> | null> => {
+    return await fetch('/api/lists', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            action: ListAction.Get,
+            gameId,
+            userId
+        })
+    }).then(res => res.json()).catch(() => null)
+}
 
 const addToList = async (
     action: ListAction,
@@ -40,20 +53,29 @@ const addToList = async (
 }
 
 interface Props {
-    listsState: ListsState | undefined
     gameId: number
 }
 
-const GameActions = ({ listsState, gameId }: Props) => {
+const GameActions = ({ gameId }: Props) => {
     const { isSignedIn, userId } = useAuth()
     const { info, error } = useToast()
     const [listWarning, setListWarning] = useState(false)
-    const [lists, setLists] = useState<ListsState>(listsState ?? {
-        [ListType.Favorite]: ListState.Inactive,
-        [ListType.Playlist]: ListState.Inactive,
-        [ListType.Finished]: ListState.Inactive,
+    const [lists, setLists] = useState<ListsState>({
+        [ListType.Favorite]: ListState.Loading,
+        [ListType.Playlist]: ListState.Loading,
+        [ListType.Finished]: ListState.Loading,
         [ListType.Custom]: ListState.Inactive
     })
+    
+    useEffect(() => {
+        if (isSignedIn && userId) {
+            getList(userId, gameId).then(res => {
+                if (res && res.success) {
+                    setLists(res.data)
+                }
+            })
+        }
+    }, [])
 
     const updateList = async (listTypes: ListType[], listId: number | null = null) => {
         if (!isSignedIn || !userId) {
