@@ -74,6 +74,13 @@ const GameActions = ({ gameId }: Props) => {
                     setLists(res.data)
                 }
             })
+        } else {
+            setLists({
+                [ListType.Favorite]: ListState.Inactive,
+                [ListType.Playlist]: ListState.Inactive,
+                [ListType.Finished]: ListState.Inactive,
+                [ListType.Custom]: ListState.Inactive
+            })
         }
     }, [])
 
