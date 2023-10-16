@@ -12,7 +12,8 @@ export enum ListState {
 }
 
 export enum ListAction {
-    Add = 1,
-    Remove = 2,
-    Get = 3
+    AddGame = 1,
+    RemoveGame = 2,
+    GetGame = 3,
+    GetLists = 4
 }

@@ -1,7 +1,7 @@
 -- https://onecompiler.com/postgresql
 
 -- create
-CREATE TABLE custom_list (
+CREATE TABLE list (
   id SERIAL,
   user_id VARCHAR(40) NOT NULL,
   name VARCHAR(30) NOT NULL,

@@ -23,7 +23,7 @@ const getList = async (userId: string, gameId: number): Promise<IHttpResponse<Li
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            action: ListAction.Get,
+            action: ListAction.GetGame,
             gameId,
             userId
         })
@@ -90,7 +90,7 @@ const GameActions = ({ gameId }: Props) => {
             return
         }
         
-        const actions = listTypes.map(list => lists[list] === ListState.Active ? ListAction.Remove : ListAction.Add)
+        const actions = listTypes.map(list => lists[list] === ListState.Active ? ListAction.RemoveGame : ListAction.AddGame)
         
         setLists({ ...lists, ...listTypes.map(list => ({ [list]: ListState.Loading })).reduce((a, b) => ({ ...a, ...b })) })
         

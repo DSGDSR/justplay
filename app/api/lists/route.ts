@@ -1,10 +1,19 @@
 import { ListAction, ListState, ListType } from "@/lib/enums";
+import { List } from "@/lib/models/lists";
+import { IHttpResponse } from "@/lib/models/response";
 import {
     HttpResponse,
     MissingBodyError
 } from "@/lib/utils"
 import { VercelPoolClient, db } from "@vercel/postgres"
 import { NextRequest } from "next/server"
+
+const getLists = async (userId: string, client: VercelPoolClient): Promise<Response> => {
+    if (!userId) return HttpResponse(null, false, MissingBodyError)
+    const { rows } = await client.query(`SELECT * FROM list WHERE user_id = $1`, [userId])
+
+    return HttpResponse(rows, true)
+}
 
 const get = async (userId: string, gameId: number, client: VercelPoolClient): Promise<Response> => {
     if (!userId || !gameId) return HttpResponse(null, false, MissingBodyError)
@@ -73,9 +82,10 @@ export async function POST(_request: NextRequest) {
     if (!action) return HttpResponse(null, false, MissingBodyError)
 
     const actions: Record<ListAction, () => Promise<Response>> = {
-        [ListAction.Add]: () => add(userId, gameId, listId, listType, client),
-        [ListAction.Remove]: () => remove(userId, gameId, listId, listType, client),
-        [ListAction.Get]: () => get(userId, gameId, client)
+        [ListAction.AddGame]: () => add(userId, gameId, listId, listType, client),
+        [ListAction.RemoveGame]: () => remove(userId, gameId, listId, listType, client),
+        [ListAction.GetGame]: () => get(userId, gameId, client),
+        [ListAction.GetLists]: () => getLists(userId, client),
     }
 
     try {

@@ -103,3 +103,17 @@
 body > div[role="region"] {
   pointer-events: none;
 }
+
+/* CLERK */
+.cl-userButtonPopoverFooter {
+  display: none;
+}
+.cl-userButtonPopoverActions {
+  margin-top: 24px;
+}
+.cl-internal-149lhzs:focus {
+  box-shadow: none;
+}
+.cl-internal-149lhzs:focus .cl-avatarBox {
+  outline: 2px solid hsl(var(--primary));
+}

@@ -11,6 +11,7 @@ import { apiUrl, cn, localizedDate, unix2Date } from "@/lib/utils"
 import { redirect } from "next/navigation"
 import { ICompany } from "@/lib/models/company"
 import Platforms from "@/components/Platforms"
+import HowLongToBeat from "@/components/HowLongToBeat"
 
 async function getGame(slug: string): Promise<IHttpResponse<IGame>> {
     const url = `${apiUrl}${Endpoints.GameBySlug}`
@@ -95,14 +96,13 @@ export default async function GamePage({ slug }: Props) {
                     <GameActions gameId={game.id} />
                 </aside>
                 <article className="flex-grow -mt-14">
-                    <h3 className="text-xl font-semibold mb-4">Platforms</h3>
+                    <h3 className="text-xl font-semibold mb-3.5">Platforms</h3>
                     <Platforms platforms={game.platforms} />
 
-                    <br />
-                    <br />
-                    <br />
-                    <h2 className="text-2xl font-bold mb-3">Summary</h2>
+                    <h3 className="text-xl font-bold mb-3.5 mt-10">Summary</h3>
                     <p className="text-shadow">{game.summary}</p>
+
+                    <HowLongToBeat gameName={game.name} />
                 </article>
             </main>
         </section>

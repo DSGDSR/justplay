@@ -3,10 +3,10 @@ import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
-import {dark} from "@clerk/themes"
 import { Suspense } from 'react'
 import { TooltipProvider } from '@/components/Tooltip'
 import { Toaster } from '@/components/toaster'
+import { clerkTheme } from '@/styles/clerk-theme'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider appearance={{baseTheme: dark}}>
+    <ClerkProvider appearance={clerkTheme}>
       <TooltipProvider delayDuration={100}>
         <html lang="en">
           <body className={`${inter.className} dark`}>
