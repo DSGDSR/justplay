@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     return await postIGDB(
         IGDBEndpoints.Games,
         `fields id,name,cover.*,genres.*,slug;
-         search "${query}"; where parent_game = null & cover != null & genres != null ${fastSearch ? '& rating_count > 0' : ''};
+         search "${query}"; where cover != null & genres != null ${fastSearch ? '& rating_count > 0' : ''};
          limit ${+limit || '5'};`
     ).then(async (response) => {
         if (!response.ok) {

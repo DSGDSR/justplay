@@ -10,12 +10,15 @@ import { IHttpResponse } from "@/lib/models/response"
 import { apiUrl, cn, localizedDate, unix2Date } from "@/lib/utils"
 import { redirect } from "next/navigation"
 import { ICompany } from "@/lib/models/company"
-import Mac from "@/components/icons/platforms/Mac"
 import Platforms from "@/components/Platforms"
+import { auth } from "@clerk/nextjs"
 
 async function getGame(slug: string): Promise<IHttpResponse<IGame>> {
+    const { userId } = await auth()
     const url = `${apiUrl}${Endpoints.GameBySlug}`
-    const res = await fetch(url.replace(':slug', slug))
+    const res = await fetch(url.replace(':slug', slug), {
+        headers: { 'userId': userId ?? '' }
+    })
 
     if (!res.ok) redirect('/')// custtom 404 TODO ?
     return res.json()
@@ -93,7 +96,7 @@ export default async function GamePage({ slug }: Props) {
             </header>
             <main className="flex gap-8 mt-3.5">
                 <aside style={{ flex: '0 0 280px' }}>
-                    <GameActions />
+                    <GameActions gameId={game.id} listsState={game.lists} />
                 </aside>
                 <article className="flex-grow -mt-14">
                     <h3 className="text-xl font-semibold mb-4">Platforms</h3>

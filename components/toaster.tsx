@@ -34,7 +34,7 @@ export function Toaster({ position, ...props }: Props) {
   const { toasts } = useToast()
 
   return (
-    <ToastProvider>
+    <ToastProvider duration={3500}>
       {toasts.map(function ({ id, title, description, action, ...props }) {
         return (
           <Toast key={id} {...props} className={position ? slideBy[position] : slideBy["top-center"]}>

@@ -1,6 +1,7 @@
 import { IInvolvedCompany } from "./company";
 import { ICover } from "./cover";
 import { IGenre } from "./genre";
+import { ListsState } from "./lists";
 import { IScreenshot, IVideo } from "./media";
 import { IPlatform } from "./platform";
 
@@ -52,6 +53,7 @@ export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'v
     videos: IVideo[]
     involved_companies: IInvolvedCompany[]
     platforms: IPlatform[]
+    lists?: ListsState
 }
 
 export interface IGameSearch {

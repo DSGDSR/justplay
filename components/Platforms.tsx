@@ -12,7 +12,7 @@ import { cn, formatList } from "@/lib/utils";
 import GameCube from "./icons/platforms/GameCube";
 import Wii from "./icons/platforms/Wii";
 import WiiU from "./icons/platforms/WiiU";
-import { Platform } from "@/lib/enums/platforms";
+import { Platforms } from "@/lib/enums/platforms";
 
 interface Props {
   platforms: IPlatform[];
@@ -25,7 +25,7 @@ const PlatformTooltip = ({ platform }: { platform: IGroupedPlatforms }) => <Tool
     <TooltipContent sideOffset={5}>{ formatList(platform.names) }</TooltipContent>
 </Tooltip>
 
-const Platforms = ({ platforms }: Props) => {
+const PlatformsList = ({ platforms }: Props) => {
     const groupedPlatforms = groupPlatforms(platforms)
 
     return <ul className="list-none flex items-center gap-3.5 text-slate-600">
@@ -56,44 +56,44 @@ const groupPlatforms = (platforms: IPlatform[]) => {
 }
 
 const PlatformGroups: Record<string, number[]> = {
-    [Platform.Windows]: [6, 74, 161, 405],
-    [Platform.PS]: [8, 9, 38, 46, 48, 165, 167, 390],
-    [Platform.XBOX]: [11, 12, 49, 169],
-    [Platform.Mac]: [14, 75, 115],
-    [Platform.Linux]: [3],
-    [Platform.NintendoSwitch]: [130],
-    [Platform.Android]: [34],
-    [Platform.NintendoDS]: [20],
-    [Platform.Nintendo3DS]: [37, 137],
-    [Platform.NintendoDSi]: [159],
-    [Platform.Nintendo64]: [4, 416],
-    [Platform.GameCube]: [21],
-    [Platform.NES]: [18, 131],
-    [Platform.SNES]: [19],
-    [Platform.iOS]: [39],
-    [Platform.Wii]: [5], // TODO
-    [Platform.WiiU]: [41] // TODO
+    [Platforms.Windows]: [6, 74, 161, 405],
+    [Platforms.PS]: [8, 9, 38, 46, 48, 165, 167, 390],
+    [Platforms.XBOX]: [11, 12, 49, 169],
+    [Platforms.Mac]: [14, 75, 115],
+    [Platforms.Linux]: [3],
+    [Platforms.NintendoSwitch]: [130],
+    [Platforms.Android]: [34],
+    [Platforms.NintendoDS]: [20],
+    [Platforms.Nintendo3DS]: [37, 137],
+    [Platforms.NintendoDSi]: [159],
+    [Platforms.Nintendo64]: [4, 416],
+    [Platforms.GameCube]: [21],
+    [Platforms.NES]: [18, 131],
+    [Platforms.SNES]: [19],
+    [Platforms.iOS]: [39],
+    [Platforms.Wii]: [5], // TODO
+    [Platforms.WiiU]: [41] // TODO
 }
 
 const IconClasses = 'w-6 h-6 fill-current text-md cursor-default'
 const PlatformIcons: Record<string, ReactNode> = {
-    [Platform.Windows]: <Windows className={IconClasses} style={{transform: 'scale(.9)'}}/>,
-    [Platform.PS]: <PlayStation className={IconClasses} />, //PS VITA (46) & PSP (38) TODO change?
-    [Platform.XBOX]: <Xbox className={IconClasses} style={{transform: 'scale(.85)'}}/>,
-    [Platform.Mac]: <Mac className={IconClasses} />,
-    [Platform.Linux]: <Linux className={IconClasses} />,
-    [Platform.NintendoSwitch]: <NintendoSwitch className={IconClasses} style={{transform: 'scale(.85)'}}/>,
-    [Platform.Android]: <Android className={IconClasses} />,
-    [Platform.NintendoDS]: <strong className={IconClasses}>DS</strong>,
-    [Platform.Nintendo3DS]: <strong className={IconClasses}>3DS</strong>,
-    [Platform.NintendoDSi]: <strong className={IconClasses}>DSi</strong>,
-    [Platform.Nintendo64]: <strong className={IconClasses}>N64</strong>,
-    [Platform.GameCube]: <GameCube className={IconClasses} />,
-    [Platform.NES]: <strong className={IconClasses}>NES</strong>,
-    [Platform.SNES]: <strong className={IconClasses}>SNES</strong>,
-    [Platform.iOS]: <strong className={IconClasses}>iOS</strong>,
-    [Platform.Wii]: <Wii className={cn(IconClasses, 'w-7')} />,
-    [Platform.WiiU]: <WiiU className={cn(IconClasses, 'w-11')}/>,
+    [Platforms.Windows]: <Windows className={IconClasses} style={{transform: 'scale(.9)'}}/>,
+    [Platforms.PS]: <PlayStation className={IconClasses} />, //PS VITA (46) & PSP (38) TODO change?
+    [Platforms.XBOX]: <Xbox className={IconClasses} style={{transform: 'scale(.85)'}}/>,
+    [Platforms.Mac]: <Mac className={IconClasses} />,
+    [Platforms.Linux]: <Linux className={IconClasses} />,
+    [Platforms.NintendoSwitch]: <NintendoSwitch className={IconClasses} style={{transform: 'scale(.85)'}}/>,
+    [Platforms.Android]: <Android className={IconClasses} />,
+    [Platforms.NintendoDS]: <strong className={IconClasses}>DS</strong>,
+    [Platforms.Nintendo3DS]: <strong className={IconClasses}>3DS</strong>,
+    [Platforms.NintendoDSi]: <strong className={IconClasses}>DSi</strong>,
+    [Platforms.Nintendo64]: <strong className={IconClasses}>N64</strong>,
+    [Platforms.GameCube]: <GameCube className={IconClasses} />,
+    [Platforms.NES]: <strong className={IconClasses}>NES</strong>,
+    [Platforms.SNES]: <strong className={IconClasses}>SNES</strong>,
+    [Platforms.iOS]: <strong className={IconClasses}>iOS</strong>,
+    [Platforms.Wii]: <Wii className={cn(IconClasses, 'w-7')} />,
+    [Platforms.WiiU]: <WiiU className={cn(IconClasses, 'w-11')}/>,
 }
 
-export default Platforms
+export default PlatformsList

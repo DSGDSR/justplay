@@ -98,3 +98,8 @@
 .snap-start {
   scroll-snap-align: start;
 }
+
+/* TOASTER */
+body > div[role="region"] {
+  pointer-events: none;
+}

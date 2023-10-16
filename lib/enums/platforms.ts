@@ -1,4 +1,4 @@
-export enum Platform {
+export enum Platforms {
     Windows,
     PS,
     XBOX,

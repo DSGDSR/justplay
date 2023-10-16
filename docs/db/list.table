@@ -1,0 +1,27 @@
+-- https://onecompiler.com/postgresql
+
+-- create
+CREATE TABLE custom_list (
+  id SERIAL,
+  user_id VARCHAR(40) NOT NULL,
+  name VARCHAR(30) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE list_item (
+  user_id VARCHAR(40) NOT NULL,
+  list_type INTEGER NOT NULL,
+  custom_list_id INTEGER,
+  game INTEGER NOT NULL,
+  FOREIGN KEY(custom_list_id) REFERENCES custom_list(id)
+);
+
+-- insert
+INSERT INTO list_item VALUES ('user_2WizmKftDxBOxnginqYAidmOJ9J', 1, null, 150);
+INSERT INTO custom_list (user_id, name) VALUES ('user_2WizmKftDxBOxnginqYAidmOJ9J', 'Custom list');
+INSERT INTO custom_list (user_id, name) VALUES ('user_2WizmKftDxBOxnginqYAidmOJ9J', 'Custom list2');
+INSERT INTO list_item VALUES ('user_2WizmKftDxBOxnginqYAidmOJ9J', 3, 2, 151);
+
+-- fetch 
+SELECT * FROM list_item;
+SELECT * FROM custom_list;
