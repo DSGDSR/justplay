@@ -5,7 +5,8 @@ import { Button, ButtonProps } from "./Button"
 import Play from "./icons/Play"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./Tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip"
+import { YouTubeLite } from 'react-youtube-lite'
 
 interface Props {
     name: string
@@ -36,15 +37,10 @@ const Trailer = ({ name, id }: Props) => {
         <DialogContent
             size={'embed'}
             onOpenAutoFocus={e => e.preventDefault()}
+            className="aspect-video w-[720px]"
+            id="trailer-video"
         >
-            <iframe
-                width={700} height={395}
-                src={`https://tube.rvere.com/embed?v=${id}`}
-                title={`${name} - Trailer`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-                allowFullScreen
-            ></iframe>
+            <YouTubeLite url={id} title={`${name} - Trailer`} />
         </DialogContent>
     </Dialog> : <Link target="_blank" href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${name} trailer`)}`}>
         <TrailerButton />

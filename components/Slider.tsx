@@ -60,6 +60,7 @@ const Slider = ({ screenshots }: Props) => {
                     width={s.width}
                     height={s.height}
                     quality={100}
+                    priority={false}
                 />
             </div> )}
         </div>

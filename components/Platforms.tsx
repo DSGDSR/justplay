@@ -12,7 +12,7 @@ import { cn, formatList } from "@/lib/utils";
 import GameCube from "./icons/platforms/GameCube";
 import Wii from "./icons/platforms/Wii";
 import WiiU from "./icons/platforms/WiiU";
-import { Platforms } from "@/lib/enums/platforms";
+import { Platforms } from "@/lib/enums";
 
 interface Props {
   platforms: IPlatform[];
@@ -28,7 +28,7 @@ const PlatformTooltip = ({ platform }: { platform: IGroupedPlatforms }) => <Tool
 const PlatformsList = ({ platforms }: Props) => {
     const groupedPlatforms = groupPlatforms(platforms)
 
-    return <ul className="list-none flex items-center gap-3.5 text-slate-600">
+    return <ul className="list-none flex items-center gap-4 text-slate-300">
         {Object.keys(groupedPlatforms).map(platform => <li key={platform}>
             { <PlatformTooltip platform={groupedPlatforms[platform]} /> }
         </li>)}
@@ -75,7 +75,7 @@ const PlatformGroups: Record<string, number[]> = {
     [Platforms.WiiU]: [41] // TODO
 }
 
-const IconClasses = 'w-6 h-6 fill-current text-md cursor-default'
+const IconClasses = 'w-s h-s fill-current text-md cursor-default'
 const PlatformIcons: Record<string, ReactNode> = {
     [Platforms.Windows]: <Windows className={IconClasses} style={{transform: 'scale(.9)'}}/>,
     [Platforms.PS]: <PlayStation className={IconClasses} />, //PS VITA (46) & PSP (38) TODO change?
