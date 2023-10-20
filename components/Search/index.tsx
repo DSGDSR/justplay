@@ -88,12 +88,13 @@ const SearchBox = ({}: Props) => {
                 onOpenAutoFocus={e => e.preventDefault()}
                 onInteractOutside={() => setIsOpen(false)}
                 className="p-0 gap-0 flex flex-col max-w-xl"
+                size={'small'} hideClose={true}
             >
                 <header>
-                    <div className={clsx('flex items-center px-3.5 py-1', games !== null && 'border-b')}>
-                        <SearchIcon color="#a1a1aa" size={19}/>
+                    <div className={clsx('flex items-center px-4 py-2', games !== null && 'border-b')}>
+                        <SearchIcon color="#a1a1aa" size={22}/>
                         <input
-                            className="flex h-11 w-full rounded-md bg-transparent py-3 ml-2.5 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 pr-2"
+                            className="flex h-11 w-full rounded-md bg-transparent py-3 ml-3.5 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 pr-2"
                             placeholder="Type a game name..."
                             autoComplete="off"
                             autoCorrect="off"

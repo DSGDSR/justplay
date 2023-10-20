@@ -52,16 +52,16 @@ const SearchList = ({ games, onNavigate }: Props) => {
         { games?.length ? <ul>
             { games.map((game, index) => (
                 <li key={index} className={clsx(
-                    'relative px-3.5 py-2.5',
+                    'relative px-3.5 py-3.5',
                     cursor === index && 'focused',
                     cursor === -1 && 'hover:bg-accent hover:text-accent-foreground'
                 )}>
                     <Link className="flex items-center" href={`/game/${game.slug}`} onClick={onNavigate}>
                         { game.cover?.url
-                            ? <img src={game.cover?.url} alt={game.name} className="h-10 w-10 rounded-md mr-3"/>
+                            ? <img src={game.cover?.url} alt={game.name} className="h-11 w-11 rounded-md mr-3"/>
                             : <DefaultThumb className="h-10 w-10 rounded-md mr-3"/> }
-                        <div className="flex flex-col w-5/6">
-                            <p className="text-sm font-medium whitespace-nowrap text-ellipsis overflow-hidden">{game.name}</p>
+                        <div className="flex flex-col w-5/6 gap-0.5">
+                            <p className="text-base font-medium whitespace-nowrap text-ellipsis overflow-hidden">{game.name}</p>
                             { game.genres?.length &&
                                 <span className="text-xs text-muted-foreground">{game.genres?.map(g => g.name).join(', ')}</span>
                             }
