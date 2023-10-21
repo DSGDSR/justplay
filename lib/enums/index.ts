@@ -1,2 +1,5 @@
 export * from './endpoints'
 export * from './lists'
+export * from './languages'
+export * from './platforms'
+export * from './services'

@@ -70,12 +70,13 @@ export interface DialogProps
   VariantProps<typeof dialogVariants> {
   children?: React.ReactNode,
   className?: string
+  hideClose?: boolean
 }
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogProps
->(({ className, position, size, children, ...props }, ref) => (
+>(({ className, position, size, children, hideClose, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
@@ -87,12 +88,12 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className={cn("absolute left-auto right-3 top-3 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-40 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground",
+      { !hideClose ? <DialogPrimitive.Close className={cn("absolute left-auto right-3 top-3 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-40 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground",
         size === 'embed' ? 'bg-white text-black p-1 opacity-50 hover:opacity-100' : null
       )}>
         <X className="h-5 w-5" />
         <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
+      </DialogPrimitive.Close> : <></> }
     </DialogPrimitive.Content>
   </DialogPortal>
 ))

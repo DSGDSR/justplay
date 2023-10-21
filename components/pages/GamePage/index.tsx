@@ -12,6 +12,10 @@ import { redirect } from "next/navigation"
 import { ICompany } from "@/lib/models/company"
 import Platforms from "@/components/Platforms"
 import HowLongToBeat from "@/components/HowLongToBeat"
+import CardsSlider from "@/components/CardsSlider"
+import Section from "@/components/Section"
+import Link from "next/link"
+import Igdb from "@/components/icons/Igdb"
 
 async function getGame(slug: string): Promise<IHttpResponse<IGame>> {
     const url = `${apiUrl}${Endpoints.GameBySlug}`
@@ -94,19 +98,33 @@ export default async function GamePage({ slug }: Props) {
             <main className="flex gap-8 mt-3.5">
                 <aside style={{ flex: '0 0 280px' }}>
                     <GameActions gameId={game.id} />
+                    { game.rating_count > 0 ? <Section title="Rating" className="gap-2.5" pre={<hr className="mt-4 mb-1.5" />}>
+                        <Link href={game.url} className="text-sm flex items-center gap-2" target="_blank"><Igdb className="fill-purple-500 h-3"/> {game.rating.toFixed(1)} ({game.rating_count})</Link>
+                    </Section> : <></> }
+                    { game.franchises?.length ? <Section title="Franchise" className="gap-2.5" pre={<hr className="mt-4 mb-1.5" />}>
+                        <Link href={game.franchises[0].url} className="text-sm hover:underline" target="_blank">{game.franchises[0].name}</Link>
+                    </Section> : <></> }
                 </aside>
-                <article className="flex-grow -mt-14">
-                    <h3 className="text-xl font-semibold mb-3.5">Platforms</h3>
-                    <Platforms platforms={game.platforms} />
+                <article className="-mt-14 min-w-0 flex flex-col gap-12" style={{ flex: '1 1 0' }}>
+                    <Section title="Platforms">
+                        <Platforms platforms={game.platforms} />
+                    </Section>
 
-                    <h3 className="text-xl font-bold mb-3.5 mt-10">Summary</h3>
-                    <p className="text-shadow">{game.summary}</p>
+                    <Section title="Summary">
+                        <p className="text-shadow">{game.summary}</p>
+                    </Section>
 
-                    <HowLongToBeat gameName={game.name} />
+                    <Section title="How long to beat">
+                        <HowLongToBeat gameName={game.name} />
+                    </Section>
+
+                    <Section title="Similar games">
+                        <CardsSlider games={game.similar_games} lazy={true} />
+                    </Section>
                 </article>
             </main>
         </section>
-        {JSON.stringify(game, null, 2)
+        {//JSON.stringify(game, null, 2)
         }
     </>
 }
