@@ -1,10 +1,9 @@
 "use client"
 
-import { Children, Fragment, cloneElement, createElement, useEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "../Button"
 import { UserButton, SignedIn, SignedOut, ClerkLoaded, useClerk } from "@clerk/nextjs";
-import { cn, replaceNodeWithReactComponent } from "@/lib/utils";
-import { render } from "react-dom";
+import { cn } from "@/lib/utils";
 import { createPortal } from "react-dom";
 import { createRoot } from "react-dom/client";
 import Link from "next/link";
