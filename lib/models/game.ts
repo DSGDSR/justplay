@@ -1,3 +1,4 @@
+import { Services } from "../enums";
 import { IInvolvedCompany } from "./company";
 import { ICover } from "./cover";
 import { IGenre } from "./genre";
@@ -46,7 +47,7 @@ export interface IPrimitiveGame {
     language_supports: number[]
 }
 
-export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'videos' | 'genres' | 'involved_companies' | 'platforms' | 'similar_games'>  {
+export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'external_games' | 'videos' | 'genres' | 'involved_companies' | 'platforms' | 'similar_games' | 'game_engines'>  {
     cover: ICover
     genres: IGenre[]
     screenshots: IScreenshot[]
@@ -54,8 +55,20 @@ export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'v
     involved_companies: IInvolvedCompany[]
     platforms: IPlatform[]
     lists?: ListsState
+    external_games?: IExternalGame[]
     similar_games: IGame[]
-    franchises?: IGame[]
+    franchises?: IGame[] // Change to IFranchise
+    game_engines?: IGame[] // Change to IGameEngine
+}
+
+export interface IExternalGame {
+    id: number
+    category: Services
+    game: number
+    name: string
+    uid: string
+    url: string
+    year: number
 }
 
 export interface IGameSearch {
