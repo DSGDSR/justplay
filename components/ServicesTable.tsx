@@ -19,6 +19,7 @@ import ItchIo from "./icons/services/ItchIo"
 import Oculus from "./icons/services/Oculus"
 import Mac from "./icons/platforms/Mac"
 import Utomik from "./icons/services/Utomik"
+import FocusEnt from "./icons/services/FocusEnt"
 
 interface Props {
     services: IExternalGame[] | undefined
@@ -100,7 +101,7 @@ export const ServiceIcons: Record<Services, (service: IExternalGame) => ReactNod
         <Xbox className="w-8 h-8 fill-white"/>
     </ServiceIcon>,
     [Services.PSStore]: (s) => <ServiceIcon url={s.url} service={s}><PSStore/></ServiceIcon>,
-    [Services.FocusEntertainment]: () => <></>,
+    [Services.FocusEntertainment]: (s) => <ServiceIcon url={s.url} service={s}><FocusEnt/></ServiceIcon>,
     [Services.XboxGamePass]: (s) => <ServiceIcon url={s.url} service={s} className="bg-[#107b11] flex flex-col gap-1.5">
         <Xbox className="w-6 h-6 fill-white"/>
         <span className="text-[.45rem] font-medium">GAME PASS</span>
