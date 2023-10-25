@@ -2,15 +2,24 @@ import { Badge } from "@/components/Badge";
 import Skeleton from "@/components/Skeleton";
 import GamePage from "@/components/pages/GamePage";
 import { CoverSkeleton, ThumbSkeleton } from "@/components/pages/GamePage/skeletons";
+import { getGame } from "@/services/game";
 import { Suspense } from "react";
 
-interface Props {
+interface GamePageRequest {
     params: {
         slug: string
     }
 }
 
-export default function Page({ params: { slug } }: Props) {
+export async function generateMetadata({ params: { slug } }: GamePageRequest) {
+    const { data: game } = await getGame(slug)
+   
+    return {
+      title: `${game.name} - Where to play`
+    }
+}
+
+export default function Page({ params: { slug } }: GamePageRequest) {
     return <Suspense key={slug} fallback={<GamePageSkeleton />}>
         {/*<GamePageSkeleton />*/}
         <GamePage slug={slug} />

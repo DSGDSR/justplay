@@ -4,34 +4,18 @@ import PreloadedImage from "@/components/PreloadedImage"
 import Screenshots from "@/components/Screenshots"
 import Trailer from "@/components/Trailer"
 import GameActions from "@/components/GameActions"
-import { Endpoints } from "@/lib/enums"
-import { IGame } from "@/lib/models/game"
-import { IHttpResponse } from "@/lib/models/response"
-import { apiUrl, cn, localizedDate, unix2Date } from "@/lib/utils"
-import { redirect } from "next/navigation"
-import { ICompany } from "@/lib/models/company"
+import { Services } from "@/lib/enums"
+import { cn, localizedDate, unix2Date } from "@/lib/utils"
 import Platforms from "@/components/Platforms"
 import HowLongToBeat from "@/components/HowLongToBeat"
 import CardsSlider from "@/components/CardsSlider"
 import Section from "@/components/Section"
 import Link from "next/link"
 import Igdb from "@/components/icons/Igdb"
-
-async function getGame(slug: string): Promise<IHttpResponse<IGame>> {
-    const url = `${apiUrl}${Endpoints.GameBySlug}`
-    const res = await fetch(url.replace(':slug', slug))
-
-    if (!res.ok) redirect('/')// custtom 404 TODO ?
-    return res.json()
-}
-
-async function getCompany(id: number): Promise<IHttpResponse<ICompany>> {
-    const url = `${apiUrl}${Endpoints.CompanyById}`
-    const res = await fetch(url.replace(':id', id.toString()))
-
-    if (!res.ok) redirect('/')// custtom 404 TODO ?
-    return res.json()
-}
+import AsideSection from "@/components/AsideSection"
+import ServicesTable from "@/components/ServicesTable"
+import { getGame } from "@/services/game"
+import { getCompany } from "@/services/company"
 
 interface Props {
     slug: string
@@ -98,33 +82,48 @@ export default async function GamePage({ slug }: Props) {
             <main className="flex gap-8 mt-3.5">
                 <aside style={{ flex: '0 0 280px' }}>
                     <GameActions gameId={game.id} />
-                    { game.rating_count > 0 ? <Section title="Rating" className="gap-2.5" pre={<hr className="mt-4 mb-1.5" />}>
-                        <Link href={game.url} className="text-sm flex items-center gap-2" target="_blank"><Igdb className="fill-purple-500 h-3"/> {game.rating.toFixed(1)} ({game.rating_count})</Link>
-                    </Section> : <></> }
-                    { game.franchises?.length ? <Section title="Franchise" className="gap-2.5" pre={<hr className="mt-4 mb-1.5" />}>
-                        <Link href={game.franchises[0].url} className="text-sm hover:underline" target="_blank">{game.franchises[0].name}</Link>
-                    </Section> : <></> }
+
+                    <AsideSection title="Rating" condition={game.rating_count > 0}>
+                        <Link href={game.url} className="text-sm flex items-center gap-2" target="_blank"><Igdb className="fill-purple-500 h-3"/> {game.rating?.toFixed(1)} ({game.rating_count})</Link>
+                    </AsideSection>
+
+                    <AsideSection title="Franchise" condition={!!game.franchises?.length}>
+                        <Link href={game.franchises?.[0]?.url ?? '/'} className="text-sm" target="_blank">{game.franchises?.[0].name}</Link>
+                    </AsideSection>
+
+                    <AsideSection title="Game engines" condition={!!game.game_engines?.length}>
+                        <div>
+                            { game.game_engines?.map((engine, idx) => {
+                                const isLast = idx === (game.game_engines?.length ?? 0) - 1
+                                return <Link key={engine.id} href={engine.url ?? '#'} className="text-sm inline" target="_blank">{engine.name}{isLast ? '' : ', '}</Link>
+                            }) }
+                        </div>
+                    </AsideSection>
                 </aside>
                 <article className="-mt-14 min-w-0 flex flex-col gap-12" style={{ flex: '1 1 0' }}>
                     <Section title="Platforms">
                         <Platforms platforms={game.platforms} />
                     </Section>
 
+                    <ServicesTable services={game.external_games} />
+
                     <Section title="Summary">
                         <p className="text-shadow">{game.summary}</p>
                     </Section>
 
-                    <Section title="How long to beat">
-                        <HowLongToBeat gameName={game.name} />
-                    </Section>
+                    <HowLongToBeat gameName={game.name} />
 
-                    <Section title="Similar games">
-                        <CardsSlider games={game.similar_games} lazy={true} />
-                    </Section>
+                    { game.similar_games?.length ? <Section title="Similar games">
+                        <CardsSlider games={
+                            // Sort games by popularity
+                            game.similar_games.sort((a, b) => b.rating - a.rating)
+                        } lazy={true} />
+                    </Section> : <></> }
                 </article>
             </main>
         </section>
-        {//JSON.stringify(game, null, 2)
-        }
+        {JSON.stringify(game.external_games)}
+        {game.external_games?.map((game, index) => <>{Services[(game.category as number)]}<br></br></>)}
     </>
 }
+
