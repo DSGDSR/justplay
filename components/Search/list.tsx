@@ -4,6 +4,7 @@ import DefaultThumb from "../icons/DefaultThumb"
 import { useRouter } from "next/navigation"
 import { IGameSearch } from "@/lib/models/game"
 import Link from "next/link"
+import Image from "next/image"
 
 interface Props {
     games: IGameSearch[] | null
@@ -49,7 +50,7 @@ const SearchList = ({ games, onNavigate }: Props) => {
     }, [games])
 
     return games instanceof Array ? <main>
-        { games?.length ? <ul>
+        { games?.length ? <ul role="listbox" id="search-results">
             { games.map((game, index) => (
                 <li key={index} className={clsx(
                     'relative px-3.5 py-3.5',
@@ -58,7 +59,7 @@ const SearchList = ({ games, onNavigate }: Props) => {
                 )}>
                     <Link className="flex items-center" href={`/game/${game.slug}`} onClick={onNavigate}>
                         { game.cover?.url
-                            ? <img src={game.cover?.url} alt={game.name} className="h-11 w-11 rounded-md mr-3"/>
+                            ? <Image src={game.cover?.url} alt={game.name} className="h-11 w-11 rounded-md mr-3"/>
                             : <DefaultThumb className="h-10 w-10 rounded-md mr-3"/> }
                         <div className="flex flex-col w-5/6 gap-0.5">
                             <p className="text-base font-medium whitespace-nowrap text-ellipsis overflow-hidden">{game.name}</p>

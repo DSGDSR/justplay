@@ -102,7 +102,8 @@ const SearchBox = ({ className }: Props) => {
                             spellCheck="false"
                             ria-autocomplete="list"
                             role="combobox"
-                            aria-expanded="true"
+                            aria-controls="search-results"
+                            aria-expanded={games?.length ? 'true': 'false'}
                             type="text"
                             autoFocus={true}
                             onChange={(event) => debouncedSearch(event.target.value)}

@@ -32,7 +32,7 @@ const HowLongToBeat = ({ gameName, className }: Props) => {
                 setAverage((styles.reduce((a, b) => a + b, 0) / styles.length).toFixed(0))
             }
         }))
-    }, [])
+    }, [gameName])
 
     return hltbData?.gameplayMain ? <Section title="How long to beat">
         <div className={cn(className)}>

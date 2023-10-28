@@ -82,7 +82,7 @@ const GameActions = ({ gameId }: Props) => {
                 [ListType.Custom]: ListState.Inactive
             })
         }
-    }, [])
+    }, [gameId, isSignedIn, userId])
 
     const updateList = async (listTypes: ListType[], listId: number | null = null) => {
         if (!isSignedIn || !userId) {

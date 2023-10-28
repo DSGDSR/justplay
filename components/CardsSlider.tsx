@@ -54,7 +54,7 @@ const CardsSlider = ({ games, className, lazy }: Props) => {
         return () => {
             slider()?.removeEventListener('scroll', listenToScroll)
         }
-    }, [])
+    })
 
     return <div className={cn('relative', className)}>
         <div id="cards-slider" className="whitespace-nowrap overflow-x-scroll overflow-y-hidden no-scrollbar">
