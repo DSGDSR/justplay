@@ -12,6 +12,7 @@ export default authMiddleware({
         // Public API routes
         '/api/games/(.*)',
         '/api/companies/(.*)',
+        '/api/eshop/(.*)',
         '/api/hltb',
     ],
 });

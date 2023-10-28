@@ -22,7 +22,7 @@ export async function GET(_request: NextRequest, query: GETGameBySlugQuery) {
 
     return await postIGDB(
         IGDBEndpoints.Games,
-        `fields *,screenshots.*,cover.*,videos.*,genres.*,involved_companies.*,franchises.*,language_supports.*,language_supports.language.*,platforms.*,external_games.*,similar_games.*,similar_games.cover.*;
+        `fields *,screenshots.*,cover.*,videos.*,genres.*,involved_companies.*,game_engines.*,franchises.*,language_supports.*,language_supports.language.*,platforms.*,external_games.*,similar_games.*,similar_games.cover.*;
          where slug="${slug}";`
     ).then(async (response) => {
         if (!response.ok) {

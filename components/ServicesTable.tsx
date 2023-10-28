@@ -20,29 +20,18 @@ import Oculus from "./icons/services/Oculus"
 import Mac from "./icons/platforms/Mac"
 import Utomik from "./icons/services/Utomik"
 import FocusEnt from "./icons/services/FocusEnt"
+import { eShopItem } from "@/lib/models/eshop"
+import { IHttpResponse } from "@/lib/models/response"
+import EShop from "./icons/services/EShop"
+import useServices from "@/hooks/use-services"
 
 interface Props {
     services: IExternalGame[] | undefined
+    name: string
 }
 
-const ServicesTable = ({ services }: Props) => {
-    const [refinedServices, setRefinedServices] = useState<Record<ServiceType, IExternalGame[]> | null>(null)
-
-    useEffect(() => {
-        if (services) {
-            const refinedServices = uniqByKey(services, s => s.category).reduce((acc, service) => {
-                const serviceType = ServiceByType[service.category]
-
-                if (serviceType !== undefined) {
-                    acc[serviceType] = serviceType in acc ? [...acc[serviceType], service] : [service]
-                }
-
-                return acc
-            }, {} as Record<ServiceType, IExternalGame[]>)
-
-            setRefinedServices(refinedServices)
-        }
-    }, [services])
+const ServicesTable = ({ services, name }: Props) => {
+    const refinedServices = useServices(services, name)
 
     return Object.keys(refinedServices ?? {}).length > 0 && <Section title="Play now">
         <div className="flex flex-col">
@@ -60,7 +49,7 @@ const ServicesTable = ({ services }: Props) => {
                         "flex flex-grow border-slate-900 items-center gap-4 pl-4 border-t",
                         idx === Object.keys(refinedServices).length - 1 && 'border-b'
                     )}>
-                        { services.map(service => <li key={service.id}>
+                        { services.map((service, idx) => <li key={idx}>
                             {ServiceIcons[service.category](service)}
                         </li>) }
                     </ul>
@@ -72,7 +61,7 @@ const ServicesTable = ({ services }: Props) => {
 
 const ServiceIcon = ({ children, className, service, url }: any) => <Tooltip>
     <TooltipTrigger asChild>
-        <Link href={url ?? ''} target="_blank" className={cn("flex items-center justify-center cursor-pointer w-14 h-14 rounded-lg bg-white", className)}>
+        <Link href={url ?? '#'} target="_blank" className={cn("flex items-center justify-center cursor-pointer w-14 h-14 rounded-lg bg-white", className)}>
             { children }
         </Link>
     </TooltipTrigger>
@@ -106,6 +95,7 @@ export const ServiceIcons: Record<Services, (service: IExternalGame) => ReactNod
         <Xbox className="w-6 h-6 fill-white"/>
         <span className="text-[.45rem] font-medium">GAME PASS</span>
     </ServiceIcon>,
+    [Services.EShop]: (s) => <ServiceIcon url={s.url} className="bg-[#FF7D00]" service={s}><EShop/></ServiceIcon>,
 }  
 
 export default ServicesTable

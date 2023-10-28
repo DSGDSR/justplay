@@ -105,7 +105,7 @@ export default async function GamePage({ slug }: Props) {
                         <Platforms platforms={game.platforms} />
                     </Section>
 
-                    <ServicesTable services={game.external_games} />
+                    <ServicesTable services={game.external_games} name={game.name} />
 
                     <Section title="Summary">
                         <p className="text-shadow">{game.summary}</p>

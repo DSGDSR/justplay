@@ -19,6 +19,7 @@ export enum Services {
     FocusEntertainment = 37,
     XboxGamePass = 54,
     // Gamejolt = 55,
+    EShop = 99,
 }
 
 export enum ServiceType {
@@ -42,5 +43,6 @@ export const ServiceByType: Record<Services, ServiceType> = {
     [Services.Xbox]: ServiceType.Buy,
     [Services.PSStore]: ServiceType.Buy,
     [Services.FocusEntertainment]: ServiceType.Buy,
+    [Services.EShop]: ServiceType.Buy,
     [Services.XboxGamePass]: ServiceType.Subscription,
 }

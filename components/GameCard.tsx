@@ -13,7 +13,8 @@ interface Props {
 
 const GameCard = ({ game, className, lazy }: Props) => {
     return (
-        <Link className={cn("relative flex flex-col gap-3 w-48", className)} href={`/game/${game.slug}`}>
+        <Link className={cn("relative flex flex-col gap-3 w-48 group", className)} href={`/game/${game.slug}`}>
+            <div className="absolute w-full h-full bg-black group-hover:opacity-50 opacity-0 transition-opacity"></div>
             <figure>
                 { !!game.cover?.url ? <PreloadedImage
                     className="w-full h-full rounded-md aspect-[9/12]"

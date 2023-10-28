@@ -1,5 +1,4 @@
 import { IGDBEndpoints } from "../enums/endpoints";
-import { AuthToken } from "../models/auth";
 import { IHttpError } from "../models/error";
 
 export const IGDBError = (error: any): IHttpError => ({

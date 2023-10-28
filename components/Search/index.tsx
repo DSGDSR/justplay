@@ -10,12 +10,13 @@ import SearchFooter from "./footer"
 import SearchList from "./list"
 import SearchIcon from "../icons/Search"
 import { Endpoints } from "@/lib/enums"
-import { debounce, cleanQuery, apiUrl } from "@/lib/utils"
+import { debounce, cleanQuery, apiUrl, cn } from "@/lib/utils"
 
 interface Props {
+    className?: string
 }
 
-const SearchBox = ({}: Props) => {
+const SearchBox = ({ className }: Props) => {
     const [isSearching, setIsSearching] = useState(false)
     const [games, setGames] = useState<IGameSearch[] | null>(null)
     const [isOpen, setIsOpen] = useState(false)
@@ -76,11 +77,11 @@ const SearchBox = ({}: Props) => {
 
     return (
         <Dialog open={isOpen}>
-            <DialogTrigger onClick={() => setIsOpen(true)}>
-                <div className="inline-flex items-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64">
-                    <span className="hidden lg:inline-flex">Search games...</span>
-                    <span className="inline-flex lg:hidden">Search...</span>
-                    <span className="absolute right-2 top-[7px] flex gap-1 text-xs"><Kbd className="!text-[15px] pt-[0.09em] px-[0.31em]">⌘</Kbd>+<Kbd className="!text-[11px]">K</Kbd></span>
+            <DialogTrigger onClick={() => setIsOpen(true)} className={className}>
+                <div className={cn("group inline-flex items-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-muted sm:bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-10 sm:h-9 px-4 py-2 relative w-full justify-between sm:justify-start text-sm text-muted-foreground sm:pr-12 sm:w-64")}>
+                    <span className="inline-flex">Search games...</span>
+                    <span className="hidden sm:flex absolute right-2 top-[7px] gap-1 text-xs"><Kbd className="!text-[15px] pt-[0.09em] px-[0.31em]">⌘</Kbd>+<Kbd className="!text-[11px]">K</Kbd></span>
+                    <SearchIcon size={18} strokeWidth={2} className="block sm:hidden transition-colors group-hover:stroke-accent-foreground stroke-muted-foreground"/>
                 </div>
             </DialogTrigger>
             <DialogContent
@@ -92,7 +93,7 @@ const SearchBox = ({}: Props) => {
             >
                 <header>
                     <div className={clsx('flex items-center px-4 py-2', games !== null && 'border-b')}>
-                        <SearchIcon color="#a1a1aa" size={22}/>
+                        <SearchIcon className="stroke-[#a1a1aa]" size={22}/>
                         <input
                             className="flex h-11 w-full rounded-md bg-transparent py-3 ml-3.5 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 pr-2"
                             placeholder="Type a game name..."
