@@ -14,6 +14,7 @@ export default authMiddleware({
         '/api/companies/(.*)',
         '/api/eshop/(.*)',
         '/api/hltb',
+        '/api/lists',
     ],
 });
  
