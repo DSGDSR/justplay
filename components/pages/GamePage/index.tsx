@@ -16,13 +16,18 @@ import AsideSection from "@/components/AsideSection"
 import ServicesTable from "@/components/ServicesTable"
 import { getGame } from "@/services/game"
 import { getCompany } from "@/services/company"
+import { getLists } from "@/services/lists"
+import { auth, useClerk, useUser } from "@clerk/nextjs"
+import { ListsItemsResponse } from "@/lib/models/lists"
 
 interface Props {
     slug: string
 }
 
 export default async function GamePage({ slug }: Props) {
+    const { userId } = auth()
     const { data: game } = await getGame(slug)
+    const lists = userId ? (await getLists(userId))?.data : null;
 
     const screenshots = game.screenshots?.length ? game.screenshots.filter(s => s.image_id && s.url) : []
     const screenshot = screenshots.sort((a, b) => b.width - a.width)[0] ?? null
@@ -81,7 +86,7 @@ export default async function GamePage({ slug }: Props) {
             </header>
             <main className="flex gap-8 mt-3.5">
                 <aside style={{ flex: '0 0 280px' }}>
-                    <GameActions gameId={game.id} />
+                    <GameActions gameId={game.id} lists={lists} />
 
                     <AsideSection title="Rating" condition={game.rating_count > 0}>
                         <Link href={game.url} className="text-sm flex items-center gap-2" target="_blank"><Igdb className="fill-purple-500 h-3"/> {game.rating?.toFixed(1)} ({game.rating_count})</Link>
@@ -114,7 +119,7 @@ export default async function GamePage({ slug }: Props) {
                     <HowLongToBeat gameName={game.name} />
 
                     { game.similar_games?.length ? <Section title="Similar games">
-                        <CardsSlider games={
+                        <CardsSlider lists={lists ?? undefined} games={
                             // Sort games by popularity
                             game.similar_games.sort((a, b) => b.rating - a.rating)
                         } lazy={true} />

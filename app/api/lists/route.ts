@@ -1,18 +1,39 @@
 import { ListAction, ListState, ListType } from "@/lib/enums";
-import { List } from "@/lib/models/lists";
-import { IHttpResponse } from "@/lib/models/response";
 import {
     HttpResponse,
     MissingBodyError
 } from "@/lib/utils"
+import { clerkClient } from "@clerk/nextjs";
 import { VercelPoolClient, db } from "@vercel/postgres"
 import { NextRequest } from "next/server"
+
+const updateListsMetadata = async (userId: string, client: VercelPoolClient) => {
+    const { data: listItems} = await (await getAll(userId, client)).json()
+    console.log(listItems)
+    clerkClient.users.updateUserMetadata(userId, {
+        publicMetadata: {
+            listItems
+        }
+    })
+}
 
 const getLists = async (userId: string, client: VercelPoolClient): Promise<Response> => {
     if (!userId) return HttpResponse(null, false, MissingBodyError)
     const { rows } = await client.query(`SELECT * FROM list WHERE user_id = $1`, [userId])
 
     return HttpResponse(rows, true)
+}
+
+const getAll = async (userId: string, client: VercelPoolClient): Promise<Response> => {
+    if (!userId) return HttpResponse(null, false, MissingBodyError)
+    const { rows } = await client.query(`SELECT * FROM list_item WHERE user_id = $1;`, [userId])
+
+    return HttpResponse({
+        [ListType.Favorite]: rows.filter((list) => list.list_type === ListType.Favorite),
+        [ListType.Playlist]: rows.filter((list) => list.list_type === ListType.Playlist),
+        [ListType.Finished]: rows.filter((list) => list.list_type === ListType.Finished),
+        [ListType.Custom]: rows.filter((list) => !!list.Custom_list_id)
+    }, true)
 }
 
 const get = async (userId: string, gameId: number, client: VercelPoolClient): Promise<Response> => {
@@ -45,12 +66,15 @@ const add = async (
         gameId
     ]);
 
-    return rowCount > 0
-        ? HttpResponse(null, true)
-        : HttpResponse(null, false, {
-            status: 500,
-            message: "Could not add the game to list"
-        })
+    if (rowCount > 0) {
+        // await updateListsMetadata(userId, client)
+        return HttpResponse(null, true)
+    }
+
+    return HttpResponse(null, false, {
+        status: 500,
+        message: "Could not add the game to the list"
+    })
 }
 
 const remove = async (
@@ -68,12 +92,15 @@ const remove = async (
         game = ${listId !== null ? '$4' : '$3'};`,
     listId !== null ? [userId, listType, listId, gameId] : [userId, listType, gameId]);
 
-    return rowCount > 0
-        ? HttpResponse(null, true)
-        : HttpResponse(null, false, {
-            status: 500,
-            message: "Could not remove the game from list"
-        })
+    if (rowCount > 0) {
+        // await updateListsMetadata(userId, client)
+        return HttpResponse(null, true)
+    }
+
+    return HttpResponse(null, false, {
+        status: 500,
+        message: "Could not remove the game from the list"
+    })
 }
 
 export async function POST(_request: NextRequest) {
@@ -85,6 +112,7 @@ export async function POST(_request: NextRequest) {
         [ListAction.AddGame]: () => add(userId, gameId, listId, listType, client),
         [ListAction.RemoveGame]: () => remove(userId, gameId, listId, listType, client),
         [ListAction.GetGame]: () => get(userId, gameId, client),
+        [ListAction.GetAllGames]: () => getAll(userId, client),
         [ListAction.GetLists]: () => getLists(userId, client),
     }
 
