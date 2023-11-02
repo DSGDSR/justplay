@@ -26,7 +26,7 @@ export default function RootLayout({
         <html lang="en">
           <body className={`${inter.className} dark`}>
             <Nav />
-            <main>
+            <main className='pt-24 sm:pt-16'>
               <Suspense fallback={<div>Loading...</div>}>
                 {children}
               </Suspense>

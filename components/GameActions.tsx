@@ -1,6 +1,6 @@
 "use client"
 
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "./Button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip"
 import Gamepad from "./icons/Gamepad"
@@ -14,20 +14,13 @@ import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import { IHttpResponse } from "@/lib/models/response"
 import Spinner from "./icons/Spinner"
-import { ListsState } from "@/lib/models/lists"
+import { ListsItemsResponse, ListsState } from "@/lib/models/lists"
 
-const getList = async (userId: string, gameId: number): Promise<IHttpResponse<ListsState> | null> => {
-    return await fetch('/api/lists', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            action: ListAction.GetGame,
-            gameId,
-            userId
-        })
-    }).then(res => res.json()).catch(() => null)
+const DEFAULT_LISTS: ListsState = {
+    [ListType.Favorite]: ListState.Inactive,
+    [ListType.Playlist]: ListState.Inactive,
+    [ListType.Finished]: ListState.Inactive,
+    [ListType.Custom]: ListState.Inactive
 }
 
 const addToList = async (
@@ -54,13 +47,15 @@ const addToList = async (
 
 interface Props {
     gameId: number
+    lists: ListsItemsResponse | null
+    mode?: 'card' | 'page'
 }
 
-const GameActions = ({ gameId }: Props) => {
+const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
     const { isSignedIn, userId } = useAuth()
     const { info, error } = useToast()
     const [listWarning, setListWarning] = useState(false)
-    const [lists, setLists] = useState<ListsState>({
+    const [listsStates, setListsStates] = useState<ListsState>({
         [ListType.Favorite]: ListState.Loading,
         [ListType.Playlist]: ListState.Loading,
         [ListType.Finished]: ListState.Loading,
@@ -68,20 +63,12 @@ const GameActions = ({ gameId }: Props) => {
     })
     
     useEffect(() => {
-        if (isSignedIn && userId) {
-            getList(userId, gameId).then(res => {
-                if (res && res.success) {
-                    setLists(res.data)
-                }
-            })
-        } else {
-            setLists({
-                [ListType.Favorite]: ListState.Inactive,
-                [ListType.Playlist]: ListState.Inactive,
-                [ListType.Finished]: ListState.Inactive,
-                [ListType.Custom]: ListState.Inactive
-            })
-        }
+        setListsStates(lists ? {
+            [ListType.Favorite]: lists[ListType.Favorite].filter(l => l.game === gameId).length ? ListState.Active : ListState.Inactive,
+            [ListType.Playlist]: lists[ListType.Playlist].filter(l => l.game === gameId).length ? ListState.Active : ListState.Inactive,
+            [ListType.Finished]: lists[ListType.Finished].filter(l => l.game === gameId).length ? ListState.Active : ListState.Inactive,
+            [ListType.Custom]: ListState.Inactive
+        } : DEFAULT_LISTS)
     }, [gameId, isSignedIn, userId])
 
     const updateList = async (listTypes: ListType[], listId: number | null = null) => {
@@ -90,9 +77,9 @@ const GameActions = ({ gameId }: Props) => {
             return
         }
         
-        const actions = listTypes.map(list => lists[list] === ListState.Active ? ListAction.RemoveGame : ListAction.AddGame)
+        const actions = listTypes.map(list => listsStates[list] === ListState.Active ? ListAction.RemoveGame : ListAction.AddGame)
         
-        setLists({ ...lists, ...listTypes.map(list => ({ [list]: ListState.Loading })).reduce((a, b) => ({ ...a, ...b })) })
+        setListsStates({ ...listsStates, ...listTypes.map(list => ({ [list]: ListState.Loading })).reduce((a, b) => ({ ...a, ...b })) })
         
         const additions = await Promise.all(listTypes.map((list, index) => {
             return addToList(actions[index], gameId, list, userId, listId)
@@ -100,59 +87,62 @@ const GameActions = ({ gameId }: Props) => {
         
         if (additions.every(addition => !addition || ('success' in addition && !addition.success))) {
             error('An error ocurred while adding or removing the game from the list.')
-            setLists({ ...lists, ...listTypes.map((list, i) => ({ [list]: listTypes[i] })).reduce((a, b) => ({ ...a, ...b })) })
+            setListsStates({ ...listsStates, ...listTypes.map((list, i) => ({ [list]: listTypes[i] })).reduce((a, b) => ({ ...a, ...b })) })
             return
         }
         
-        setLists({ ...lists, ...listTypes.map((list, i) => ({ [list]: actions[i] })).reduce((a, b) => ({ ...a, ...b })) })
+        setListsStates({ ...listsStates, ...listTypes.map((list, i) => ({ [list]: actions[i] })).reduce((a, b) => ({ ...a, ...b })) })
     }
 
 
-    return <div className="flex flex-col gap-3.5 w-full">
+    return <div className={cn("flex flex-col gap-3.5 w-full", mode === 'card' && 'p-2')}>
         <WarningDialog open={listWarning} onOpenChange={setListWarning} updateList={updateList} />
 
-        <div className="flex gap-3.5">
-            <ListButton onClick={() => {
-                if (lists[ListType.Favorite] === ListState.Loading) return
+        <div className={cn("flex", mode === 'page' && 'gap-3.5', mode === 'card' && 'justify-between')}>
+            <ListButton mode={mode} onClick={(e: MouseEvent) => {
+                if (listsStates[ListType.Favorite] === ListState.Loading) return
                 updateList([ListType.Favorite])
+                e.preventDefault()
             }} tooltip={
-                lists[ListType.Favorite] === ListState.Active ? 'Remove from favorites' : 'Add to favorites'
+                listsStates[ListType.Favorite] === ListState.Active ? 'Remove from favorites' : 'Add to favorites'
             }>
-                { lists[ListType.Favorite] !== ListState.Loading ?
-                    <Heart active={lists[ListType.Favorite] === ListState.Active} /> : <Spinner size={24}/> }
+                { listsStates[ListType.Favorite] !== ListState.Loading ?
+                    <Heart active={listsStates[ListType.Favorite] === ListState.Active} /> : <Spinner size={24}/> }
             </ListButton>
-            <ListButton onClick={() => {
-                if (lists[ListType.Playlist] === ListState.Loading) return
+            <ListButton mode={mode} onClick={(e: MouseEvent) => {
+                if (listsStates[ListType.Playlist] === ListState.Loading) return
                 updateList([ListType.Playlist])
+                e.preventDefault()
             }} tooltip={
-                lists[ListType.Playlist] === ListState.Active ? 'Remove from playlist' : 'Want to play'
+                listsStates[ListType.Playlist] === ListState.Active ? 'Remove from playlist' : 'Want to play'
             }>
-                { lists[ListType.Playlist] !== ListState.Loading ?
-                    <Gamepad active={lists[ListType.Playlist] === ListState.Active} /> : <Spinner size={24}/> }
+                { listsStates[ListType.Playlist] !== ListState.Loading ?
+                    <Gamepad active={listsStates[ListType.Playlist] === ListState.Active} /> : <Spinner size={24}/> }
             </ListButton>
-            <ListButton onClick={() => {
-                if (lists[ListType.Finished] === ListState.Loading) return
-                if (lists[ListType.Playlist] === ListState.Active && lists[ListType.Finished] === ListState.Inactive) {
+            <ListButton mode={mode} onClick={(e: MouseEvent) => {
+                if (listsStates[ListType.Finished] === ListState.Loading) return
+                if (listsStates[ListType.Playlist] === ListState.Active && listsStates[ListType.Finished] === ListState.Inactive) {
                     setListWarning(true)
                 } else {
                     updateList([ListType.Finished])
                 }
+                e.preventDefault()
             }} tooltip={
-                lists[ListType.Finished] === ListState.Active ? 'Set as not finished' : 'Set as finished'
+                listsStates[ListType.Finished] === ListState.Active ? 'Set as not finished' : 'Set as finished'
             }>
-                { lists[ListType.Finished] !== ListState.Loading ?
-                    <Medal active={lists[ListType.Finished] === ListState.Active} /> : <Spinner size={24}/> }
+                { listsStates[ListType.Finished] !== ListState.Loading ?
+                    <Medal active={listsStates[ListType.Finished] === ListState.Active} /> : <Spinner size={24}/> }
             </ListButton>
         </div>
-        <Button variant="secondary" size="lg" className="w-full">
+        { mode === 'page' ? <Button variant="secondary" size="lg" className="w-full">
             <PlaylistAdd className="mr-2"/> Add to list
-        </Button>
+        </Button> : <></> }
     </div>
 }
 
-const ListButton = ({ className, children, tooltip, ...props }: any) => <Tooltip>
+const ListButton = ({ className, children, tooltip, mode, ...props }: any) => <Tooltip>
     <TooltipTrigger asChild>
-        <Button variant="secondary" className={cn("flex-grow h-16", className)} {...props}>
+        <Button variant={mode === 'card' ? 'outline' : 'secondary'} className={cn("flex-grow h-16", mode === 'card' && 'flex-grow-0 h-12 w-[30%] shadow-lg', className)} {...props}>
             {children}
         </Button>
     </TooltipTrigger>

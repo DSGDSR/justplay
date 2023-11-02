@@ -4,17 +4,23 @@ import { CoverSkeleton } from "./pages/GamePage/skeletons";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import DefaultThumb from "./icons/DefaultThumb";
+import { ListsItemsResponse } from "@/lib/models/lists";
+import GameActions from "./GameActions";
 
 interface Props {
     game: IGame
     className: string
     lazy?: boolean
+    lists?: ListsItemsResponse
 }
 
-const GameCard = ({ game, className, lazy }: Props) => {
+const GameCard = ({ game, className, lazy, lists }: Props) => {
     return (
         <Link className={cn("relative flex flex-col gap-3 w-48 group", className)} href={`/game/${game.slug}`}>
-            <div className="absolute w-full h-full bg-black group-hover:opacity-50 opacity-0 transition-opacity"></div>
+            <div className="absolute w-full z-[5] transition-opacity pointer-events-none opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto">
+                { lists ? <GameActions mode="card" gameId={game.id} lists={lists} /> : <></> }
+            </div>
+            <div className="absolute z-0 w-full h-full bg-black group-hover:opacity-50 opacity-0 transition-opacity"></div>
             <figure>
                 { !!game.cover?.url ? <PreloadedImage
                     className="w-full h-full rounded-md aspect-[9/12]"
