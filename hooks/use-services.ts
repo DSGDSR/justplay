@@ -28,14 +28,16 @@ const useServices = (services: IExternalGame[] | undefined, name: string) => {
                 return acc
             }, {} as Record<ServiceType, IExternalGame[]>)
 
-            refinedServices[ServiceType.Buy] = [
-                ...refinedServices[ServiceType.Buy] ?? [],
-                ...eShop ? [{
-                    category: Services.EShop,
-                    uid: eShop?.id,
-                    url: `https://nintendo.es${eShop?.url}`
-                } as IExternalGame] : []
-            ]
+            if (eShop) {
+                refinedServices[ServiceType.Buy] = [
+                    ...refinedServices[ServiceType.Buy] ?? [],
+                    {
+                        category: Services.EShop,
+                        uid: eShop?.id,
+                        url: `https://nintendo.es${eShop?.url}`
+                    } as IExternalGame
+                ]
+            }
             setRefinedServices(refinedServices)
         }
     }, [services, eShop])

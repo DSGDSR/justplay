@@ -12,4 +12,7 @@ export enum Endpoints {
 
     // COMPANIES
     CompanyById = '/companies/:id',
+
+    // LISTS
+    Lists = '/lists',
 }
