@@ -15,5 +15,6 @@ export enum ListAction {
     AddGame = 1,
     RemoveGame = 2,
     GetGame = 3,
-    GetLists = 4
+    GetAllGames = 4,
+    GetLists = 5
 }
