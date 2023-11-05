@@ -7,16 +7,6 @@ import { clerkClient } from "@clerk/nextjs";
 import { VercelPoolClient, db } from "@vercel/postgres"
 import { NextRequest } from "next/server"
 
-const updateListsMetadata = async (userId: string, client: VercelPoolClient) => {
-    const { data: listItems} = await (await getAll(userId, client)).json()
-    console.log(listItems)
-    clerkClient.users.updateUserMetadata(userId, {
-        publicMetadata: {
-            listItems
-        }
-    })
-}
-
 const getLists = async (userId: string, client: VercelPoolClient): Promise<Response> => {
     if (!userId) return HttpResponse(null, false, MissingBodyError)
     const { rows } = await client.query(`SELECT * FROM list WHERE user_id = $1`, [userId])

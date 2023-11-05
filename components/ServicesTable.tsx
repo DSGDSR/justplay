@@ -84,9 +84,6 @@ export const ServiceIcons: Record<Services, (service: IExternalGame) => ReactNod
     [Services.Oculus]: (s) => <ServiceIcon url={s.url} service={s}><Oculus/></ServiceIcon>,
     [Services.Utomik]: (s) => <ServiceIcon url={s.url} service={s}><Utomik/></ServiceIcon>, // TODO - Utomik link not working as expected (http://localhost:3000/game/flame-keeper)
     [Services.ItchIo]: (s) => <ServiceIcon url={s.url} service={s} className="bg-[#ff6260]"><ItchIo/></ServiceIcon>,
-    [Services.Xbox]: (s) => <ServiceIcon url={s.url} service={s} className="bg-[#107b11]">
-        <Xbox className="w-8 h-8 fill-white"/>
-    </ServiceIcon>,
     [Services.PSStore]: (s) => <ServiceIcon url={s.url} service={s}><PSStore/></ServiceIcon>,
     [Services.FocusEntertainment]: (s) => <ServiceIcon url={s.url} service={s}><FocusEnt/></ServiceIcon>,
     [Services.XboxGamePass]: (s) => <ServiceIcon url={s.url} service={s} className="bg-[#107b11] flex flex-col gap-1.5">
