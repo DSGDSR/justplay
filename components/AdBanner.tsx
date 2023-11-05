@@ -9,7 +9,7 @@ interface Props {
 const AdBanner = (props: Props) => {
   useEffect(() => {
     try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
     } catch (err) {
       console.log(err);
     }
