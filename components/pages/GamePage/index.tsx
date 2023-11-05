@@ -19,6 +19,7 @@ import { getCompany } from "@/services/company"
 import { getLists } from "@/services/lists"
 import { auth, useClerk, useUser } from "@clerk/nextjs"
 import { ListsItemsResponse } from "@/lib/models/lists"
+import AdBanner from "@/components/AdBanner"
 
 interface Props {
     slug: string
@@ -104,6 +105,12 @@ export default async function GamePage({ slug }: Props) {
                             }) }
                         </div>
                     </AsideSection>
+
+                    <AdBanner
+                        data-ad-slot="1650839076"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"
+                    />
                 </aside>
                 <article className="-mt-14 min-w-0 flex flex-col gap-12" style={{ flex: '1 1 0' }}>
                     <Section title="Platforms">
