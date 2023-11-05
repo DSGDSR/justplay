@@ -107,8 +107,10 @@ export default async function GamePage({ slug }: Props) {
                     </AsideSection>
 
                     <AdBanner
+                        className="border-2 border-dashed border-slate-800 mt-14"
                         data-ad-slot="1650839076"
                         data-ad-format="auto"
+                        google_adtest="on"
                         data-full-width-responsive="true"
                     />
                 </aside>

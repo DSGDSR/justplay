@@ -1,12 +1,14 @@
 "use client"
 
+import { cn } from '@/lib/utils';
 import { useEffect } from 'react';
 
 interface Props {
+    className?: string;
     [key: string]: any;
 }
 
-const AdBanner = (props: Props) => {
+const AdBanner = ({ className, ...props }: Props) => {
   useEffect(() => {
     try {
       ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
@@ -17,7 +19,7 @@ const AdBanner = (props: Props) => {
 
   return (
     <ins
-      className="adsbygoogle adbanner-customize"
+      className={cn("adsbygoogle adbanner-customize", className)}
       style={{
         display: 'block',
         overflow: 'hidden',
