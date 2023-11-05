@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import { createPortal } from "react-dom";
 import { createRoot } from "react-dom/client";
 import Link from "next/link";
-import X from "../icons/X";
 
 const avatarSize = {
     width: '2.15rem',

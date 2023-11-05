@@ -2,12 +2,14 @@ import Link from 'next/link';
 import SearchBox from '../Search';
 import UserAvatar from '../User/Avatar';
 import Ham from './Ham';
+import MobileSearch from './MobileSearch';
 
 const Nav = () => {
     return <header
-        className="supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur"
+        id="header"
+        className="supports-backdrop-blur:bg-background/60 fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur"
     >
-        <div className="sm:container flex h-16 items-center px-3 justify-between sm:justify-normal">
+        <div className="sm:container flex items-center h-16 px-3 justify-between sm:justify-normal">
             <Ham/>
             <div className="sm:mr-4 flex">
                 <Link className="sm:mr-6 flex items-center space-x-2" href="/">
@@ -26,9 +28,7 @@ const Nav = () => {
                 <UserAvatar />
             </div>
         </div>
-        <div className='block sm:hidden px-2.5 pb-3'>
-            <SearchBox className="w-full" />
-        </div>
+        <MobileSearch />
     </header>
 }
 

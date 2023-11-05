@@ -141,7 +141,6 @@ body > div[role="region"] {
     border-radius: 0;
     width: 100%;
     max-width: 100vw;
-    animation: none;
   }
 }
 
