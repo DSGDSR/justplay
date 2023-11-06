@@ -4,7 +4,6 @@ import PreloadedImage from "@/components/PreloadedImage"
 import Screenshots from "@/components/Screenshots"
 import Trailer from "@/components/Trailer"
 import GameActions from "@/components/GameActions"
-import { Services } from "@/lib/enums"
 import { cn, localizedDate, unix2Date } from "@/lib/utils"
 import Platforms from "@/components/Platforms"
 import HowLongToBeat from "@/components/HowLongToBeat"
@@ -17,8 +16,7 @@ import ServicesTable from "@/components/ServicesTable"
 import { getGame } from "@/services/game"
 import { getCompany } from "@/services/company"
 import { getLists } from "@/services/lists"
-import { auth, useClerk, useUser } from "@clerk/nextjs"
-import { ListsItemsResponse } from "@/lib/models/lists"
+import { auth } from "@clerk/nextjs"
 import AdBanner from "@/components/AdBanner"
 
 interface Props {
@@ -107,10 +105,10 @@ export default async function GamePage({ slug }: Props) {
                     </AsideSection>
 
                     <AdBanner
-                        className="border-2 border-dashed border-slate-800 mt-14"
+                        className="border-2 border-dashed border-slate-800"
+                        pre={<hr className="mt-4 mb-5" />}
                         data-ad-slot="1650839076"
                         data-ad-format="auto"
-                        google_adtest="on"
                         data-full-width-responsive="true"
                     />
                 </aside>
@@ -136,8 +134,7 @@ export default async function GamePage({ slug }: Props) {
                 </article>
             </main>
         </section>
-        {JSON.stringify(game.external_games)}
-        {game.external_games?.map((game, index) => <>{Services[(game.category as number)]}<br></br></>)}
+        {JSON.stringify(game)}
     </>
 }
 
