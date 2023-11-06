@@ -15,6 +15,12 @@ export default authMiddleware({
         '/api/eshop/(.*)',
         '/api/hltb',
         '/api/lists',
+
+        // Data routes
+        '/data/eshop.json',
+
+        // CMP
+        '/cmp.js',
     ],
 });
  

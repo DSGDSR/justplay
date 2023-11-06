@@ -1,10 +1,10 @@
-import { promises as fs } from 'fs';
 import {
     InvalidParams,
     MissingParamsError,
     IGDBError,
     HttpResponse,
-    similarity
+    similarity,
+    domain
 } from "@/lib/utils"
 import { NextRequest } from "next/server"
 import { eShopItem } from '@/lib/models/eshop';
@@ -22,10 +22,8 @@ export async function GET(_request: NextRequest, query: GETeShopGamesQuery) {
     const { query: search } = query.params
 
     try {
-        const file = await fs.readFile(process.cwd() + '/data/eshop.json', 'utf8');
-        const json: eShopItem[] = JSON.parse(file)
-
-        const results = json.filter(g => similarity(g.title, search) > 0.95)
+        const file: eShopItem[] = await fetch(`${domain}/data/eshop.json`).then((r) => r.json());
+        const results = file.filter(g => similarity(g.title, search) > 0.95)
 
         return HttpResponse(results)
     } catch (error) {
