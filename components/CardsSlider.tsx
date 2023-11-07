@@ -61,7 +61,7 @@ const CardsSlider = ({ games, className, lazy, lists }: Props) => {
     return <div className={cn('relative', className)}>
         <div id="cards-slider" className="whitespace-nowrap overflow-x-scroll overflow-y-hidden no-scrollbar">
             {games.map((game, index) => (
-                <GameCard key={game.id} game={game} className="inline-block mr-3 last:mr-0" lazy={lazy} lists={lists} />
+                <GameCard key={game.id} game={game} className="inline-block mr-2 md:mr-3 last:mr-0" lazy={lazy} lists={lists} />
             ))}
         </div>
         <div className="controls absolute w-full flex justify-between h-full -top-1 pointer-events-none">
@@ -81,10 +81,10 @@ const SliderControl = ({ direction, onClick, className }: {
     className?: string
 }) => {
     return <span className={cn(
-        'h-full z-10 w-10 bg-background opacity-80 transition-opacity flex justify-center items-center pointer-events-auto cursor-pointer',
+        'h-full z-10 w-7 md:w-10 bg-background opacity-80 transition-opacity flex justify-center items-center pointer-events-auto cursor-pointer',
         className
     )} onClick={onClick}>
-        <Chevron direction={direction} className="w-8 h-8 ml-1 opacity-100"/>
+        <Chevron direction={direction} className="w-6 md:w-8 h-6 md:h-8 ml-1 opacity-100"/>
     </span>
 }
 

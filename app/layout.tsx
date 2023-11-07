@@ -27,13 +27,21 @@ export default function RootLayout({
         <html lang="en">
           <body className={`${inter.className} dark`}>
             <Nav />
-            <main className='pt-24 sm:pt-16'>
+            <main className='pt-16'>
               <Suspense fallback={<div>Loading...</div>}>
                 {children}
               </Suspense>
             </main>
             <Toaster />
-            <Script async src='/cmp.js' />
+            <Script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
+              strategy="lazyOnload"
+              crossOrigin="anonymous"
+            />
+            {
+              /*<Script async src='/cmp.js' />*/
+            }
           </body>
         </html>
       </TooltipProvider>

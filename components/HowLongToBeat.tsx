@@ -36,33 +36,26 @@ const HowLongToBeat = ({ gameName, className }: Props) => {
 
     return hltbData?.gameplayMain ? <Section title="How long to beat">
         <div className={cn(className)}>
-            <div className='bg-primary-foreground h-40 rounded-md p-5'>
-                <div className='flex gap-2 justify-between h-full'>
-                    <div className='flex-grow flex flex-col justify-center items-center gap-5'>
-                        <p className='font-semibold text-slate-400'>Main story</p>
-                        <p className='text-3xl'><CountUp delay={.25} duration={2.5} end={hltbData.gameplayMain}/>h</p>
-                    </div>
-                    <div className='separator w-[1px] h-full border-l border-l-secondary'></div>
-                    <div className='flex-grow flex flex-col justify-center items-center gap-5'>
-                        <p className='font-semibold text-slate-400'>Main + extras</p>
-                        <p className='text-3xl'><CountUp delay={.25} duration={2.5} end={hltbData.gameplayMainExtra}/>h</p>
-                    </div>
-                    <div className='separator w-[1px] h-full border-l border-l-secondary'></div>
-                    <div className='flex-grow flex flex-col justify-center items-center gap-5'>
-                        <p className='font-semibold text-slate-400'>Completionist</p>
-                        <p className='text-3xl'><CountUp delay={.25} duration={2.5} end={hltbData?.gameplayCompletionist}/>h</p>
-                    </div>
-                    { average ? <>
-                        <div className='separator w-[1px] h-full border-l border-l-secondary'></div>
-                        <div className='flex-grow flex flex-col justify-center items-center gap-5'>
-                            <p className='font-semibold text-slate-400'>All styles</p>
-                            <p className='text-3xl'><CountUp delay={.25} duration={2.5} end={+average}/>h</p>
-                        </div>
-                    </> : <></> }
-                </div>
+            <div className='bg-primary-foreground sm:h-28 md:h-40 rounded-md p-5 sm:p-4 md:p-5 flex gap-5 sm:gap-2 justify-between flex-wrap'>
+                <HltbItem title="Main story" time={hltbData.gameplayMain}/>
+                <HltbSeparator />
+                <HltbItem title="Main + extras" time={hltbData.gameplayMainExtra}/>
+                <HltbSeparator />
+                <HltbItem title="Completionist" time={hltbData.gameplayCompletionist}/>
+                { average ? <>
+                    <HltbSeparator />
+                    <HltbItem title="All styles" time={+average}/>
+                </> : <></> }
             </div>
         </div>
     </Section> : <></>
 }
+
+const HltbSeparator = () => <div className='separator hidden sm:block w-[1px] h-full border-l border-l-secondary'></div>
+
+const HltbItem = ({ title, time }: any) => <div style={{width: 'calc(50% - 1.25rem)'}} className='flex-grow sm:!w-auto flex flex-col justify-center items-center gap-1.5 md:gap-5'>
+    <p className='text-sm md:text-base font-semibold text-slate-400'>{title}</p>
+    <p className='text-2xl md:text-3xl'><CountUp delay={.25} duration={2.5} end={time}/>h</p>
+</div>
 
 export default HowLongToBeat

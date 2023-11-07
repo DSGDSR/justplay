@@ -16,8 +16,8 @@ interface Props {
 
 const GameCard = ({ game, className, lazy, lists }: Props) => {
     return (
-        <Link className={cn("relative flex flex-col gap-3 w-48 group", className)} href={`/game/${game.slug}`}>
-            <div className="absolute w-full z-[5] transition-opacity pointer-events-none opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto">
+        <Link className={cn("relative flex flex-col gap-3 w-32 md:w-48 group", className)} href={`/game/${game.slug}`}>
+            <div className="hidden md:block absolute w-full z-[5] transition-opacity pointer-events-none opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto">
                 { lists ? <GameActions mode="card" gameId={game.id} lists={lists} /> : <></> }
             </div>
             <div className="absolute z-0 w-full h-full bg-black group-hover:opacity-50 opacity-0 transition-opacity"></div>

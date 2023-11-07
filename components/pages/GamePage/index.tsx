@@ -38,9 +38,9 @@ export default async function GamePage({ slug }: Props) {
     const { data: company } = developer ? await getCompany(developer?.company) : { data: null }
 
     return <>
-        { screenshot ? <figure className="relative h-96 w-full thumb-filter blur">
+        { screenshot ? <figure className="relative h-96 w-full thumb-filter blur hidden md:block">
             <PreloadedImage
-                className="h-full w-full object-cover rounded-none"
+                className="h-full w-full object-cover rounded-none hidden md:block"
                 src={`https://${screenshot.url.slice(2).replace('t_thumb', 't_screenshot_big')}`}
                 alt={game.name}
                 width={screenshot.width}
@@ -50,9 +50,21 @@ export default async function GamePage({ slug }: Props) {
                 priority={true}
             />
         </figure> : <></> }
-        <section className={cn("container game-page relative", screenshot ? '-top-[19rem]' : 'mt-20')}>
-            <header className="flex gap-8">
-                <div style={{ flex: '0 0 280px' }}>
+        <figure className="relative h-[292px] sm:h-64 w-full thumb-filter blur block md:hidden">
+            <PreloadedImage
+                className="h-full w-full object-cover rounded-none md:hidden block"
+                src={`https://${game.cover.url.slice(2).replace('t_thumb', 't_720p')}`}
+                alt={game.name}
+                width={280}
+                height={373.33}
+                skeleton={<CoverSkeleton />}
+                quality={0}
+                priority={true}
+            />
+        </figure>
+        <section className={cn("container game-page relative", screenshot ? '-top-[13.75rem] sm:-top-[13.5rem] md:-top-[19rem]' : 'md:mt-20')}>
+            <header className="flex gap-8 flex-col md:flex-row h-[292px] justify-end sm:h-72 md:justify-normal md:h-auto">
+                <div style={{ flex: '0 0 280px' }} className="hidden md:block">
                     <figure className="shadow-md w-full"> {/* TODO NO COVER */}
                         <PreloadedImage
                             className="w-full h-full rounded-md aspect-[9/12]"
@@ -68,11 +80,11 @@ export default async function GamePage({ slug }: Props) {
                 </div>
                 <div className="main-details relative w-full flex flex-col justify-end mb-10">
                     <hgroup className="flex flex-col gap-3 w-full mb-14">
-                        <h1 className="text-7xl font-bold text-shadow-lg mb-1">{game.name}</h1>
-                        { game.genres?.length ? <div className="genres flex gap-3 mb-4">
+                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-shadow-lg mb-1">{game.name}</h1>
+                        { game.genres?.length ? <div className="genres flex gap-2 md:gap-3 mb-8 sm:mb-4">
                             { game.genres.map(g => <Badge key={g.id} variant="secondary">{g.name}</Badge>) }
                         </div> : <></> }
-                        <div className="text-lg text-shadow">
+                        <div className="hidden sm:block text-base md:text-lg text-shadow">
                             <time dateTime={unix2Date(game.first_release_date).toLocaleString()}>{localizedDate(game.first_release_date)}</time>
                             { company ? <> by <strong>{company.name}</strong></> : <></> }
                         </div>
@@ -83,8 +95,8 @@ export default async function GamePage({ slug }: Props) {
                     </div>
                 </div>
             </header>
-            <main className="flex gap-8 mt-3.5">
-                <aside style={{ flex: '0 0 280px' }}>
+            <main className="flex gap-8 mt-3.5 flex-col md:flex-row">
+                <aside style={{ flex: '0 0 280px' }} className="hidden md:block">
                     <GameActions gameId={game.id} lists={lists} />
 
                     <AsideSection title="Rating" condition={game.rating_count > 0}>
@@ -134,7 +146,8 @@ export default async function GamePage({ slug }: Props) {
                 </article>
             </main>
         </section>
-        {JSON.stringify(game)}
+        {//JSON.stringify(game)
+        }
     </>
 }
 
