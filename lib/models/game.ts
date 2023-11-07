@@ -47,7 +47,7 @@ export interface IPrimitiveGame {
     language_supports: number[]
 }
 
-export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'external_games' | 'videos' | 'genres' | 'involved_companies' | 'platforms' | 'similar_games' | 'game_engines'>  {
+export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'external_games' | 'videos' | 'genres' | 'involved_companies' | 'platforms' | 'similar_games' | 'game_engines' | 'keywords' | 'alternative_names'>  {
     cover: ICover
     genres: IGenre[]
     screenshots: IScreenshot[]
@@ -59,6 +59,21 @@ export interface IGame extends Omit<IPrimitiveGame, 'cover' | 'screenshots' | 'e
     similar_games: IGame[]
     franchises?: IGame[] // Change to IFranchise
     game_engines?: IGame[] // Change to IGameEngine
+    keywords: IKeyword[]
+    alternative_names: IAlternativeName[]
+}
+
+export interface IAlternativeName {
+    id: number
+    name: string
+    game: number
+}
+
+export interface IKeyword {
+    id: number
+    name: string
+    slug: string
+    url: string
 }
 
 export interface IExternalGame {

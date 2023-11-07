@@ -16,9 +16,14 @@ interface Props {
 const TrailerButton = (props: ButtonProps) => {
     return <Tooltip>
         <TooltipTrigger asChild>
-            <Button className="group" size="bubble" variant="secondary" {...props}>
-                <Play />
-            </Button>
+            <>
+                <Button className="hidden md:flex group" size="bubble" variant="secondary" {...props}>
+                    <Play />
+                </Button>
+                <Button className="md:hidden group" variant="secondary" {...props}>
+                    <Play className="w-4 sm:mr-2 sm:-ml-1" /> <span className="hidden sm:block">Trailer</span>
+                </Button>
+            </>
         </TooltipTrigger>
         <TooltipContent sideOffset={7.5}>Watch trailer</TooltipContent>
     </Tooltip>

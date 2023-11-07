@@ -7,7 +7,6 @@ import { Suspense } from 'react'
 import { TooltipProvider } from '@/components/Tooltip'
 import { Toaster } from '@/components/toaster'
 import { clerkTheme } from '@/styles/clerk-theme'
-import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,14 +32,14 @@ export default function RootLayout({
               </Suspense>
             </main>
             <Toaster />
-            <Script
+            {
+              /*<Script
               async
               src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
               strategy="lazyOnload"
               crossOrigin="anonymous"
             />
-            {
-              /*<Script async src='/cmp.js' />*/
+            <Script async src='/cmp.js' />*/
             }
           </body>
         </html>

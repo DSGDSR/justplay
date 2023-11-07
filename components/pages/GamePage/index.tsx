@@ -18,10 +18,24 @@ import { getCompany } from "@/services/company"
 import { getLists } from "@/services/lists"
 import { auth } from "@clerk/nextjs"
 import AdBanner from "@/components/AdBanner"
+import { IGenre } from "@/lib/models/genre"
+import ReadMore from "@/components/ReadMore"
 
 interface Props {
     slug: string
 }
+
+const GameGenres = ({ genres, className }: {
+    genres: IGenre[],
+    className?: string
+}) => {
+    return genres?.length ? <div className={cn("genres flex flex-wrap gap-2 md:gap-3 md:mb-4", className)}>
+        { genres.map((g, i) => <Badge key={g.id} variant="secondary" className={cn(i > 2 && 'hidden md:inline-flex')}>
+            {g.name}
+        </Badge>) }
+    </div> : <></>
+}
+
 
 export default async function GamePage({ slug }: Props) {
     const { userId } = auth()
@@ -38,9 +52,9 @@ export default async function GamePage({ slug }: Props) {
     const { data: company } = developer ? await getCompany(developer?.company) : { data: null }
 
     return <>
-        { screenshot ? <figure className="relative h-96 w-full thumb-filter blur hidden md:block">
+        { screenshot ? <figure className="relative h-[236px] sm:h-64 md:h-96 w-full thumb-filter blur">
             <PreloadedImage
-                className="h-full w-full object-cover rounded-none hidden md:block"
+                className="h-full w-full object-cover rounded-none"
                 src={`https://${screenshot.url.slice(2).replace('t_thumb', 't_screenshot_big')}`}
                 alt={game.name}
                 width={screenshot.width}
@@ -50,21 +64,9 @@ export default async function GamePage({ slug }: Props) {
                 priority={true}
             />
         </figure> : <></> }
-        <figure className="relative h-[292px] sm:h-64 w-full thumb-filter blur block md:hidden">
-            <PreloadedImage
-                className="h-full w-full object-cover rounded-none md:hidden block"
-                src={`https://${game.cover.url.slice(2).replace('t_thumb', 't_720p')}`}
-                alt={game.name}
-                width={280}
-                height={373.33}
-                skeleton={<CoverSkeleton />}
-                quality={0}
-                priority={true}
-            />
-        </figure>
         <section className={cn("container game-page relative", screenshot ? '-top-[13.75rem] sm:-top-[13.5rem] md:-top-[19rem]' : 'md:mt-20')}>
-            <header className="flex gap-8 flex-col md:flex-row h-[292px] justify-end sm:h-72 md:justify-normal md:h-auto">
-                <div style={{ flex: '0 0 280px' }} className="hidden md:block">
+            <header className="flex gap-8 flex-row-reverse md:flex-row h-[17rem] justify-end sm:h-72 md:justify-normal md:h-auto">
+                <div className="flex-grow-0 flex-shrink-0 [flex-basis:152px;] sm:[flex-basis:186px;] md:[flex-basis:280px;] self-end">
                     <figure className="shadow-md w-full"> {/* TODO NO COVER */}
                         <PreloadedImage
                             className="w-full h-full rounded-md aspect-[9/12]"
@@ -78,24 +80,25 @@ export default async function GamePage({ slug }: Props) {
                         />
                     </figure>
                 </div>
-                <div className="main-details relative w-full flex flex-col justify-end mb-10">
-                    <hgroup className="flex flex-col gap-3 w-full mb-14">
-                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-shadow-lg mb-1">{game.name}</h1>
-                        { game.genres?.length ? <div className="genres flex gap-2 md:gap-3 mb-8 sm:mb-4">
-                            { game.genres.map(g => <Badge key={g.id} variant="secondary">{g.name}</Badge>) }
-                        </div> : <></> }
+                <div className="main-details relative w-full flex flex-col justify-end md:mb-10">
+                    <hgroup className="flex flex-col gap-3 w-full mb-7 md:mb-14">
+                        <h1 className={cn(
+                            game.name?.length > 50 ? 'text-lg' : (game.name?.length > 15 ? 'text-xl' : (game.name?.length > 10 ? 'text-2xl' : 'text-3xl')),
+                            "break-all sm:text-4xl md:text-7xl font-bold text-shadow-lg mb-1"
+                        )}>{game.name}</h1>
+                        <GameGenres genres={game.genres} />
                         <div className="hidden sm:block text-base md:text-lg text-shadow">
                             <time dateTime={unix2Date(game.first_release_date).toLocaleString()}>{localizedDate(game.first_release_date)}</time>
                             { company ? <> by <strong>{company.name}</strong></> : <></> }
                         </div>
                     </hgroup>
-                    <div className="absolute actions flex gap-6 right-0">
+                    <div className="md:absolute actions gap-3 md:gap-6 md:right-0 flex">
                         <Trailer name={game.name} id={video?.video_id} />
                         { screenshots?.length ? <Screenshots screenshots={screenshots} /> : <></> }
                     </div>
                 </div>
             </header>
-            <main className="flex gap-8 mt-3.5 flex-col md:flex-row">
+            <main className="flex gap-8 mt-24 md:mt-3.5 flex-col md:flex-row">
                 <aside style={{ flex: '0 0 280px' }} className="hidden md:block">
                     <GameActions gameId={game.id} lists={lists} />
 
@@ -132,7 +135,7 @@ export default async function GamePage({ slug }: Props) {
                     <ServicesTable services={game.external_games} name={game.name} />
 
                     <Section title="Summary">
-                        <p className="text-shadow">{game.summary}</p>
+                        <ReadMore className="text-shadow">{game.summary}</ReadMore>
                     </Section>
 
                     <HowLongToBeat gameName={game.name} />

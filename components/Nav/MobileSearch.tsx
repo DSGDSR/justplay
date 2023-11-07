@@ -1,12 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import SearchBox from "../Search";
+import MobileSearchBox from "../Search/mobile";
 import { cn } from "@/lib/utils";
 
 const MobileSearch = () => {
-    const [scrollPosition, setScrollPosition] = useState(0);
     const [isVisible, setIsVisible] = useState(true);
+    // TODO temp disabled
+    /*const [scrollPosition, setScrollPosition] = useState(0);
 
     useEffect(() => setScrollPosition(window.scrollY))
 
@@ -21,11 +22,11 @@ const MobileSearch = () => {
       setScrollPosition(newScrollPosition);
     
       setIsVisible(newScrollPosition < scrollPosition)
-    }
+    }*/
 
     return <div className={cn("block sm:hidden h-[52px] transition", !isVisible && 'h-0')}>
         <div className={cn("px-2.5 pb-3 absolute w-full translate-y-0 opacity-100 transition", !isVisible && '-translate-y-10 opacity-0 pointer-events-none')}>
-            <SearchBox className={cn("w-full")} />
+            <MobileSearchBox className={cn("w-full")} />
         </div>
     </div>
 }

@@ -36,15 +36,15 @@ const ServicesTable = ({ services, name }: Props) => {
             { refinedServices && Object.keys(refinedServices).map((serviceType, idx) => {
                 const services = refinedServices[serviceType as ServiceType]
 
-                return <div className="flex h-[5.25rem]" key={serviceType}>
+                return <div className="relative pl-6" key={serviceType}>
                     <h4 className={cn(
-                        "flex justify-center items-center uppercase w-6 font-semibold text-xs rotate-180 [writing-mode:vertical-lr]",
+                        "absolute left-0 h-full flex justify-center items-center uppercase w-6 font-semibold text-xs rotate-180 [writing-mode:vertical-lr]",
                         serviceType === ServiceType.Buy && 'bg-slate-700',
                         serviceType === ServiceType.Subscription && 'bg-slate-500',
                         serviceType === ServiceType.Streaming && 'bg-slate-300 text-slate-500',
                     )}>{serviceType}</h4>
                     <ul className={cn(
-                        "flex flex-grow border-slate-900 items-center gap-4 pl-4 border-t",
+                        "flex flex-wrap flex-grow border-slate-900 items-center gap-3.5 pl-3.5 py-3 border-t",
                         idx === Object.keys(refinedServices).length - 1 && 'border-b'
                     )}>
                         { services.map((service, idx) => <li key={idx}>

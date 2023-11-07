@@ -9,10 +9,10 @@ const Nav = () => {
         id="header"
         className="supports-backdrop-blur:bg-background/60 fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur"
     >
-        <div className="sm:container flex items-center h-16 px-3 justify-between sm:justify-normal">
+        <div className="relative sm:container flex items-center h-16 px-3 justify-between sm:justify-normal">
             <Ham/>
             <div className="sm:mr-4 flex">
-                <Link className="sm:mr-6 flex items-center space-x-2" href="/">
+                <Link className="absolute sm:relative top-1/2 left-1/2 [transform:translate(-50%,-50%);] sm:top-0 sm:left-0 sm:[transform:none;] sm:mr-6 flex items-center space-x-2" href="/">
                     <span className="font-bold sm:inline-block text-lg">WTP</span>
                 </Link>
                 <nav className="hidden sm:flex items-center space-x-6 text-sm font-medium">

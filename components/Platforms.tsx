@@ -20,7 +20,9 @@ interface Props {
 
 const PlatformTooltip = ({ platform }: { platform: IGroupedPlatforms }) => <Tooltip>
     <TooltipTrigger asChild>
-        { PlatformIcons[platform.group] }
+        <div className="scale-90 sm:scale-100">
+            { PlatformIcons[platform.group] }
+        </div>
     </TooltipTrigger>
     <TooltipContent sideOffset={5}>{ formatList(platform.names) }</TooltipContent>
 </Tooltip>
@@ -28,7 +30,7 @@ const PlatformTooltip = ({ platform }: { platform: IGroupedPlatforms }) => <Tool
 const PlatformsList = ({ platforms }: Props) => {
     const groupedPlatforms = groupPlatforms(platforms)
 
-    return <ul className="list-none flex items-center gap-4 text-slate-300">
+    return <ul className="list-none flex items-center gap-3 sm:gap-4 text-slate-300 flex-wrap">
         {Object.keys(groupedPlatforms).map(platform => <li key={platform}>
             { <PlatformTooltip platform={groupedPlatforms[platform]} /> }
         </li>)}

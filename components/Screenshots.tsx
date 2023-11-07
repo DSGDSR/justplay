@@ -15,9 +15,14 @@ interface Props {
 const ScreenshotsButton = (props: ButtonProps) => {
     return <Tooltip>
         <TooltipTrigger asChild>
-            <Button {...props} className="group" size="bubble" variant="secondary">
-                <Photo />
-            </Button>
+            <>
+                <Button {...props} className="hidden md:flex group" size="bubble" variant="secondary">
+                    <Photo />
+                </Button>
+                <Button {...props} className="md:hidden group" variant="secondary">
+                    <Photo className="w-4 sm:mr-2" /> <span className="hidden sm:block">Gallery</span>
+                </Button>
+            </>
         </TooltipTrigger>
         <TooltipContent sideOffset={7.5}>Screenshots</TooltipContent>
     </Tooltip>

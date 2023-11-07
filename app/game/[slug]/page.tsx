@@ -3,6 +3,7 @@ import Skeleton from "@/components/Skeleton";
 import GamePage from "@/components/pages/GamePage";
 import { CoverSkeleton, ThumbSkeleton } from "@/components/pages/GamePage/skeletons";
 import { getGame } from "@/services/game";
+import { Metadata } from "next";
 import { Suspense } from "react";
 
 interface GamePageRequest {
@@ -11,11 +12,13 @@ interface GamePageRequest {
     }
 }
 
-export async function generateMetadata({ params: { slug } }: GamePageRequest) {
+export async function generateMetadata({ params: { slug } }: GamePageRequest): Promise<Metadata> {
     const { data: game } = await getGame(slug)
    
     return {
-      title: `${game.name} - Where to play`
+      title: `${game.name} - ${process.env.TITLE}`,
+      // TODO copy keywords
+      keywords: `${process.env.GENERIC_KEYWORDS ?? process.env.TITLE}, ${game.name}, ${game.genres?.map(g => g.name).join(', ') ?? ''}, ${game.alternative_names?.map(an => an.name)?.join(', ') ?? ''}, ${game.keywords?.map(k => k.name)?.join(', ') ?? ''}`,
     }
 }
 

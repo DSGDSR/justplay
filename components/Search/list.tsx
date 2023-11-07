@@ -5,13 +5,15 @@ import { useRouter } from "next/navigation"
 import { IGameSearch } from "@/lib/models/game"
 import Link from "next/link"
 import Image from "next/image"
+import { cn } from "@/lib/utils"
 
 interface Props {
     games: IGameSearch[] | null
     onNavigate: () => void
+    className?: string
 }
 
-const SearchList = ({ games, onNavigate }: Props) => {
+const SearchList = ({ games, onNavigate, className }: Props) => {
     const [cursor, setCursor] = useState(-1)
     const { push } = useRouter()
 
@@ -49,11 +51,11 @@ const SearchList = ({ games, onNavigate }: Props) => {
         }
     }, [games])
 
-    return games instanceof Array ? <main>
-        { games?.length ? <ul role="listbox" id="search-results">
+    return games instanceof Array ? <div className={cn("absolute md:bg-background", className)}>
+        { games?.length ? <ul role="listbox" id="search-results" className="flex flex-col py-1.5">
             { games.map((game, index) => (
                 <li key={index} className={clsx(
-                    'relative px-3.5 py-3.5',
+                    'relative px-3.5 py-2.5',
                     cursor === index && 'focused',
                     cursor === -1 && 'hover:bg-accent hover:text-accent-foreground'
                 )}>
@@ -62,9 +64,11 @@ const SearchList = ({ games, onNavigate }: Props) => {
                             ? <Image src={`https:${game.cover?.url}`} alt={game.name} width={44} height={44} className="rounded-md mr-3"/>
                             : <DefaultThumb className="h-10 w-10 rounded-md mr-3"/> }
                         <div className="flex flex-col w-5/6 gap-0.5">
-                            <p className="text-base font-medium whitespace-nowrap text-ellipsis overflow-hidden">{game.name}</p>
+                            <p className="text-sm md:text-base font-medium whitespace-nowrap text-ellipsis overflow-hidden">{game.name}</p>
                             { game.genres?.length &&
-                                <span className="text-xs text-muted-foreground">{game.genres?.map(g => g.name).join(', ')}</span>
+                                <span className="text-xs text-muted-foreground whitespace-nowrap overflow-hidden text-ellipsis">
+                                    {game.genres?.map(g => g.name).join(', ')}
+                                </span>
                             }
                         </div>
                     </Link>
@@ -73,7 +77,7 @@ const SearchList = ({ games, onNavigate }: Props) => {
         </ul> : <p key={0} className="px-3.5 py-3 text-sm text-gray-400">
             No results found... try again gamer!
         </p> }
-    </main> : <></>
+    </div> : <></>
 }
 
 export default SearchList
