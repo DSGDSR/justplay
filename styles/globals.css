@@ -75,6 +75,13 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
 /* SEARCH */
 .focused {
   background-color: hsl(var(--accent));
