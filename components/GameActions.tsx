@@ -140,9 +140,9 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
     </div>
 }
 
-const ListButton = ({ className, children, tooltip, mode, ...props }: any) => <Tooltip>
+const ListButton = ({ className, children, tooltip, mode, ...props }: any) => <Tooltip className={mode === 'card' ? 'w-[30%]' : 'flex-grow'}>
     <TooltipTrigger asChild>
-        <Button variant={mode === 'card' ? 'outline' : 'secondary'} className={cn("flex-grow h-16", mode === 'card' && 'flex-grow-0 h-12 w-[30%] shadow-lg', className)} {...props}>
+        <Button variant={mode === 'card' ? 'outline' : 'secondary'} className={cn("w-full h-16", mode === 'card' && 'h-12 shadow-lg', className)} {...props}>
             {children}
         </Button>
     </TooltipTrigger>
