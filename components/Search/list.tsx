@@ -51,8 +51,8 @@ const SearchList = ({ games, onNavigate, className }: Props) => {
         }
     }, [games])
 
-    return games instanceof Array ? <div className={cn("absolute md:bg-background", className)}>
-        { games?.length ? <ul role="listbox" id="search-results" className="flex flex-col py-1.5">
+    return <div className={cn("absolute md:bg-background", !(games instanceof Array) && 'md:hidden', className)}>
+        { games?.length ? <ul role="listbox" id="search-results" className="flex flex-col py-1.5s">
             { games.map((game, index) => (
                 <li key={index} className={clsx(
                     'relative px-3.5 py-2.5',
@@ -74,10 +74,10 @@ const SearchList = ({ games, onNavigate, className }: Props) => {
                     </Link>
                 </li>
             )) }
-        </ul> : <p key={0} className="px-3.5 py-3 text-sm text-gray-400">
+        </ul> : ( games?.length === 0 ? <p key={0} className="px-4 md:px-3.5 py-5 md:py-3 text-sm text-gray-400">
             No results found... try again gamer!
-        </p> }
-    </div> : <></>
+        </p> : <></> ) }
+    </div>
 }
 
 export default SearchList
