@@ -44,7 +44,7 @@ const ServicesTable = ({ services, name }: Props) => {
                         serviceType === ServiceType.Streaming && 'bg-slate-300 text-slate-500',
                     )}>{serviceType}</h4>
                     <ul className={cn(
-                        "flex flex-wrap flex-grow border-slate-900 items-center gap-3.5 pl-3.5 py-3 border-t",
+                        "flex flex-wrap flex-grow border-slate-900 items-center gap-2 md:gap-3.5 pl-2.5 md:pl-3.5 py-2 md:py-3 border-t",
                         idx === Object.keys(refinedServices).length - 1 && 'border-b'
                     )}>
                         { services.map((service, idx) => <li key={idx}>
@@ -59,7 +59,7 @@ const ServicesTable = ({ services, name }: Props) => {
 
 const ServiceIcon = ({ children, className, service, url }: any) => <Tooltip>
     <TooltipTrigger asChild>
-        <Link href={url ?? '#'} target="_blank" className={cn("flex items-center justify-center cursor-pointer w-14 h-14 rounded-lg bg-white", className)}>
+        <Link href={url ?? '#'} target="_blank" className={cn("flex items-center justify-center cursor-pointer scale-90 md:scale-100 w-14 h-14 rounded-lg bg-white", className)}>
             { children }
         </Link>
     </TooltipTrigger>

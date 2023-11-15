@@ -20,18 +20,19 @@ import { auth } from "@clerk/nextjs"
 import AdBanner from "@/components/AdBanner"
 import { IGenre } from "@/lib/models/genre"
 import ReadMore from "@/components/ReadMore"
+import { useGenres } from "@/hooks/use-genres"
 
 interface Props {
     slug: string
 }
 
 const GameGenres = ({ genres, className }: {
-    genres: IGenre[],
+    genres: IGenre[] | string[],
     className?: string
 }) => {
     return genres?.length ? <div className={cn("genres flex flex-wrap gap-2 md:gap-3 md:mb-4", className)}>
-        { genres.map((g, i) => <Badge key={g.id} variant="secondary" className={cn(i > 2 && 'hidden md:inline-flex')}>
-            {g.name}
+        { genres.map((g, i) => <Badge key={typeof g === 'string' ? g : g.id} variant="secondary" className={cn(i > 2 && 'hidden md:inline-flex')}>
+            {typeof g === 'string' ? g : g.name}
         </Badge>) }
     </div> : <></>
 }
@@ -50,6 +51,8 @@ export default async function GamePage({ slug }: Props) {
 
     const developer = game.involved_companies.find(c => c.developer) ?? null
     const { data: company } = developer ? await getCompany(developer?.company) : { data: null }
+
+    const genres =  useGenres(game.genres)
 
     return <>
         { screenshot ? <figure className="relative h-[236px] sm:h-64 md:h-96 w-full thumb-filter blur">
@@ -84,9 +87,9 @@ export default async function GamePage({ slug }: Props) {
                     <hgroup className="flex flex-col gap-3 w-full mb-7 md:mb-14">
                         <h1 className={cn(
                             game.name?.length > 50 ? 'text-lg' : (game.name?.length > 15 ? 'text-xl' : (game.name?.length > 10 ? 'text-2xl' : 'text-3xl')),
-                            "break-all sm:text-4xl md:text-7xl font-bold text-shadow-lg mb-1"
+                            "break-words sm:text-4xl md:text-7xl font-bold text-shadow-lg mb-1"
                         )}>{game.name}</h1>
-                        <GameGenres genres={game.genres} />
+                        <GameGenres genres={genres} />
                         <div className="hidden sm:block text-base md:text-lg text-shadow">
                             <time dateTime={unix2Date(game.first_release_date).toLocaleString()}>{localizedDate(game.first_release_date)}</time>
                             { company ? <> by <strong>{company.name}</strong></> : <></> }
