@@ -45,3 +45,21 @@ export const ServiceByType: Record<Services, ServiceType> = {
     [Services.EShop]: ServiceType.Buy,
     [Services.XboxGamePass]: ServiceType.Subscription,
 }
+
+export const ServiceTypeNames: Record<Services, string> = {
+    [Services.Steam]: 'Steam',
+    [Services.GOG]: 'GOG',
+    [Services.Microsoft]: 'Microsoft Xbox',
+    [Services.Apple]: 'Apple',
+    [Services.Android]: 'Android',
+    [Services.AmazonAsin]: 'Amazon',
+    [Services.AmazonLuna]: 'Amazon Luna',
+    [Services.EpicGame]: 'Epic Games',
+    [Services.Oculus]: 'Oculus',
+    [Services.Utomik]: 'Utomik',
+    [Services.ItchIo]: 'ItchIo',
+    [Services.PSStore]: 'PlayStation Store',
+    [Services.FocusEntertainment]: 'Focus Entertainment',
+    [Services.EShop]: 'Nintendo eShop',
+    [Services.XboxGamePass]: 'Xbox Game Pass',
+}

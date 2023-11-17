@@ -1,6 +1,6 @@
 "use client"
 
-import { ServiceType, Services } from "@/lib/enums"
+import { ServiceType, ServiceTypeNames, Services } from "@/lib/enums"
 import { IExternalGame } from "@/lib/models/game"
 import { ReactNode } from "react"
 import Section from "./Section"
@@ -57,13 +57,18 @@ const ServicesTable = ({ services, name }: Props) => {
     </Section>
 }
 
-const ServiceIcon = ({ children, className, service, url }: any) => <Tooltip>
+const ServiceIcon = ({ children, className, service, url }: {
+    children: ReactNode
+    className?: string
+    service: IExternalGame
+    url?: string
+}) => <Tooltip>
     <TooltipTrigger asChild>
         <Link href={url ?? '#'} target="_blank" className={cn("flex items-center justify-center cursor-pointer scale-90 md:scale-100 w-14 h-14 rounded-lg bg-white", className)}>
             { children }
         </Link>
     </TooltipTrigger>
-    <TooltipContent sideOffset={7.5}>{ Services[service.category].toString() }</TooltipContent>
+    <TooltipContent sideOffset={7.5}>{ ServiceTypeNames[service.category] }</TooltipContent>
 </Tooltip>
 
 export const ServiceIcons: Record<Services, (service: IExternalGame) => ReactNode> = {
