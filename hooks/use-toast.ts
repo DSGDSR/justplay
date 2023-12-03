@@ -184,7 +184,7 @@ function useToast() {
 
   return {
     ...state,
-    toast,
+    toast: (text: string) => toast({ description: text, variant: 'default', duration: TOAST_REMOVE_DELAY }),
     info: (text: string) => toast({ description: text, variant: 'secondary', duration: TOAST_REMOVE_DELAY }),
     error: (text: string) => toast({ description: text, variant: 'destructive', duration: TOAST_REMOVE_DELAY }),
     dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
