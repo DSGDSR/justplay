@@ -15,7 +15,7 @@ import AsideSection from "@/components/AsideSection"
 import ServicesTable from "@/components/ServicesTable"
 import { getGame } from "@/services/game"
 import { getCompany } from "@/services/company"
-import { getLists } from "@/services/lists"
+import { getListedGames } from "@/services/lists"
 import { auth } from "@clerk/nextjs"
 import AdBanner from "@/components/AdBanner"
 import { IGenre } from "@/lib/models/genre"
@@ -41,7 +41,7 @@ const GameGenres = ({ genres, className }: {
 export default async function GamePage({ slug }: Props) {
     const { userId } = auth()
     const { data: game } = await getGame(slug)
-    const lists = userId ? (await getLists(userId))?.data : null;
+    const lists = userId ? (await getListedGames(userId))?.data : null;
 
     const screenshots = game.screenshots?.length ? game.screenshots.filter(s => s.image_id && s.url) : []
     const screenshot = screenshots.sort((a, b) => b.width - a.width)[0] ?? null
@@ -52,7 +52,7 @@ export default async function GamePage({ slug }: Props) {
     const developer = game.involved_companies.find(c => c.developer) ?? null
     const { data: company } = developer ? await getCompany(developer?.company) : { data: null }
 
-    const genres =  useGenres(game.genres)
+    const genres = useGenres(game.genres)
 
     return <>
         { screenshot ? <figure className="relative h-[236px] sm:h-64 md:h-96 w-full thumb-filter blur">

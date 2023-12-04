@@ -1,19 +1,18 @@
-import { ListState, ListType } from "../enums";
+import { ListStates, ListTypes } from "../enums";
 
-export type ListsState = Record<ListType, ListState>
+export type ListsState = Record<ListTypes, ListStates>
 
-export type ListsItemsResponse = Record<ListType, ListItem[]>
+export type ListsItemsResponse = Record<ListTypes, ListItem[]>
 
 export interface List {
     id: number
     user_id: string
     name: string
-    emoji: string
 }
 
 export interface ListItem {
     user_id: string
-    list_type: ListType
+    list_type: ListTypes
     custom_list_id: number | null
     game: number
 }
