@@ -2,10 +2,9 @@
 
 -- create
 CREATE TABLE list (
-  id SERIAL,
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id VARCHAR(40) NOT NULL,
-  name VARCHAR(30) NOT NULL,
-  PRIMARY KEY(id)
+  name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE list_item (
