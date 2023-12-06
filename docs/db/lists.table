@@ -2,7 +2,7 @@
 
 -- create
 CREATE TABLE list (
-  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v7() NOT NULL,
   user_id VARCHAR(40) NOT NULL,
   name VARCHAR(30) NOT NULL
 );
@@ -10,7 +10,7 @@ CREATE TABLE list (
 CREATE TABLE list_item (
   user_id VARCHAR(40) NOT NULL,
   list_type INTEGER NOT NULL,
-  custom_list_id INTEGER,
+  custom_list_id uuid,
   game INTEGER NOT NULL,
   FOREIGN KEY(custom_list_id) REFERENCES custom_list(id)
 );
