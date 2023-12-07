@@ -1,4 +1,4 @@
-import { IGDBEndpoints, ListState, ListType } from "@/lib/enums"
+import { IGDBEndpoints } from "@/lib/enums"
 import { IGame } from "@/lib/models/game"
 import {
     MissingParamsError,
