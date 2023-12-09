@@ -1,5 +1,4 @@
 class Query {
-    private query: string | undefined;
     private queryFields: {
         where: string[];
         fields?: string;
@@ -19,8 +18,8 @@ class Query {
     fields(fields: string | string[]): this {
         if (fields) {
             let fieldsString =
-                fields && Array.isArray(fields) ? fields.join(",") : fields;
-            fieldsString = fieldsString ? fieldsString.replace(/\s/g, "") : "";
+                fields && Array.isArray(fields) ? fields.join(',') : fields;
+            fieldsString = fieldsString ? fieldsString.replace(/\s/g, '') : '';
             this.queryFields.fields = `fields ${fieldsString}`;
         }
         return this;
@@ -29,8 +28,8 @@ class Query {
     exclude(exclude: string | string[]): this {
         if (exclude) {
             let excludeString =
-                exclude && Array.isArray(exclude) ? exclude.join(",") : exclude;
-            excludeString = excludeString ? excludeString.replace(/\s/g, "") : "";
+                exclude && Array.isArray(exclude) ? exclude.join(',') : exclude;
+            excludeString = excludeString ? excludeString.replace(/\s/g, '') : '';
             this.queryFields.exclude = `exclude ${excludeString}`;
         }
         return this;
@@ -39,12 +38,12 @@ class Query {
     sort(field: string, direction?: string): this {
         if (field) {
             if (
-                field.toLowerCase().endsWith(" desc") ||
-                field.toLowerCase().endsWith(" asc")
+                field.toLowerCase().endsWith(' desc') ||
+                field.toLowerCase().endsWith(' asc')
             ) {
                 this.queryFields.sort = `sort ${field}`;
             } else {
-                this.queryFields.sort = `sort ${field} ${direction || "asc"}`;
+                this.queryFields.sort = `sort ${field} ${direction || 'asc'}`;
             }
         }
         return this;
@@ -74,7 +73,7 @@ class Query {
     where(filters: string | string[]): this {
         if (filters) {
             if (Array.isArray(filters)) {
-                this.queryFields.where.push(`where ${filters.join(" & ")}`);
+                this.queryFields.where.push(`where ${filters.join(' & ')}`);
             } else {
                 this.queryFields.where.push(`where ${filters.trim()}`);
             }
@@ -85,7 +84,7 @@ class Query {
     build(): string {
         const { where, ...rest } = this.queryFields;
         const query = Object.keys(this.queryFields).length > 1 || this.queryFields.where.length > 0
-            ? Object.values(rest).concat(where).join(";") + ";" : "";
+            ? Object.values(rest).concat(where).join(';') + ';' : '';
         return query;
     }
 }

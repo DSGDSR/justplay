@@ -1,8 +1,7 @@
 import {
     string,
     minLength,
-    maxLength,
-    custom
+    maxLength
 } from 'valibot'
 
 export const ListNameSchemma = string([

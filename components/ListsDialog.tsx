@@ -1,24 +1,23 @@
-"use client"
+'use client'
 
-import { ReactNode, useEffect, useRef, useState } from "react"
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
     DialogTrigger
-} from "./Dialog"
-import { Button } from "./Button"
-import { List } from "@/lib/models/lists"
-import { ListActions } from "@/lib/enums"
-import { Checkbox } from "./Checkbox"
-import X from "./icons/X"
-import { TrashIcon } from "@radix-ui/react-icons"
-import { ListNameSchemma, cn } from "@/lib/utils"
-import { parse, flatten, ValiError } from "valibot"
-import { IHttpResponse } from "@/lib/models/response"
-import { useToast } from "@/hooks/use-toast"
-import { deleteList, getLists } from "@/services/lists"
+} from './Dialog'
+import { Button } from './Button'
+import { List } from '@/lib/models/lists'
+import { ListActions } from '@/lib/enums'
+import { Checkbox } from './Checkbox'
+import X from './icons/X'
+import { ListNameSchemma } from '@/lib/utils'
+import { parse, flatten, ValiError } from 'valibot'
+import { IHttpResponse } from '@/lib/models/response'
+import { useToast } from '@/hooks/use-toast'
+import { getLists } from '@/services/lists'
 
 const createList = async (userId: string, name: string): Promise<IHttpResponse<null> | null> => {
     return await fetch('/api/lists', {
@@ -131,7 +130,7 @@ const CreateList = ({ onCreate, userId }: {
             ? <>
                 <div className="h-11 flex bg-slate-800 rounded-md items-center pl-3 pr-1.5 gap-1 z-[1]">
                     <input ref={nameInput} placeholder="List name" type="text" autoFocus className="w-full h-11 text-white outline-none text-sm bg-transparent pr-2"/>
-                    <Button variant="outline" className={"right px-2 py-1 h-8 text-sm font-normal"} onClick={create}>Create</Button>
+                    <Button variant="outline" className={'right px-2 py-1 h-8 text-sm font-normal'} onClick={create}>Create</Button>
                     <Button variant="outline" className="right px-2 py-1 h-8" onClick={cancel} >
                         <X className="w-4"/>
                     </Button>
