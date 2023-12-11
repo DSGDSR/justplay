@@ -7,7 +7,9 @@
     "dev:turbo": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install",
+    "ts:check": "tsc --noEmit --pretty"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.25.2",
@@ -39,6 +41,8 @@
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "postcss": "^8",
     "tailwindcss": "^3",
     "typescript": "^5"
