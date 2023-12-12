@@ -1,26 +1,26 @@
-import { Badge } from "@/components/Badge"
-import { CoverSkeleton, ThumbSkeleton } from "./skeletons"
-import PreloadedImage from "@/components/PreloadedImage"
-import Screenshots from "@/components/Screenshots"
-import Trailer from "@/components/Trailer"
-import GameActions from "@/components/GameActions"
-import { cn, localizedDate, unix2Date } from "@/lib/utils"
-import Platforms from "@/components/Platforms"
-import HowLongToBeat from "@/components/HowLongToBeat"
-import CardsSlider from "@/components/CardsSlider"
-import Section from "@/components/Section"
-import Link from "next/link"
-import Igdb from "@/components/icons/Igdb"
-import AsideSection from "@/components/AsideSection"
-import ServicesTable from "@/components/ServicesTable"
-import { getGame } from "@/services/game"
-import { getCompany } from "@/services/company"
-import { getListedGames } from "@/services/lists"
-import { auth } from "@clerk/nextjs"
-import AdBanner from "@/components/AdBanner"
-import { IGenre } from "@/lib/models/genre"
-import ReadMore from "@/components/ReadMore"
-import { useGenres } from "@/hooks/use-genres"
+import { Badge } from '@/components/Badge'
+import { CoverSkeleton, ThumbSkeleton } from './skeletons'
+import PreloadedImage from '@/components/PreloadedImage'
+import Screenshots from '@/components/Screenshots'
+import Trailer from '@/components/Trailer'
+import GameActions from '@/components/GameActions'
+import { cn, localizedDate, unix2Date } from '@/lib/utils'
+import Platforms from '@/components/Platforms'
+import HowLongToBeat from '@/components/HowLongToBeat'
+import CardsSlider from '@/components/CardsSlider'
+import Section from '@/components/Section'
+import Link from 'next/link'
+import Igdb from '@/components/icons/Igdb'
+import AsideSection from '@/components/AsideSection'
+import ServicesTable from '@/components/ServicesTable'
+import { getGame } from '@/services/game'
+import { getCompany } from '@/services/company'
+import { getListedGames } from '@/services/lists'
+import { auth } from '@clerk/nextjs'
+import AdBanner from '@/components/AdBanner'
+import { IGenre } from '@/lib/models/genre'
+import ReadMore from '@/components/ReadMore'
+import { useGenres } from '@/hooks/use-genres'
 
 interface Props {
     slug: string
@@ -30,13 +30,12 @@ const GameGenres = ({ genres, className }: {
     genres: IGenre[] | string[],
     className?: string
 }) => {
-    return genres?.length ? <div className={cn("genres flex flex-wrap gap-2 md:gap-3 md:mb-4", className)}>
+    return genres?.length ? <div className={cn('genres flex flex-wrap gap-2 md:gap-3 md:mb-4', className)}>
         { genres.map((g, i) => <Badge key={typeof g === 'string' ? g : g.id} variant="secondary" className={cn(i > 2 && 'hidden md:inline-flex')}>
             {typeof g === 'string' ? g : g.name}
         </Badge>) }
     </div> : <></>
 }
-
 
 export default async function GamePage({ slug }: Props) {
     const { userId } = auth()
@@ -67,7 +66,7 @@ export default async function GamePage({ slug }: Props) {
                 priority={true}
             />
         </figure> : <></> }
-        <section className={cn("container game-page relative", screenshot ? '-top-[13.75rem] sm:-top-[13.5rem] md:-top-[19rem]' : 'md:mt-20')}>
+        <section className={cn('container game-page relative', screenshot ? '-top-[13.75rem] sm:-top-[13.5rem] md:-top-[19rem]' : 'md:mt-20')}>
             <header className="flex gap-8 flex-row-reverse md:flex-row h-[17rem] justify-end sm:h-72 md:justify-normal md:h-auto">
                 <div className="flex-grow-0 flex-shrink-0 [flex-basis:152px;] sm:[flex-basis:186px;] md:[flex-basis:280px;] self-end">
                     <figure className="shadow-md w-full"> {/* TODO NO COVER */}
@@ -86,10 +85,10 @@ export default async function GamePage({ slug }: Props) {
                 <div className="main-details relative w-full flex flex-col justify-end md:mb-10">
                     <hgroup className="flex flex-col gap-3 w-full mb-7 md:mb-14">
                         <h1 className={cn(
-                            game.name?.length > 50 ? 'text-lg' : (game.name?.length > 15 ? 'text-xl' : (game.name?.length > 10 ? 'text-2xl' : 'text-3xl')),
-                            "break-words sm:text-4xl md:text-7xl font-bold text-shadow-lg mb-1"
+                            game.name?.length > 50 ? 'text-lg' : (game.name?.length > 15 ? 'text-2xl' : (game.name?.length > 10 ? 'text-3xl' : 'text-4xl')),
+                            'break-words sm:text-4xl md:text-7xl font-bold text-shadow-lg mb-1'
                         )}>{game.name}</h1>
-                        <GameGenres genres={genres} />
+                        <GameGenres className="hidden sm:flex" genres={genres} />
                         <div className="hidden sm:block text-base md:text-lg text-shadow">
                             <time dateTime={unix2Date(game.first_release_date).toLocaleString()}>{localizedDate(game.first_release_date)}</time>
                             { company ? <> by <strong>{company.name}</strong></> : <></> }
@@ -101,7 +100,7 @@ export default async function GamePage({ slug }: Props) {
                     </div>
                 </div>
             </header>
-            <main className="flex gap-8 mt-24 md:mt-3.5 flex-col md:flex-row">
+            <main className="flex gap-8 mt-20 sm:mt-24 md:mt-3.5 flex-col md:flex-row">
                 <aside style={{ flex: '0 0 280px' }} className="hidden md:block">
                     <GameActions gameId={game.id} lists={lists} />
 
@@ -130,7 +129,9 @@ export default async function GamePage({ slug }: Props) {
                         data-full-width-responsive="true"
                     />
                 </aside>
-                <article className="-mt-14 min-w-0 flex flex-col gap-12" style={{ flex: '1 1 0' }}>
+                <article className="-mt-14 min-w-0 flex flex-col gap-10 sm:gap-12" style={{ flex: '1 1 0' }}>
+                    <GameGenres className="sm:hidden" genres={genres} />
+
                     <Section title="Platforms">
                         <Platforms platforms={game.platforms} />
                     </Section>
