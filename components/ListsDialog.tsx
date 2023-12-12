@@ -9,32 +9,27 @@ import {
     DialogTrigger
 } from './Dialog'
 import { Button } from './Button'
-import { List } from '@/lib/models/lists'
-import { ListActions } from '@/lib/enums'
+import { List, ListsItemsResponse } from '@/lib/models/lists'
 import { Checkbox } from './Checkbox'
 import X from './icons/X'
-import { ListNameSchemma } from '@/lib/utils'
+import { ListNameSchemma, cn } from '@/lib/utils'
 import { parse, flatten, ValiError } from 'valibot'
-import { IHttpResponse } from '@/lib/models/response'
 import { useToast } from '@/hooks/use-toast'
-import { getLists } from '@/services/lists'
-
-const createList = async (userId: string, name: string): Promise<IHttpResponse<null> | null> => {
-    return await fetch('/api/lists', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: ListActions.CreateList, name, userId })
-    }).then(res => res.json()).catch(() => null)
-}
+import { addToList, createList, getLists, removeFromList } from '@/services/lists'
+import { ListTypes } from '@/lib/enums'
+import Spinner from './icons/Spinner'
 
 interface Props {
+    gameLists: ListsItemsResponse | null
     trigger: ReactNode
     userId: string | null | undefined
+    gameId: number
 }
 
-const ListsDialog = ({ trigger, userId }: Props) => {
+const ListsDialog = ({ trigger, userId, gameId, gameLists }: Props) => {
     // get the user's lists
     const [lists, setLists] = useState<List[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
     const updateLists = () => {
         if (!userId) return
@@ -45,6 +40,21 @@ const ListsDialog = ({ trigger, userId }: Props) => {
     }
 
     useEffect(() => updateLists(), [userId])
+
+    const toggleList = (listId: string, addition: boolean) => {
+        if (!userId) return
+
+        setLoading(true)
+        if (addition) {
+            addToList(userId, gameId, listId, ListTypes.Custom)
+                .then(_ => setLoading(false))
+                .catch(err => console.log(err)) // TODO Control
+        } else {
+            removeFromList(userId, gameId, listId, ListTypes.Custom)
+                .then(_ => setLoading(false))
+                .catch(err => console.log(err)) // TODO Control
+        }
+    }
 
     /*const onDelete = async (listId: number) => {
         if (deleted === undefined || deleted !== listId) {
@@ -69,20 +79,37 @@ const ListsDialog = ({ trigger, userId }: Props) => {
                 <DialogTitle>Add game to my lists</DialogTitle>
             </DialogHeader>
 
-            <main className="flex flex-col border-2 rounded-md border-slate-800 border-dashed p-1 gap-1 mt-3">
-                { lists?.map(list => <ListItem key={list.id} list={list} />) }
+            <main className="relative flex flex-col border-2 rounded-md border-slate-800 border-dashed p-1 gap-1 mt-3 overflow-hidden">
+                { lists?.map(list => <ListItem
+                    key={list.id}
+                    list={list}
+                    toggleList={toggleList}
+                    isAdded={!!gameLists?.[ListTypes.Custom]?.find(l => l.game === gameId && l.custom_list_id === list.id) ?? false}
+                />) }
                 <CreateList onCreate={updateLists} userId={userId} />
+
+                { /* LOADING PLACEHOLDER */ }
+                <div className={cn('hidden h-full w-full absolute z-[1] bg-background opacity-70 top-0 left-0 justify-center items-center', loading && 'flex')}>
+                    <Spinner size={30} />
+                </div>
             </main>
         </DialogContent>
     </Dialog> : trigger
 }
 
-const ListItem = ({ list }: {
+const ListItem = ({ list, toggleList, isAdded }: {
     list: List
+    toggleList: (listId: string, addition: boolean) => void
+    isAdded: boolean
 }) => {
     return <div className="group relative" key={list.id}>
         <label htmlFor={`list-${list.id}`} className="cursor-pointer flex items-center gap-3 bg-slate-800 group-hover:bg-slate-900 rounded-md h-11 px-3">
-            <Checkbox className="border-white data-[state=checked]:bg-white" id={`list-${list.id}`} />
+            <Checkbox
+                id={`list-${list.id}`}
+                defaultChecked={isAdded}
+                className="border-white data-[state=checked]:bg-white"
+                onCheckedChange={(checked) => toggleList(list.id, !!checked)}
+            />
             <p className="text-sm font-medium truncate">{ list.name }</p>
         </label>
     </div>

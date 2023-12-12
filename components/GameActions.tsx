@@ -20,10 +20,10 @@ import { ListActions, ListStates, ListTypes } from '@/lib/enums'
 import { useAuth } from '@clerk/nextjs'
 import { useToast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
-import { IHttpResponse } from '@/lib/models/response'
 import Spinner from './icons/Spinner'
 import { ListsItemsResponse, ListsState } from '@/lib/models/lists'
 import ListsDialog from './ListsDialog'
+import { toggleList } from '@/services/lists'
 
 const DEFAULT_LIST = (state = ListStates.Inactive): ListsState => ({
     [ListTypes.Favorite]: state,
@@ -31,28 +31,6 @@ const DEFAULT_LIST = (state = ListStates.Inactive): ListsState => ({
     [ListTypes.Finished]: state,
     [ListTypes.Custom]: state
 })
-
-const addToList = async (
-    action: ListActions,
-    gameId: number,
-    list: ListTypes,
-    userId: string,
-    listId: number | null = null
-): Promise<IHttpResponse | null> => {
-    return await fetch('/api/lists', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            action,
-            listType: list,
-            listId,
-            gameId,
-            userId
-        })
-    }).then(res => res.json()).catch(() => null)
-}
 
 interface Props {
     gameId: number
@@ -75,7 +53,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
         } : DEFAULT_LIST())
     }, [gameId, isSignedIn, userId])
 
-    const updateList = async (listTypes: ListTypes[], listId: number | null = null) => {
+    const updateList = async (listTypes: ListTypes[]) => {
         if (!isSignedIn || !userId) {
             info('You must be signed in to use lists.')
             return
@@ -86,7 +64,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
         setListsStates({ ...listsStates, ...listTypes.map(list => ({ [list]: ListStates.Loading })).reduce((a, b) => ({ ...a, ...b })) })
         
         const additions = await Promise.all(listTypes.map((list, index) => {
-            return addToList(actions[index], gameId, list, userId, listId)
+            return toggleList(userId, gameId, null, list, actions[index])
         }))
         
         if (additions.every(addition => !addition || ('success' in addition && !addition.success))) {
@@ -147,7 +125,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
             >
                 <PlaylistAdd className="mr-2"/> Add to list
             </Button>
-        } userId={userId}/> : <></> }
+        } userId={userId} gameId={gameId} gameLists={lists} /> : <></> }
     </div>
 }
 

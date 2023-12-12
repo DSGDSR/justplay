@@ -1,12 +1,12 @@
-import { ListActions, ListStates, ListTypes } from "@/lib/enums";
+import { ListActions, ListStates, ListTypes } from '@/lib/enums';
 import {
     HttpResponse,
     ListNameSchemma,
     MissingBodyError
-} from "@/lib/utils"
-import { VercelPoolClient, db } from "@vercel/postgres"
-import { NextRequest } from "next/server"
-import { parse, ValiError, flatten } from "valibot"
+} from '@/lib/utils'
+import { VercelPoolClient, db } from '@vercel/postgres'
+import { NextRequest } from 'next/server'
+import { parse, ValiError, flatten } from 'valibot'
 
 const createList = async (userId: string, name: string, client: VercelPoolClient): Promise<Response> => {
     if (!userId || !name) return HttpResponse(null, false, MissingBodyError)
@@ -25,7 +25,7 @@ const createList = async (userId: string, name: string, client: VercelPoolClient
 
         return HttpResponse(null, false, {
             status: 500,
-            message: "Could not create list. Please try again later."
+            message: 'Could not create list. Please try again later.'
         })
     } catch (error) {
         const message = flatten(error as ValiError).root?.join('. ') ?? ''
@@ -38,7 +38,7 @@ const deleteList = async (
     client: VercelPoolClient
 ): Promise<Response> => {
     if (!listId) return HttpResponse(null, false, MissingBodyError)
-    const { rowCount } = await client.query(`DELETE FROM list WHERE id = $1`, [listId]);
+    const { rowCount } = await client.query('DELETE FROM list WHERE id = $1', [listId]);
 
     if (rowCount > 0) {
         return HttpResponse(null, true)
@@ -46,33 +46,33 @@ const deleteList = async (
 
     return HttpResponse(null, false, {
         status: 500,
-        message: "Could not delete the list"
+        message: 'Could not delete the list'
     })
 }
 
 const getLists = async (userId: string, client: VercelPoolClient): Promise<Response> => {
     if (!userId) return HttpResponse(null, false, MissingBodyError)
-    const { rows } = await client.query(`SELECT * FROM list WHERE user_id = $1`, [userId])
+    const { rows } = await client.query('SELECT * FROM list WHERE user_id = $1', [userId])
 
     return HttpResponse(rows, true)
 }
 
 const getAll = async (userId: string, client: VercelPoolClient): Promise<Response> => {
     if (!userId) return HttpResponse(null, false, MissingBodyError)
-    const { rows } = await client.query(`SELECT * FROM list_item WHERE user_id = $1;`, [userId])
+    const { rows } = await client.query('SELECT * FROM list_item WHERE user_id = $1;', [userId])
 
     return HttpResponse({
         [ListTypes.Favorite]: rows.filter((list) => list.list_type === ListTypes.Favorite),
         [ListTypes.Playlist]: rows.filter((list) => list.list_type === ListTypes.Playlist),
         [ListTypes.Finished]: rows.filter((list) => list.list_type === ListTypes.Finished),
-        [ListTypes.Custom]: rows.filter((list) => !!list.Custom_list_id)
+        [ListTypes.Custom]: rows.filter((list) => !!list.custom_list_id)
     }, true)
 }
 
 const get = async (userId: string, gameId: number, client: VercelPoolClient): Promise<Response> => {
     if (!userId || !gameId) return HttpResponse(null, false, MissingBodyError)
     const { rows } = await client.query(
-        `SELECT * FROM list_item WHERE user_id = $1 AND game = $2;`,
+        'SELECT * FROM list_item WHERE user_id = $1 AND game = $2;',
         [userId, gameId]
     )
 
@@ -106,7 +106,7 @@ const add = async (
 
     return HttpResponse(null, false, {
         status: 500,
-        message: "Could not add the game to the list"
+        message: 'Could not add the game to the list'
     })
 }
 
@@ -132,7 +132,7 @@ const remove = async (
 
     return HttpResponse(null, false, {
         status: 500,
-        message: "Could not remove the game from the list"
+        message: 'Could not remove the game from the list'
     })
 }
 
