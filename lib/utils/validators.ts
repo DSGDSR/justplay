@@ -5,7 +5,7 @@ import {
 } from 'valibot'
 
 export const ListNameSchemma = string([
-    minLength(3, 'List name must be at least 3 characters long'),
+    minLength(4, 'List name must be at least 4 characters long'),
     maxLength(30, 'List name must be at most 30 characters long'),
     // TODO avoid special chars
 ])

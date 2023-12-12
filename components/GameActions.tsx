@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { MouseEvent, ReactNode, useEffect, useState } from "react"
-import { Button } from "./Button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip"
-import Gamepad from "./icons/Gamepad"
-import Heart from "./icons/Heart"
-import Medal from "./icons/Medal"
-import PlaylistAdd from "./icons/PlaylistAdd"
+import { MouseEvent, ReactNode, useEffect, useState } from 'react'
+import { Button } from './Button'
+import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip'
+import Gamepad from './icons/Gamepad'
+import Heart from './icons/Heart'
+import Medal from './icons/Medal'
+import PlaylistAdd from './icons/PlaylistAdd'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -15,15 +15,15 @@ import {
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader, AlertDialogTitle
-} from "./AlertDialog"
-import { ListActions, ListStates, ListTypes } from "@/lib/enums"
-import { useAuth } from "@clerk/nextjs"
-import { useToast } from "@/hooks/use-toast"
-import { cn } from "@/lib/utils"
-import { IHttpResponse } from "@/lib/models/response"
-import Spinner from "./icons/Spinner"
-import { ListsItemsResponse, ListsState } from "@/lib/models/lists"
-import ListsDialog from "./ListsDialog"
+} from './AlertDialog'
+import { ListActions, ListStates, ListTypes } from '@/lib/enums'
+import { useAuth } from '@clerk/nextjs'
+import { useToast } from '@/hooks/use-toast'
+import { cn } from '@/lib/utils'
+import { IHttpResponse } from '@/lib/models/response'
+import Spinner from './icons/Spinner'
+import { ListsItemsResponse, ListsState } from '@/lib/models/lists'
+import ListsDialog from './ListsDialog'
 
 const DEFAULT_LIST = (state = ListStates.Inactive): ListsState => ({
     [ListTypes.Favorite]: state,
@@ -99,10 +99,10 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
     }
 
 
-    return <div className={cn("flex flex-col gap-3.5 w-full", mode === 'card' && 'p-2')}>
+    return <div className={cn('flex flex-col gap-3.5 w-full', mode === 'card' && 'p-2')}>
         <WarningDialog open={listWarning} onOpenChange={setListWarning} updateList={updateList} />
 
-        <div className={cn("flex", mode === 'page' && 'gap-3.5', mode === 'card' && 'justify-between')}>
+        <div className={cn('flex', mode === 'page' && 'gap-3.5', mode === 'card' && 'justify-between')}>
             <ListButton mode={mode} onClick={(e: MouseEvent) => {
                 if (listsStates[ListTypes.Favorite] === ListStates.Loading) return
                 updateList([ListTypes.Favorite])
@@ -139,10 +139,15 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
             </ListButton>
         </div>
         { mode === 'page' ? <ListsDialog trigger={
-            <Button variant="secondary" size="lg" className="w-full py-6">
+            <Button
+                variant="secondary"
+                size="lg"
+                className="w-full py-6"
+                onClick={() => !userId && info('You must be signed in to use lists.')}
+            >
                 <PlaylistAdd className="mr-2"/> Add to list
             </Button>
-        } userId={userId} /> : <></> }
+        } userId={userId}/> : <></> }
     </div>
 }
 
@@ -154,7 +159,7 @@ const ListButton = ({ className, children, tooltip, mode, onClick }: {
     onClick: (e: MouseEvent<HTMLElement>) => void
 }) => <Tooltip className={mode === 'card' ? 'w-[30%]' : 'flex-grow'}>
     <TooltipTrigger asChild>
-        <Button variant={mode === 'card' ? 'outline' : 'secondary'} className={cn("w-full h-16", mode === 'card' && 'h-12 shadow-lg', className)} onClick={onClick}>
+        <Button variant={mode === 'card' ? 'outline' : 'secondary'} className={cn('w-full h-16', mode === 'card' && 'h-12 shadow-lg', className)} onClick={onClick}>
             {children}
         </Button>
     </TooltipTrigger>
