@@ -32,7 +32,7 @@ const UserAvatar = () => {
                     icon: Array.from(userDropdown.children[0].children[0].classList).join(' '),
                     svg: Array.from(userDropdown.children[0].children[0].children[0].classList).join(' '),
                     text: Array.from(userDropdown.children[0].children[1].classList).join(' '),
-                }} />, userDropdown));
+                }} username={clerk.session?.user.username} />, userDropdown));
 
             userDropdown.children[0]?.classList.add('order-2')
             userDropdown.children[1]?.classList.add('order-3')
@@ -60,7 +60,7 @@ const UserAvatar = () => {
     </div>
 }
 
-const ViewProfile = ({ classes }: any) => <Link href={'/profile'} className={classes.parent} role="menuitem">
+const ViewProfile = ({ classes, username }: any) => <Link href={`/user/${username}`} className={classes.parent} role="menuitem">
     <div className={classes.icon}>
         <svg className={cn(classes.svg, 'w-4 h-4')} width="24" height="24" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

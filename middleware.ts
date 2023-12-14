@@ -8,6 +8,7 @@ export default authMiddleware({
         // Public pages
         '/',
         '/game/(.*)',
+        '/user/(.*)',
 
         // Public API routes
         '/api/games/(.*)',
@@ -21,6 +22,9 @@ export default authMiddleware({
 
         // CMP
         '/cmp.js',
+
+        // Clerk webhook
+        '/api/clerk',
     ],
 });
  

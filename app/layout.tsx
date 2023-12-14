@@ -7,6 +7,7 @@ import { Suspense } from 'react'
 import { TooltipProvider } from '@/components/Tooltip'
 import { Toaster } from '@/components/toaster'
 import { clerkTheme } from '@/styles/clerk-theme'
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,6 +27,7 @@ export default function RootLayout({
       <TooltipProvider delayDuration={100}>
         <html lang="en">
           <body className={`${inter.className} dark`}>
+            <NextTopLoader color='#3b98f6' showSpinner={false} />
             <Nav />
             <main className='pt-16'>
               <Suspense fallback={<div>Loading...</div>}>
