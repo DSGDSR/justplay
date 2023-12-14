@@ -1,4 +1,4 @@
-import { unix2Date } from "./unix2date"
+import { unix2Date } from './unix2date'
 
 const defaultConfig: Intl.DateTimeFormatOptions = {
     year: 'numeric',

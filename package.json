@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "prepare": "husky install",
     "ts:check": "tsc --noEmit --pretty"
   },

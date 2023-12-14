@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 
 const X = ({className, ...props}: any) => <svg className={cn('w-6', className)} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round" {...props}>
     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

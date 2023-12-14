@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { Dialog, DialogContent } from "./Dialog"
-import { Button, ButtonProps } from "./Button"
-import Play from "./icons/Play"
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip"
+import { Dialog, DialogContent } from './Dialog'
+import { Button, ButtonProps } from './Button'
+import Play from './icons/Play'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip'
 import { YouTubeLite } from 'react-youtube-lite'
 
 interface Props {

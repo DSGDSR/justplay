@@ -1,18 +1,18 @@
-import { IGroupedPlatforms, IPlatform } from "@/lib/models/platform";
-import { ReactNode } from "react";
-import Windows from "./icons/platforms/Windows";
-import Mac from "./icons/platforms/Mac";
-import { Tooltip, TooltipTrigger, TooltipContent } from "./Tooltip";
-import Linux from "./icons/platforms/Linux";
-import Android from "./icons/platforms/Android";
-import PlayStation from "./icons/platforms/PlayStation";
-import Xbox from "./icons/platforms/Xbox";
-import NintendoSwitch from "./icons/platforms/Switch";
-import { cn, formatList } from "@/lib/utils";
-import GameCube from "./icons/platforms/GameCube";
-import Wii from "./icons/platforms/Wii";
-import WiiU from "./icons/platforms/WiiU";
-import { Platforms } from "@/lib/enums";
+import { IGroupedPlatforms, IPlatform } from '@/lib/models/platform';
+import { ReactNode } from 'react';
+import Windows from './icons/platforms/Windows';
+import Mac from './icons/platforms/Mac';
+import { Tooltip, TooltipTrigger, TooltipContent } from './Tooltip';
+import Linux from './icons/platforms/Linux';
+import Android from './icons/platforms/Android';
+import PlayStation from './icons/platforms/PlayStation';
+import Xbox from './icons/platforms/Xbox';
+import NintendoSwitch from './icons/platforms/Switch';
+import { cn, formatList } from '@/lib/utils';
+import GameCube from './icons/platforms/GameCube';
+import Wii from './icons/platforms/Wii';
+import WiiU from './icons/platforms/WiiU';
+import { Platforms } from '@/lib/enums';
 
 interface Props {
   platforms: IPlatform[];

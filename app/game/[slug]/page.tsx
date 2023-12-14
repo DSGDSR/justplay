@@ -1,10 +1,10 @@
-import { Badge } from "@/components/Badge";
-import Skeleton from "@/components/Skeleton";
-import GamePage from "@/components/pages/GamePage";
-import { CoverSkeleton, ThumbSkeleton } from "@/components/pages/GamePage/skeletons";
-import { getGame } from "@/services/game";
-import { Metadata } from "next";
-import { Suspense } from "react";
+import { Badge } from '@/components/Badge';
+import Skeleton from '@/components/Skeleton';
+import GamePage from '@/components/pages/GamePage';
+import { CoverSkeleton, ThumbSkeleton } from '@/components/pages/GamePage/skeletons';
+import { getGame } from '@/services/game';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 interface GamePageRequest {
     params: {

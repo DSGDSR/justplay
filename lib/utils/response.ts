@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { IHttpError } from "../models/error";
+import { NextResponse } from 'next/server';
+import { IHttpError } from '../models/error';
 
 export const HttpResponse = (
     data: any,

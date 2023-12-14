@@ -1,4 +1,4 @@
-import chalk from "chalk"
+import chalk from 'chalk'
 
 const formatNumber = (time: number): string => `${time < 10 ? '0' : ''}${time}`
 

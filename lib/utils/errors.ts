@@ -1,4 +1,4 @@
-import { IHttpError } from "../models/error"
+import { IHttpError } from '../models/error'
 
 export const MissingBodyError: IHttpError = {
     status: 400,

@@ -1,5 +1,5 @@
-import { Appearance } from "@clerk/types/dist/appearance"
-import { dark } from "@clerk/themes"
+import { Appearance } from '@clerk/types/dist/appearance'
+import { dark } from '@clerk/themes'
 
 export const clerkTheme: Appearance = {
     baseTheme: dark,

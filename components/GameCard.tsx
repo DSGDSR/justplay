@@ -1,11 +1,11 @@
-import { IGame } from "@/lib/models/game";
-import PreloadedImage from "./PreloadedImage";
-import { CoverSkeleton } from "./pages/GamePage/skeletons";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import DefaultThumb from "./icons/DefaultThumb";
-import { ListsItemsResponse } from "@/lib/models/lists";
-import GameActions from "./GameActions";
+import { IGame } from '@/lib/models/game';
+import PreloadedImage from './PreloadedImage';
+import { CoverSkeleton } from './pages/GamePage/skeletons';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import DefaultThumb from './icons/DefaultThumb';
+import { ListsItemsResponse } from '@/lib/models/lists';
+import GameActions from './GameActions';
 
 interface Props {
     game: IGame
@@ -16,7 +16,7 @@ interface Props {
 
 const GameCard = ({ game, className, lazy, lists }: Props) => {
     return (
-        <Link className={cn("relative flex flex-col gap-3 w-32 md:w-48 group", className)} href={`/game/${game.slug}`}>
+        <Link className={cn('relative flex flex-col gap-3 w-32 md:w-48 group', className)} href={`/game/${game.slug}`}>
             <div className="hidden md:block absolute w-full z-[5] transition-opacity pointer-events-none opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto">
                 { lists ? <GameActions mode="card" gameId={game.id} lists={lists} /> : <></> }
             </div>

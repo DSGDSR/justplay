@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { useState } from "react";
+import { useState } from 'react';
 
 interface Props {
     children: string;

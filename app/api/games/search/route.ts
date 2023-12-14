@@ -1,6 +1,6 @@
-import { IGDBEndpoints } from "@/lib/enums"
-import { IGameSearch } from "@/lib/models/game"
-import { NextRequest } from "next/server"
+import { IGDBEndpoints } from '@/lib/enums'
+import { IGameSearch } from '@/lib/models/game'
+import { NextRequest } from 'next/server'
 import {
     InvalidParams,
     MissingParamsError,
@@ -8,7 +8,7 @@ import {
     IGDBError,
     postIGDB,
     HttpResponse
-} from "@/lib/utils"
+} from '@/lib/utils'
 
 export async function POST(request: NextRequest) {
     const body = await request.json()

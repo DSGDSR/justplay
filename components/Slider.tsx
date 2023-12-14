@@ -1,10 +1,10 @@
-import { IScreenshot } from "@/lib/models/media"
-import { cn } from "@/lib/utils"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import Chevron from "./icons/Chevron"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { IScreenshot } from '@/lib/models/media'
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import Chevron from './icons/Chevron'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface Props {
     screenshots: IScreenshot[]
@@ -90,7 +90,7 @@ const SliderControl = ({ id, selected, onClick }: any) => <a
     href={`#${id}`}
     onClick={onClick}
 >
-    <span className={cn("w-1.5 h-1.5 text-gray-700 rounded-full bg-gray-400 flex justify-center items-center transition-all",
+    <span className={cn('w-1.5 h-1.5 text-gray-700 rounded-full bg-gray-400 flex justify-center items-center transition-all',
         selected && 'bg-black w-4'
     )}></span>
 </a>

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react"
-import clsx from "clsx"
-import DefaultThumb from "../icons/DefaultThumb"
-import { useRouter } from "next/navigation"
-import { IGameSearch } from "@/lib/models/game"
-import Link from "next/link"
-import Image from "next/image"
-import { cn } from "@/lib/utils"
+import { useEffect, useState } from 'react'
+import clsx from 'clsx'
+import DefaultThumb from '../icons/DefaultThumb'
+import { useRouter } from 'next/navigation'
+import { IGameSearch } from '@/lib/models/game'
+import Link from 'next/link'
+import Image from 'next/image'
+import { cn } from '@/lib/utils'
 
 interface Props {
     games: IGameSearch[] | null
@@ -51,7 +51,7 @@ const SearchList = ({ games, onNavigate, className }: Props) => {
         }
     }, [games])
 
-    return <div className={cn("absolute md:bg-background", !(games instanceof Array) && 'md:hidden', className)}>
+    return <div className={cn('absolute md:bg-background', !(games instanceof Array) && 'md:hidden', className)}>
         { games?.length ? <ul role="listbox" id="search-results" className="flex flex-col py-1.5s">
             { games.map((game, index) => (
                 <li key={index} className={clsx(

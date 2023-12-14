@@ -1,14 +1,14 @@
-"use client"
+'use client'
 
-import { useState, useRef, useEffect } from "react"
-import { IGameSearch } from "@/lib/models/game"
-import Spinner from "../icons/Spinner"
-import SearchList from "./list"
-import SearchIcon from "../icons/Search"
-import { Endpoints } from "@/lib/enums"
-import { debounce, cleanQuery, apiUrl } from "@/lib/utils"
-import X from "../icons/X"
-import ArrowDown from "../icons/ArrowDown"
+import { useState, useRef, useEffect } from 'react'
+import { IGameSearch } from '@/lib/models/game'
+import Spinner from '../icons/Spinner'
+import SearchList from './list'
+import SearchIcon from '../icons/Search'
+import { Endpoints } from '@/lib/enums'
+import { debounce, cleanQuery, apiUrl } from '@/lib/utils'
+import X from '../icons/X'
+import ArrowDown from '../icons/ArrowDown'
 
 const ID = 'mobile-search-input'
 
@@ -37,7 +37,7 @@ const MobileSearchBox = () => {
             blurInput()
             document.body.style.setProperty('overflow', 'auto')
             if (searchInput.current) {
-                searchInput.current.value = ""
+                searchInput.current.value = ''
             }
         }
     }

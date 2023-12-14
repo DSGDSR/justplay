@@ -1,5 +1,5 @@
-import { IGDBEndpoints } from "../enums/endpoints";
-import { IHttpError } from "../models/error";
+import { IGDBEndpoints } from '../enums/endpoints';
+import { IHttpError } from '../models/error';
 
 export const IGDBError = (error: any): IHttpError => ({
     status: 500,

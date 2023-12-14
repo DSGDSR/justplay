@@ -5,8 +5,8 @@ import {
     HttpResponse,
     similarity,
     domain
-} from "@/lib/utils"
-import { NextRequest } from "next/server"
+} from '@/lib/utils'
+import { NextRequest } from 'next/server'
 import { eShopItem } from '@/lib/models/eshop';
 
 interface GETeShopGamesQuery {

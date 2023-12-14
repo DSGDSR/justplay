@@ -1,5 +1,5 @@
-import { HttpResponse, MissingBodyError } from "@/lib/utils"
-import { NextRequest } from "next/server"
+import { HttpResponse, MissingBodyError } from '@/lib/utils'
+import { NextRequest } from 'next/server'
 import { HowLongToBeatService } from 'howlongtobeat'
 
 const hltb = new HowLongToBeatService()

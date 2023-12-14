@@ -1,4 +1,4 @@
-import { IHttpError } from "./error";
+import { IHttpError } from './error';
 
 export interface IHttpResponse<T = any> {
     data: T,

@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { IGame } from "@/lib/models/game";
-import GameCard from "./GameCard";
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-import Chevron from "./icons/Chevron";
-import { ListsItemsResponse } from "@/lib/models/lists";
+import { IGame } from '@/lib/models/game';
+import GameCard from './GameCard';
+import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+import Chevron from './icons/Chevron';
+import { ListsItemsResponse } from '@/lib/models/lists';
 
 interface Props {
     games: IGame[]

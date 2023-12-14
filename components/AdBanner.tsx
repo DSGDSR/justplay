@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { cn } from '@/lib/utils';
 import { ReactNode, useEffect } from 'react';
@@ -21,7 +21,7 @@ const AdBanner = ({ className, pre, ...props }: Props) => {
     return <>
         { pre ?? <></> }
         <ins
-            className={cn("adsbygoogle adbanner-customize", className)}
+            className={cn('adsbygoogle adbanner-customize', className)}
             style={{
                 display: 'block',
                 overflow: 'hidden',

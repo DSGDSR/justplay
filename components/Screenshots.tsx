@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { Dialog, DialogContent } from "./Dialog"
-import { Button, ButtonProps } from "./Button"
-import { useEffect, useState } from "react"
-import Slider from "./Slider"
-import { IScreenshot } from "@/lib/models/media"
-import Photo from "./icons/Photo"
-import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip"
+import { Dialog, DialogContent } from './Dialog'
+import { Button, ButtonProps } from './Button'
+import { useEffect, useState } from 'react'
+import Slider from './Slider'
+import { IScreenshot } from '@/lib/models/media'
+import Photo from './icons/Photo'
+import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip'
 
 interface Props {
     screenshots: IScreenshot[]

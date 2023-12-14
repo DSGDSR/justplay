@@ -1,10 +1,10 @@
-import { Services } from "../enums";
-import { IInvolvedCompany } from "./company";
-import { ICover } from "./cover";
-import { IGenre } from "./genre";
-import { ListsState } from "./lists";
-import { IScreenshot, IVideo } from "./media";
-import { IPlatform } from "./platform";
+import { Services } from '../enums';
+import { IInvolvedCompany } from './company';
+import { ICover } from './cover';
+import { IGenre } from './genre';
+import { ListsState } from './lists';
+import { IScreenshot, IVideo } from './media';
+import { IPlatform } from './platform';
 
 export interface IPrimitiveGame {
     id: number

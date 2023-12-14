@@ -1,6 +1,6 @@
-import { ReactNode } from "react"
-import Section from "./Section"
-import { cn } from "@/lib/utils"
+import { ReactNode } from 'react'
+import Section from './Section'
+import { cn } from '@/lib/utils'
 
 interface Props {
     children: ReactNode
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const AsideSection = ({ children, title, condition, className }: Props) => {
-    return condition !== undefined && condition ? <Section title={title} className={cn("gap-2.5", className)} pre={<hr className="mt-4 mb-1.5" />}>
+    return condition !== undefined && condition ? <Section title={title} className={cn('gap-2.5', className)} pre={<hr className="mt-4 mb-1.5" />}>
         { children }
     </Section> : <></>
 }

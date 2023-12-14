@@ -1,4 +1,4 @@
-import { LanguageSupportType } from "../enums"
+import { LanguageSupportType } from '../enums'
 
 export interface LanguageSupport {
     id: number

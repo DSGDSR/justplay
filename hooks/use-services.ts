@@ -1,9 +1,9 @@
-import { ServiceByType, ServiceType, Services } from "@/lib/enums"
-import { eShopItem } from "@/lib/models/eshop"
-import { IExternalGame } from "@/lib/models/game"
-import { IHttpResponse } from "@/lib/models/response"
-import { uniqByKey } from "@/lib/utils"
-import { useEffect, useState } from "react"
+import { ServiceByType, ServiceType, Services } from '@/lib/enums'
+import { eShopItem } from '@/lib/models/eshop'
+import { IExternalGame } from '@/lib/models/game'
+import { IHttpResponse } from '@/lib/models/response'
+import { uniqByKey } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
 const useServices = (services: IExternalGame[] | undefined, name: string) => {
     const [refinedServices, setRefinedServices] = useState<Record<ServiceType, IExternalGame[]> | null>(null)

@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { cn } from "@/lib/utils";
-import Image, { ImageProps } from "next/image";
-import { ReactNode, useState } from "react";
+import { cn } from '@/lib/utils';
+import Image, { ImageProps } from 'next/image';
+import { ReactNode, useState } from 'react';
 
 interface Props extends ImageProps {
     skeleton: ReactNode
