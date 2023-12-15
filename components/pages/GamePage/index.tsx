@@ -21,6 +21,7 @@ import AdBanner from '@/components/AdBanner'
 import { IGenre } from '@/lib/models/genre'
 import ReadMore from '@/components/ReadMore'
 import { useGenres } from '@/hooks/use-genres'
+import Company from '../../Company'
 
 interface Props {
     slug: string
@@ -39,8 +40,14 @@ const GameGenres = ({ genres, className }: {
 
 export default async function GamePage({ slug }: Props) {
     const { userId } = auth()
-    const { data: game } = await getGame(slug)
-    const lists = userId ? (await getListedGames(userId))?.data : null;
+
+    const responses = await Promise.all([
+        getGame(slug),
+        ...userId ? [getListedGames(userId)] : []
+    ])
+
+    const game = responses[0].data
+    const lists = userId ? responses[1].data : null
 
     const screenshots = game.screenshots?.length ? game.screenshots.filter(s => s.image_id && s.url) : []
     const screenshot = screenshots.sort((a, b) => b.width - a.width)[0] ?? null
@@ -49,7 +56,7 @@ export default async function GamePage({ slug }: Props) {
     const video = videos.find(v => v.name.toLowerCase().trim() === 'trailer') ?? videos[0] ?? null
 
     const developer = game.involved_companies.find(c => c.developer) ?? null
-    const { data: company } = developer ? await getCompany(developer?.company) : { data: null }
+    const company = developer ? getCompany(developer.company) : null
 
     const genres = useGenres(game.genres)
 
@@ -91,7 +98,7 @@ export default async function GamePage({ slug }: Props) {
                         <GameGenres className="hidden sm:flex" genres={genres} />
                         <div className="hidden sm:block text-base md:text-lg text-shadow">
                             <time dateTime={unix2Date(game.first_release_date).toLocaleString()}>{localizedDate(game.first_release_date)}</time>
-                            { company ? <> by <strong>{company.name}</strong></> : <></> }
+                            <Company promise={company} />
                         </div>
                     </hgroup>
                     <div className="md:absolute actions gap-3 md:gap-6 md:right-0 flex">
