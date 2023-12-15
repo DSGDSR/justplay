@@ -76,11 +76,10 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
         setListsStates({ ...listsStates, ...listTypes.map((list, i) => ({ [list]: actions[i] })).reduce((a, b) => ({ ...a, ...b })) })
     }
 
-
-    return <div className={cn('flex flex-col gap-3.5 w-full', mode === 'card' && 'p-2')}>
+    return <div className={cn('flex flex-col gap-3.5 w-full', mode === 'card' && 'bg-black bg-opacity-70 rounded-md px-1.5')}>
         <WarningDialog open={listWarning} onOpenChange={setListWarning} updateList={updateList} />
 
-        <div className={cn('flex', mode === 'page' && 'gap-3.5', mode === 'card' && 'justify-between')}>
+        <div className={cn('flex', mode === 'page' ? 'gap-3.5' : 'justify-center')}>
             <ListButton mode={mode} onClick={(e: MouseEvent) => {
                 if (listsStates[ListTypes.Favorite] === ListStates.Loading) return
                 updateList([ListTypes.Favorite])
@@ -89,7 +88,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
                 listsStates[ListTypes.Favorite] === ListStates.Active ? 'Remove from favorites' : 'Add to favorites'
             }>
                 { listsStates[ListTypes.Favorite] !== ListStates.Loading ?
-                    <Heart active={listsStates[ListTypes.Favorite] === ListStates.Active} /> : <Spinner size={24}/> }
+                    <Heart active={listsStates[ListTypes.Favorite] === ListStates.Active} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
             </ListButton>
             <ListButton mode={mode} onClick={(e: MouseEvent) => {
                 if (listsStates[ListTypes.Playlist] === ListStates.Loading) return
@@ -99,7 +98,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
                 listsStates[ListTypes.Playlist] === ListStates.Active ? 'Remove from playlist' : 'Want to play'
             }>
                 { listsStates[ListTypes.Playlist] !== ListStates.Loading ?
-                    <Gamepad active={listsStates[ListTypes.Playlist] === ListStates.Active} /> : <Spinner size={24}/> }
+                    <Gamepad active={listsStates[ListTypes.Playlist] === ListStates.Active} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
             </ListButton>
             <ListButton mode={mode} onClick={(e: MouseEvent) => {
                 if (listsStates[ListTypes.Finished] === ListStates.Loading) return
@@ -113,7 +112,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
                 listsStates[ListTypes.Finished] === ListStates.Active ? 'Set as not finished' : 'Set as finished'
             }>
                 { listsStates[ListTypes.Finished] !== ListStates.Loading ?
-                    <Medal active={listsStates[ListTypes.Finished] === ListStates.Active} /> : <Spinner size={24}/> }
+                    <Medal active={listsStates[ListTypes.Finished] === ListStates.Active} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
             </ListButton>
         </div>
         { mode === 'page' ? <ListsDialog trigger={
@@ -135,13 +134,13 @@ const ListButton = ({ className, children, tooltip, mode, onClick }: {
     tooltip: string
     mode: 'card' | 'page'
     onClick: (e: MouseEvent<HTMLElement>) => void
-}) => <Tooltip className={mode === 'card' ? 'w-[30%]' : 'flex-grow'}>
+}) => <Tooltip className={mode === 'card' ? 'w-1/3' : 'flex-grow'}>
     <TooltipTrigger asChild>
-        <Button variant={mode === 'card' ? 'outline' : 'secondary'} className={cn('w-full h-16', mode === 'card' && 'h-12 shadow-lg', className)} onClick={onClick}>
+        <Button variant={mode === 'card' ? 'ghost' : 'secondary'} className={cn('w-full h-16', mode === 'card' && 'h-11 shadow-lg p-2.5 hover:[background-color:transparent;]', className)} onClick={onClick}>
             {children}
         </Button>
     </TooltipTrigger>
-    <TooltipContent sideOffset={7.5}>{ tooltip }</TooltipContent>
+    <TooltipContent hidden={mode === 'card'} sideOffset={7.5}>{ tooltip }</TooltipContent>
 </Tooltip>
 
 const WarningDialog = ({ open, onOpenChange, updateList }: {
