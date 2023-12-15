@@ -7,10 +7,11 @@ interface Props {
     condition?: boolean
     title?: string
     className?: string
+    pre?: ReactNode
 }
 
-const AsideSection = ({ children, title, condition, className }: Props) => {
-    return condition !== undefined && condition ? <Section title={title} className={cn('gap-2.5', className)} pre={<hr className="mt-4 mb-1.5" />}>
+const AsideSection = ({ children, title, condition, className, pre }: Props) => {
+    return condition === undefined || condition ? <Section title={title} className={cn('gap-2.5', className)} pre={ pre ? pre : <hr className="mt-4 mb-1.5" />}>
         { children }
     </Section> : <></>
 }
