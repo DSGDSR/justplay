@@ -34,7 +34,7 @@ const useServices = (services: IExternalGame[] | undefined, name: string) => {
                     {
                         category: Services.EShop,
                         uid: eShop?.id,
-                        url: `https://nintendo.es${eShop?.url}`
+                        url: `https://www.nintendo.com/us/search/#q=${eShop?.title}`
                     } as IExternalGame
                 ]
             }
