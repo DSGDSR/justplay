@@ -2,7 +2,7 @@
 
 import { Dialog, DialogTrigger, DialogContent } from '../Dialog'
 import clsx from 'clsx'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { IGameSearch } from '@/lib/models/game'
 import Kbd from '../Kbd'
 import Spinner from '../icons/Spinner'
@@ -11,15 +11,17 @@ import SearchList from './list'
 import SearchIcon from '../icons/Search'
 import { Endpoints } from '@/lib/enums'
 import { debounce, cleanQuery, apiUrl, cn } from '@/lib/utils'
+import X from '../icons/X'
 
 interface Props {
     className?: string
 }
 
 const SearchBox = ({ className }: Props) => {
-    const [isSearching, setIsSearching] = useState(false)
     const [games, setGames] = useState<IGameSearch[] | null>(null)
     const [isOpen, setIsOpen] = useState(false)
+    const input = useRef<HTMLInputElement>(null)
+    const [isSearching, setIsSearching] = useState(false)
 
     const keyHandler = (event: KeyboardEvent) => {
         if ((event.metaKey || event.ctrlKey) && event.code === 'KeyK') {
@@ -70,9 +72,17 @@ const SearchBox = ({ className }: Props) => {
         }
     }, [])
 
-    const clear = () => {
-        setIsOpen(false)
+    const clearInput = (focus = true) => {
+        if (input.current) {
+            input.current.value = ''
+            if (focus) input.current.focus()
+        }
         setGames(null)
+    }
+
+    const close = () => {
+        setTimeout(() => setIsOpen(false))
+        clearInput()
     }
 
     return (
@@ -106,13 +116,17 @@ const SearchBox = ({ className }: Props) => {
                             aria-expanded={games?.length ? 'true': 'false'}
                             type="text"
                             autoFocus={true}
+                            ref={input}
                             onChange={(event) => debouncedSearch(event.target.value)}
                         />
-                        { isSearching && <Spinner color="#a1a1aa" size={19}/> }
+                        { isSearching
+                            ? <Spinner color="#a1a1aa" size={20}/>
+                            : (input.current?.value && input.current?.value.length > 0
+                                ? <X className="stroke-[#a1a1aa] cursor-pointer" onClick={clearInput} /> : <></>) }
                     </div>
                 </header>
 
-                <SearchList games={games} onNavigate={clear}/>
+                <SearchList games={games} onNavigate={close}/>
 
                 <SearchFooter />
             </DialogContent>

@@ -109,7 +109,7 @@ const MobileSearchBox = () => {
             { isSearching && <Spinner onClick={clearInput} color="#a1a1aa" className="absolute right-3.5" size={18}/> }
         </div>
 
-        { isFocused ? <SearchList games={games} onNavigate={clear} className="border-b border-slate-800 w-screen right-0 top-[53px] bg-background/95 supports-backdrop-blur:bg-background/60 backdrop-blur h-[calc(100vh-118px)] overflow-y-scroll" /> : <></> }
+        { isFocused ? <SearchList games={games} onNavigate={clear} className="border-b border-slate-800 w-screen right-0 top-[53px] bg-background/95 supports-backdrop-blur:bg-background/60 backdrop-blur h-[calc(100vh-118px)] overflow-y-scroll absolute" /> : <></> }
     </>;
 }
 

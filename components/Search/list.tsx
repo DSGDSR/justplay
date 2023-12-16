@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import DefaultThumb from '../icons/DefaultThumb'
-import { useRouter } from 'next/navigation'
 import { IGameSearch } from '@/lib/models/game'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -13,9 +12,10 @@ interface Props {
     className?: string
 }
 
+const listItemId = (index: number) => `search-result-${index}`
+
 const SearchList = ({ games, onNavigate, className }: Props) => {
     const [cursor, setCursor] = useState(-1)
-    const { push } = useRouter()
 
     const mouseHandler = () => setCursor(-1)
     
@@ -25,14 +25,16 @@ const SearchList = ({ games, onNavigate, className }: Props) => {
         }
 
         if (event.code === 'ArrowUp') {
+            event.preventDefault()
             setCursor(c => c <= 0 ? games.length - 1 : c - 1)
         } else if (event.code === 'ArrowDown') {
+            event.preventDefault()
             setCursor(c => c >= games.length - 1 ? 0 : c + 1)
         } else if (event.code === 'Enter') {
             // Open game page
+            event.preventDefault()
             setCursor(c => {
-                onNavigate()
-                push(`/game/${games[c].slug}`)  
+                document.getElementById(`${listItemId(c)}`)?.click()
                 return -1
             })
         }
@@ -51,15 +53,15 @@ const SearchList = ({ games, onNavigate, className }: Props) => {
         }
     }, [games])
 
-    return <div className={cn('absolute md:bg-background', !(games instanceof Array) && 'md:hidden', className)}>
+    return <div className={cn('md:bg-background', !(games instanceof Array) && 'md:hidden', className)}>
         { games?.length ? <ul role="listbox" id="search-results" className="flex flex-col py-1.5s">
             { games.map((game, index) => (
-                <li key={index} className={clsx(
+                <li key={listItemId(index)} className={clsx(
                     'relative px-3.5 py-2.5',
                     cursor === index && 'focused',
                     cursor === -1 && 'hover:bg-accent hover:text-accent-foreground'
                 )}>
-                    <Link className="flex items-center" href={`/game/${game.slug}`} onClick={onNavigate}>
+                    <Link id={listItemId(index)} className="flex items-center" href={`/game/${game.slug}`} onClick={onNavigate}>
                         { game.cover?.url
                             ? <Image src={`https:${game.cover?.url}`} alt={game.name} width={44} height={44} className="rounded-md mr-3"/>
                             : <DefaultThumb className="h-10 w-10 rounded-md mr-3"/> }
