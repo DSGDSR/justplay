@@ -15,4 +15,7 @@ export enum Endpoints {
 
     // LISTS
     Lists = '/lists',
+
+    // TWITCH
+    TopGameStreamings = '/twitch/game/:gameId',
 }

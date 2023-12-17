@@ -3,7 +3,7 @@
 import { Dialog, DialogContent } from './Dialog'
 import { Button, ButtonProps } from './Button'
 import { useEffect, useState } from 'react'
-import Slider from './Slider'
+import Carousel from './Carousel'
 import { IScreenshot } from '@/lib/models/media'
 import Photo from './icons/Photo'
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip'
@@ -47,7 +47,7 @@ const Screenshots = ({ screenshots }: Props) => {
             size={'embed'}
             onOpenAutoFocus={e => e.preventDefault()}
         >
-            <Slider screenshots={screenshots} />
+            <Carousel screenshots={screenshots} />
         </DialogContent>
     </Dialog> : <></>
 }

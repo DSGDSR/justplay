@@ -4,7 +4,7 @@ export enum Services {
     // Youtube = 10,
     Microsoft = 11,
     Apple = 13,
-    // Twitch = 14,
+    Twitch = 14,
     Android = 15,
     AmazonAsin = 20,
     AmazonLuna = 22,
@@ -28,7 +28,7 @@ export enum ServiceType {
     Streaming = 'stream',
 }
 
-export const ServiceByType: Record<Services, ServiceType> = {
+export const ServiceByType: Partial<Record<Services, ServiceType>> = {
     [Services.Steam]: ServiceType.Buy,
     [Services.GOG]: ServiceType.Buy,
     [Services.Microsoft]: ServiceType.Buy,
@@ -46,7 +46,7 @@ export const ServiceByType: Record<Services, ServiceType> = {
     [Services.XboxGamePass]: ServiceType.Subscription,
 }
 
-export const ServiceTypeNames: Record<Services, string> = {
+export const ServiceTypeNames: Partial<Record<Services, string>> = {
     [Services.Steam]: 'Steam',
     [Services.GOG]: 'GOG',
     [Services.Microsoft]: 'Microsoft Xbox',

@@ -23,7 +23,7 @@ export async function GET(_request: NextRequest, query: GETeShopGamesQuery) {
 
     try {
         const file: eShopItem[] = await fetch(`${domain}/data/eshop.json`).then((r) => r.json());
-        const results = file.filter(g => similarity(g.title, search) > 0.95)
+        const results = file.filter(g => g.title && similarity(g.title, search) > 0.95)
 
         return HttpResponse(results)
     } catch (error) {

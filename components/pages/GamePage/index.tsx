@@ -7,7 +7,7 @@ import GameActions from '@/components/GameActions'
 import { cn, localizedDate, unix2Date } from '@/lib/utils'
 import Platforms from '@/components/Platforms'
 import HowLongToBeat from '@/components/HowLongToBeat'
-import CardsSlider from '@/components/CardsSlider'
+import Slider from '@/components/Slider'
 import Section from '@/components/Section'
 import Link from 'next/link'
 import Igdb from '@/components/icons/Igdb'
@@ -22,6 +22,9 @@ import { IGenre } from '@/lib/models/genre'
 import ReadMore from '@/components/ReadMore'
 import { useGenres } from '@/hooks/use-genres'
 import Company from '../../Company'
+import GameCard from '@/components/GameCard'
+import { Services } from '@/lib/enums'
+import { StreamingSlider } from '@/components/Streaming'
 
 interface Props {
     slug: string
@@ -60,6 +63,8 @@ export default async function GamePage({ slug }: Props) {
 
     const genres = useGenres(game.genres)
 
+    const twitchGame = game.external_games?.find(g => g.category === Services.Twitch)
+
     return <>
         { screenshot ? <figure className="relative h-[236px] sm:h-64 md:h-96 w-full thumb-filter blur">
             <PreloadedImage
@@ -92,8 +97,8 @@ export default async function GamePage({ slug }: Props) {
                 <div className="main-details relative w-full flex flex-col justify-end md:mb-10">
                     <hgroup className="flex flex-col gap-3 w-full mb-7 md:mb-14">
                         <h1 className={cn(
-                            game.name?.length > 50 ? 'text-lg' : (game.name?.length > 15 ? 'text-2xl' : (game.name?.length > 10 ? 'text-3xl' : 'text-4xl')),
-                            'break-words sm:text-4xl md:text-7xl font-bold text-shadow-lg mb-1'
+                            game.name?.length > 40 ? 'text-lg' : (game.name?.length > 15 ? 'text-xl' : (game.name?.length > 10 ? 'text-2xl' : 'text-3xl')),
+                            'break-words sm:text-4xl md:text-7xl font-bold text-shadow-lg sm:mb-1'
                         )}>{game.name}</h1>
                         <GameGenres className="hidden sm:flex" genres={genres} />
                         <div className="hidden sm:block text-base md:text-lg text-shadow">
@@ -150,12 +155,22 @@ export default async function GamePage({ slug }: Props) {
                     </Section>
 
                     <HowLongToBeat gameName={game.name} />
+                    
+                    { twitchGame ? <StreamingSlider externalGame={twitchGame} isSection={true}/> : <></> }
 
                     { game.similar_games?.length ? <Section title="Similar games">
-                        <CardsSlider lists={lists ?? undefined} games={
-                            // Sort games by popularity
-                            game.similar_games.sort((a, b) => b.rating - a.rating)
-                        } lazy={true} />
+                        <Slider items={
+                            // Sort games by popularit
+                            game.similar_games.sort((a, b) => b.rating - a.rating).map(game => (
+                                <GameCard
+                                    key={game.id}
+                                    game={game}
+                                    className="inline-block mr-2 md:mr-3 last:mr-0"
+                                    lazy={true}
+                                    lists={lists ?? undefined}
+                                />
+                            ))
+                        }/>
                     </Section> : <></> }
                 </article>
             </main>

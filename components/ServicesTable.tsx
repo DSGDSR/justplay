@@ -48,7 +48,7 @@ const ServicesTable = ({ services, name }: Props) => {
                         idx === Object.keys(refinedServices).length - 1 && 'border-b'
                     )}>
                         { services.map((service, idx) => <li key={idx}>
-                            {ServiceIcons[service.category](service)}
+                            {ServiceIcons[service.category]?.(service)}
                         </li>) }
                     </ul>
                 </div>
@@ -71,7 +71,7 @@ const ServiceIcon = ({ children, className, service, url }: {
     <TooltipContent sideOffset={7.5}>{ ServiceTypeNames[service.category] }</TooltipContent>
 </Tooltip>
 
-export const ServiceIcons: Record<Services, (service: IExternalGame) => ReactNode> = {
+export const ServiceIcons: Partial<Record<Services, (service: IExternalGame) => ReactNode>> = {
     [Services.Steam]: (s) => <ServiceIcon className="pt-1 overflow-hidden bg-gradient-to-b from-[#152437] to-[#1f76a8]"
         url={`https://store.steampowered.com/app/${s.uid}`} service={s}
     >
