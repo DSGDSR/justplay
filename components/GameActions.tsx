@@ -88,7 +88,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
                 listsStates[ListTypes.Favorite] === ListStates.Active ? 'Remove from favorites' : 'Add to favorites'
             }>
                 { listsStates[ListTypes.Favorite] !== ListStates.Loading ?
-                    <Heart active={listsStates[ListTypes.Favorite] === ListStates.Active} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
+                    <Heart active={listsStates[ListTypes.Favorite] === ListStates.Active} className={cn(mode === 'card' && 'hover:stroke-slate-400')} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
             </ListButton>
             <ListButton mode={mode} onClick={(e: MouseEvent) => {
                 if (listsStates[ListTypes.Playlist] === ListStates.Loading) return
@@ -98,7 +98,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
                 listsStates[ListTypes.Playlist] === ListStates.Active ? 'Remove from playlist' : 'Want to play'
             }>
                 { listsStates[ListTypes.Playlist] !== ListStates.Loading ?
-                    <Gamepad active={listsStates[ListTypes.Playlist] === ListStates.Active} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
+                    <Gamepad active={listsStates[ListTypes.Playlist] === ListStates.Active} className={cn(mode === 'card' && 'hover:stroke-slate-400')} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
             </ListButton>
             <ListButton mode={mode} onClick={(e: MouseEvent) => {
                 if (listsStates[ListTypes.Finished] === ListStates.Loading) return
@@ -112,7 +112,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
                 listsStates[ListTypes.Finished] === ListStates.Active ? 'Set as not finished' : 'Set as finished'
             }>
                 { listsStates[ListTypes.Finished] !== ListStates.Loading ?
-                    <Medal active={listsStates[ListTypes.Finished] === ListStates.Active} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
+                    <Medal active={listsStates[ListTypes.Finished] === ListStates.Active} className={cn(mode === 'card' && 'hover:stroke-slate-400')} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
             </ListButton>
         </div>
         { mode === 'page' ? <ListsDialog trigger={

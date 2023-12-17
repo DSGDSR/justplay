@@ -1,4 +1,6 @@
-interface Props extends React.HTMLAttributes<SVGElement> {
+import { HTMLAttributes } from 'react'
+
+interface Props extends HTMLAttributes<SVGElement> {
     direction: 'up' | 'down' | 'left' | 'right'
     strokeWidth?: number
 }
