@@ -10,8 +10,8 @@ interface Props {
 }
 
 const socialIcon: Record<OathProviders, ReactNode> = {
-    [OathProviders.Twitch]: <Twitch size={26} strokeWidth={2} className="stroke-inherit"/>,
-    [OathProviders.Discord]: <Discord size={26} strokeWidth={2} className="stroke-inherit"/>
+    [OathProviders.Twitch]: <Twitch size={26} strokeWidth={2} className="stroke-inherit lg:w-7 lg:h-7"/>,
+    [OathProviders.Discord]: <Discord size={26} strokeWidth={2} className="stroke-inherit lg:w-7 lg:h-7"/>
 }
 
 const socialUrl: Record<OathProviders, (account: ExternalAccount) => string> = {
@@ -25,7 +25,7 @@ const ExternalAccounts = ({ externalAccounts }: Props) => {
             href={socialUrl[account.provider as OathProviders](account)}
             target="_blank"
             key={`external_account_${idx}`}
-            className="flex text-sm items-center gap-2 opacity-80 hover:text-primary hover:stroke-primary transition-all stroke-white"
+            className="flex text-sm lg:text-base items-center gap-2 opacity-80 hover:text-primary hover:stroke-primary transition-all stroke-white"
         >
             {socialIcon[account.provider as OathProviders]}
             {account.username}

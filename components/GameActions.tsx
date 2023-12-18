@@ -36,9 +36,10 @@ interface Props {
     gameId: number
     lists: ListsItemsResponse | null
     mode?: 'card' | 'page'
+    className?: string
 }
 
-const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
+const GameActions = ({ gameId, lists, mode = 'page', className }: Props) => {
     const { isSignedIn, userId } = useAuth()
     const { info, error } = useToast()
     const [listWarning, setListWarning] = useState(false)
@@ -76,10 +77,10 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
         setListsStates({ ...listsStates, ...listTypes.map((list, i) => ({ [list]: actions[i] })).reduce((a, b) => ({ ...a, ...b })) })
     }
 
-    return <div className={cn('flex flex-col gap-3.5 w-full', mode === 'card' && 'bg-black bg-opacity-70 rounded-md px-1.5')}>
+    return <div className={cn('flex flex-col gap-3.5 w-full', mode === 'card' && 'bg-black bg-opacity-70 rounded-md px-1.5', className)}>
         <WarningDialog open={listWarning} onOpenChange={setListWarning} updateList={updateList} />
 
-        <div className={cn('flex', mode === 'page' ? 'gap-3.5' : 'justify-center')}>
+        <div className={cn('flex flex-wrap', mode === 'page' ? 'gap-3.5' : 'justify-center')}>
             <ListButton mode={mode} onClick={(e: MouseEvent) => {
                 if (listsStates[ListTypes.Favorite] === ListStates.Loading) return
                 updateList([ListTypes.Favorite])
@@ -90,6 +91,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
                 { listsStates[ListTypes.Favorite] !== ListStates.Loading ?
                     <Heart active={listsStates[ListTypes.Favorite] === ListStates.Active} className={cn(mode === 'card' && 'hover:stroke-slate-400')} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
             </ListButton>
+
             <ListButton mode={mode} onClick={(e: MouseEvent) => {
                 if (listsStates[ListTypes.Playlist] === ListStates.Loading) return
                 updateList([ListTypes.Playlist])
@@ -100,6 +102,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
                 { listsStates[ListTypes.Playlist] !== ListStates.Loading ?
                     <Gamepad active={listsStates[ListTypes.Playlist] === ListStates.Active} className={cn(mode === 'card' && 'hover:stroke-slate-400')} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
             </ListButton>
+
             <ListButton mode={mode} onClick={(e: MouseEvent) => {
                 if (listsStates[ListTypes.Finished] === ListStates.Loading) return
                 if (listsStates[ListTypes.Playlist] === ListStates.Active && listsStates[ListTypes.Finished] === ListStates.Inactive) {
@@ -114,17 +117,29 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
                 { listsStates[ListTypes.Finished] !== ListStates.Loading ?
                     <Medal active={listsStates[ListTypes.Finished] === ListStates.Active} className={cn(mode === 'card' && 'hover:stroke-slate-400')} strokeWidth={mode === 'card' ? 2 : 1.5} /> : <Spinner size={24} strokeWidth={mode === 'card' ? 2 : 1.5}/> }
             </ListButton>
+
+            { mode === 'page' ? <ListsDialog trigger={
+                <div className='flex flex-grow md:basis-full'>
+                    <Button
+                        variant="secondary"
+                        size="lg"
+                        className="w-full py-6 hidden md:flex"
+                        onClick={() => !userId && info('You must be signed in to use lists.')}
+                    >
+                        <PlaylistAdd className="mr-2"/> Add to list
+                    </Button>
+
+                    <ListButton
+                        className="md:hidden flex"
+                        mode={mode}
+                        onClick={() => !userId && info('You must be signed in to use lists.')}
+                        tooltip="Handle custom lists"
+                    >
+                        <PlaylistAdd />
+                    </ListButton>
+                </div>
+            } userId={userId} gameId={gameId} gamesListed={lists} /> : <></> }
         </div>
-        { mode === 'page' ? <ListsDialog trigger={
-            <Button
-                variant="secondary"
-                size="lg"
-                className="w-full py-6"
-                onClick={() => !userId && info('You must be signed in to use lists.')}
-            >
-                <PlaylistAdd className="mr-2"/> Add to list
-            </Button>
-        } userId={userId} gameId={gameId} gamesListed={lists} /> : <></> }
     </div>
 }
 

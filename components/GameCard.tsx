@@ -9,12 +9,12 @@ import GameActions from './GameActions';
 
 interface Props {
     game: IGame
-    className: string
+    className?: string
     lazy?: boolean
-    lists?: ListsItemsResponse
+    lists?: ListsItemsResponse | null
 }
 
-const GameCard = ({ game, className, lazy, lists }: Props) => {
+const GameCard = ({ game, className, lazy = true, lists }: Props) => {
     return <div className={cn('relative flex flex-col w-32 md:w-48 group rounded-md overflow-hidden', className)}>
         <div className={cn(
             'hidden md:block w-9/12 absolute mx-auto z-[5] pointer-events-none group-hover:pointer-events-auto bottom-4',

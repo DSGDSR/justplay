@@ -100,7 +100,7 @@ const SliderControl = ({ direction, onClick, className, onMouseEnter, onMouseLea
     className?: string
 }) => {
     return <span className={cn(
-        'z-10 w-7 h-7 md:w-10 rounded-full md:h-10 bg-background opacity-90 self-center transition-opacity flex justify-center items-center pointer-events-auto cursor-pointer border border-slate-700',
+        'z-10 w-10 rounded-full h-10 bg-background opacity-90 self-center transition-opacity flex justify-center items-center pointer-events-auto cursor-pointer border border-slate-700',
         direction === 'left' ? 'ml-2' : 'mr-2',
         className
     )} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
