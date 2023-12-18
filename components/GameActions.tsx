@@ -124,7 +124,7 @@ const GameActions = ({ gameId, lists, mode = 'page' }: Props) => {
             >
                 <PlaylistAdd className="mr-2"/> Add to list
             </Button>
-        } userId={userId} gameId={gameId} gameLists={lists} /> : <></> }
+        } userId={userId} gameId={gameId} gamesListed={lists} /> : <></> }
     </div>
 }
 

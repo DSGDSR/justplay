@@ -18,18 +18,20 @@ import { useToast } from '@/hooks/use-toast'
 import { addToList, createList, getLists, removeFromList } from '@/services/lists'
 import { ListTypes } from '@/lib/enums'
 import Spinner from './icons/Spinner'
+import { IHttpResponse } from '@/lib/models/response'
 
 interface Props {
-    gameLists: ListsItemsResponse | null
+    gamesListed: ListsItemsResponse | null
     trigger: ReactNode
     userId: string | null | undefined
     gameId: number
 }
 
-const ListsDialog = ({ trigger, userId, gameId, gameLists }: Props) => {
-    // get the user's lists
+const ListsDialog = ({ trigger, userId, gameId, gamesListed }: Props) => {
     const [lists, setLists] = useState<List[]>([])
+    const [listedGames, setListedGames] = useState<ListsItemsResponse | null>(gamesListed)
     const [loading, setLoading] = useState<boolean>(false)
+    const { error } = useToast()
 
     const updateLists = () => {
         if (!userId) return
@@ -41,18 +43,28 @@ const ListsDialog = ({ trigger, userId, gameId, gameLists }: Props) => {
 
     useEffect(() => updateLists(), [userId])
 
+    const updateListedGames = (gamesResponse: IHttpResponse<ListsItemsResponse | null> | null) => {
+        if (!gamesResponse?.data) {
+            error('Error ocurred when adding/removing the game from the list. Please try again later.')
+            return
+        }
+
+        setLoading(false)
+        setListedGames(gamesResponse.data)
+    }
+
     const toggleList = (listId: string, addition: boolean) => {
         if (!userId) return
 
         setLoading(true)
         if (addition) {
             addToList(userId, gameId, listId, ListTypes.Custom)
-                .then(_ => setLoading(false))
-                .catch(err => console.log(err)) // TODO Control
+                .then(updateListedGames)
+                .catch(err => error('The game could not be added to the list. Please try again later.')) // TODO Control
         } else {
             removeFromList(userId, gameId, listId, ListTypes.Custom)
-                .then(_ => setLoading(false))
-                .catch(err => console.log(err)) // TODO Control
+                .then(updateListedGames)
+                .catch(err => error('The game could not be removed from the list. Please try again later.')) // TODO Control
         }
     }
 
@@ -84,7 +96,7 @@ const ListsDialog = ({ trigger, userId, gameId, gameLists }: Props) => {
                     key={list.id}
                     list={list}
                     toggleList={toggleList}
-                    isAdded={!!gameLists?.[ListTypes.Custom]?.find(l => l.game === gameId && l.custom_list_id === list.id) ?? false}
+                    isAdded={!!listedGames?.[ListTypes.Custom]?.find(l => l.game === gameId && l.custom_list_id === list.id) ?? false}
                 />) }
                 <CreateList onCreate={updateLists} userId={userId} />
 
@@ -148,17 +160,15 @@ const CreateList = ({ onCreate, userId }: {
         }
     }
 
-    const cancel = () => {
-        setOpen(false)
-    }
-
     return <>
         { open
             ? <>
                 <div className="h-11 flex bg-slate-800 rounded-md items-center pl-3 pr-1.5 gap-1 z-[1]">
-                    <input ref={nameInput} placeholder="List name" type="text" autoFocus className="w-full h-11 text-white outline-none text-sm bg-transparent pr-2"/>
+                    <input ref={nameInput} onKeyDown={e => {
+                        if (e.key === 'Enter') create()
+                    }} placeholder="List name" type="text" autoFocus className="w-full h-11 text-white outline-none text-sm bg-transparent pr-2"/>
                     <Button variant="outline" className={'right px-2 py-1 h-8 text-sm font-normal'} onClick={create}>Create</Button>
-                    <Button variant="outline" className="right px-2 py-1 h-8" onClick={cancel} >
+                    <Button variant="outline" className="right px-2 py-1 h-8" onClick={() => setOpen(false)} >
                         <X className="w-4"/>
                     </Button>
                 </div>

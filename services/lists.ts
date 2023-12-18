@@ -50,7 +50,7 @@ export const toggleList = async (
     listId: string | null,
     listType: ListTypes,
     action: ListActions
-): Promise<IHttpResponse<null> | null> => {
+): Promise<IHttpResponse<ListsItemsResponse | null> | null> => {
     return await fetch('/api/lists', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

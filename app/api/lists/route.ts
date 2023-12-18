@@ -100,8 +100,7 @@ const add = async (
     ]);
 
     if (rowCount > 0) {
-        // await updateListsMetadata(userId, client)
-        return HttpResponse(null, true)
+        return await getAll(userId, client)
     }
 
     return HttpResponse(null, false, {
@@ -126,8 +125,7 @@ const remove = async (
     listId !== null ? [userId, listType, listId, gameId] : [userId, listType, gameId]);
 
     if (rowCount > 0) {
-        // await updateListsMetadata(userId, client)
-        return HttpResponse(null, true)
+        return await getAll(userId, client)
     }
 
     return HttpResponse(null, false, {
