@@ -112,9 +112,17 @@ export default async function GamePage({ slug }: Props) {
                     </div>
                 </div>
             </header>
-            <main className="flex gap-8 mt-20 sm:mt-24 md:mt-3.5 flex-col md:flex-row">
-                <aside style={{ flex: '0 0 280px' }} className="hidden md:block">
-                    <GameActions gameId={game.id} lists={lists} />
+            <main className="flex gap-10 mt-20 sm:mt-24 md:mt-3.5 flex-col-reverse md:flex-row">
+                <aside style={{ flex: '0 0 280px' }}>
+                    <div className="hidden md:block">
+                        <GameActions gameId={game.id} lists={lists} />
+                    </div>
+
+                    <div className="md:hidden block">
+                        <AsideSection title="Genres" condition={!!genres.length}>    
+                            <GameGenres className="mb-1" genres={genres} />
+                        </AsideSection>
+                    </div>
 
                     <AsideSection title="Rating" condition={game.rating_count > 0}>
                         <Link href={game.url} className="text-sm flex items-center gap-2" target="_blank"><Igdb className="fill-purple-500 h-3"/> {game.rating?.toFixed(1)} ({game.rating_count})</Link>
@@ -141,8 +149,8 @@ export default async function GamePage({ slug }: Props) {
                         data-full-width-responsive="true"
                     />
                 </aside>
-                <article className="-mt-14 min-w-0 flex flex-col gap-10 sm:gap-12" style={{ flex: '1 1 0' }}>
-                    <GameGenres className="sm:hidden" genres={genres} />
+                <article className="-mt-16 md:-mt-14 min-w-0 flex flex-col gap-10 sm:gap-12" style={{ flex: '1 1 0' }}>
+                    <GameActions className="md:hidden" gameId={game.id} lists={lists} />
 
                     <Section title="Platforms">
                         <Platforms platforms={game.platforms} />
@@ -166,7 +174,6 @@ export default async function GamePage({ slug }: Props) {
                                     key={game.id}
                                     game={game}
                                     className="inline-block mr-2 md:mr-3 last:mr-0"
-                                    lazy={true}
                                     lists={lists ?? undefined}
                                 />
                             ))

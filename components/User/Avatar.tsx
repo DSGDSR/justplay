@@ -60,7 +60,7 @@ const UserAvatar = () => {
     </div>
 }
 
-const ViewProfile = ({ classes, username }: any) => <Link href={`/user/${username}`} className={classes.parent} role="menuitem">
+const ViewProfile = ({ classes, username }: any) => <Link href={`/${username}`} className={classes.parent} role="menuitem">
     <div className={classes.icon}>
         <svg className={cn(classes.svg, 'w-4 h-4')} width="24" height="24" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

@@ -1,14 +1,23 @@
 import AsideSection from '@/components/AsideSection'
 import ExternalAccounts from '@/components/ExternalAccounts'
+import GamesList from '@/components/GamesList'
+import { useServerPathname } from '@/hooks/use-server-pathname'
+import { ListTypes } from '@/lib/enums'
+import { ListsItemsResponse } from '@/lib/models/lists'
 import { User } from '@clerk/nextjs/server'
 import Image from 'next/image'
 import Link from 'next/link'
 
 interface Props {
     user: User
+    listedGames: ListsItemsResponse | null
 }
 
-export default async function UserPage({ user }: Props) {
+export default async function UserPage({ user, listedGames }: Props) {
+    const lastFavorite = listedGames?.[ListTypes.Favorite]?.slice(0, 4) ?? []
+    const lastFinished = listedGames?.[ListTypes.Finished]?.slice(0, 4) ?? []
+    const pathname = useServerPathname()
+
     return <section className="container relative py-16 flex flex-col gap-14">
         <div className="flex gap-10">
             <Link href={user.imageUrl} target='_blank' rel='noopener noreferrer'>
@@ -25,11 +34,22 @@ export default async function UserPage({ user }: Props) {
             </hgroup>
         </div>
 
-        <main className="flex gap-8 flex-col md:flex-row">
-            <div style={{ flex: '1 1 0' }}>
-                <div>test</div>
+        <main className="flex gap-10 flex-col md:flex-row">
+            <div style={{ flex: '1 1 0' }} className="flex flex-col gap-10 sm:gap-12">
+                <GamesList
+                    list={lastFavorite.slice(0,4)}
+                    listedGames={listedGames}
+                    sectionName="Favorite games"
+                    sectionLink={lastFavorite.length > 3 ? `${pathname}/favorites` : undefined}
+                />
+                { lastFinished.length ? <GamesList
+                    list={lastFinished.slice(0,4)}
+                    listedGames={listedGames}
+                    sectionName="Last finished games"
+                    sectionLink={lastFavorite.length > 3 ? `${pathname}/finished` : undefined}
+                /> : <></> }
             </div>
-            <aside style={{ flex: '0 0 280px' }} >
+            <aside style={{ flex: '0 0 320px' }} >
                 <AsideSection
                     title="Connected accounts"
                     condition={user.externalAccounts?.length > 0}

@@ -11,3 +11,10 @@ export async function getGame(slug: string): Promise<IHttpResponse<IGame>> {
     if (!res.ok) notFound()
     return res.json()
 }
+
+export async function getGamesList(gameIds: number[]): Promise<IHttpResponse<IGame[]>> {
+    const url = `${apiUrl}${Endpoints.GamesListByIds}`
+    const res = await fetch(url.replace(':ids', `(${gameIds.join(',')})`))
+
+    return res.json()
+}
