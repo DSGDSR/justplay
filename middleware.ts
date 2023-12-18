@@ -8,10 +8,11 @@ export default authMiddleware({
         // Public pages
         '/',
         '/game/(.*)',
-        '/user/(.*)',
+        '/(.*)', // USER PAGES (RISKY)
 
         // Public API routes
         '/api/games/(.*)',
+        '/api/twitch/(.*)',
         '/api/companies/(.*)',
         '/api/eshop/(.*)',
         '/api/hltb',
