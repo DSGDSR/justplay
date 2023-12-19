@@ -1,7 +1,6 @@
 import AsideSection from '@/components/AsideSection'
 import ExternalAccounts from '@/components/ExternalAccounts'
 import GamesList from '@/components/GamesList'
-import { useServerPathname } from '@/hooks/use-server-pathname'
 import { ListTypes } from '@/lib/enums'
 import { ListsItemsResponse } from '@/lib/models/lists'
 import { User } from '@clerk/nextjs/server'
@@ -15,8 +14,8 @@ interface Props {
 
 export default async function UserPage({ user, listedGames }: Props) {
     const lastFavorite = listedGames?.[ListTypes.Favorite]?.slice(0, 4) ?? []
-    const lastFinished = listedGames?.[ListTypes.Finished]?.slice(0, 4) ?? []
-    const pathname = useServerPathname()
+    const finished = listedGames?.[ListTypes.Finished]?.slice(0, 4) ?? []
+    const wantToPlay = listedGames?.[ListTypes.Playlist]?.slice(0, 4) ?? []
 
     return <section className="container relative py-16 flex flex-col gap-14">
         <div className="flex gap-10">
@@ -34,30 +33,56 @@ export default async function UserPage({ user, listedGames }: Props) {
             </hgroup>
         </div>
 
-        <main className="flex gap-10 flex-col md:flex-row">
+        <main className="flex gap-10 md:gap-12 flex-col md:flex-row">
             <div style={{ flex: '1 1 0' }} className="flex flex-col gap-10 sm:gap-12">
                 <GamesList
-                    list={lastFavorite.slice(0,4)}
+                    list={lastFavorite}
                     listedGames={listedGames}
                     sectionName="Favorite games"
-                    sectionLink={lastFavorite.length > 3 ? `${pathname}/favorites` : undefined}
+                    link={lastFavorite.length > 3 ? `/${user}/favorites` : undefined}
                 />
-                { lastFinished.length ? <GamesList
-                    list={lastFinished.slice(0,4)}
-                    listedGames={listedGames}
-                    sectionName="Last finished games"
-                    sectionLink={lastFavorite.length > 3 ? `${pathname}/finished` : undefined}
-                /> : <></> }
             </div>
             <aside style={{ flex: '0 0 320px' }} >
                 <AsideSection
                     title="Connected accounts"
                     condition={user.externalAccounts?.length > 0}
-                    className="gap-3.5"
                     pre={<></>}
                 >
                     <ExternalAccounts externalAccounts={user.externalAccounts} />
                 </AsideSection>
+
+                <AsideSection
+                    title="Want to play"
+                    link={`/${user}/playlist`}
+                    linkText={
+                        listedGames?.[ListTypes.Playlist] && listedGames?.[ListTypes.Playlist].length > 4
+                            ? listedGames?.[ListTypes.Playlist].length : undefined
+                    }
+                >
+                    <GamesList
+                        list={wantToPlay}
+                        listedGames={listedGames}
+                        link={`/${user}/playlist`}
+                        variant='compact'
+                    />
+                </AsideSection>
+
+                <AsideSection
+                    title="Finished games"
+                    link={`/${user}/finished`}
+                    linkText={
+                        listedGames?.[ListTypes.Finished] && listedGames?.[ListTypes.Finished].length > 4
+                            ? listedGames?.[ListTypes.Finished].length : undefined
+                    }
+                >
+                    <GamesList
+                        list={finished}
+                        listedGames={listedGames}
+                        link={`/${user}/finished`}
+                        variant='compact'
+                    />
+                </AsideSection>
+                
             </aside>
         </main>
     </section>
