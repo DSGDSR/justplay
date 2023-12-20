@@ -6,6 +6,7 @@ export type ListsItemsResponse = Record<ListTypes, ListItem[]>
 
 export interface List {
     id: string
+    slug: string
     user_id: string
     name: string
 }

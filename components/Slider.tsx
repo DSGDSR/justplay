@@ -11,44 +11,29 @@ interface Props {
 
 const Slider = ({ className, items }: Props) => {
     const slider = useRef<HTMLDivElement>(null)
-    const [scrollInterval, setScrollInterval] = useState<NodeJS.Timeout | null>(null)
     const [scrollPosition, setScrollPosition] = useState<'left' | 'right' | 'both' | 'none'>('left')
 
-    const getScrollPosition = () => {
-        return slider?.current?.scrollLeft ?? 0
-    }
+    const getScrollPosition = () => slider?.current?.scrollLeft ?? 0
 
-    const scrollRight = () => {
-        stopAutoScroll()
+    const scroll = (direction: 'left' | 'right') => {
+        // stopAutoScroll()
+        const scrollPosition = getScrollPosition()
         slider?.current?.scroll({
-            left: getScrollPosition() + 450,
-            behavior: 'smooth'
-        })
-    }
-    
-    const scrollLeft = () => {
-        stopAutoScroll()
-        slider?.current?.scroll({
-            left: getScrollPosition() - 450,
+            left: direction === 'left'
+                ? scrollPosition - getScrollWidth()
+                : scrollPosition + getScrollWidth(),
             behavior: 'smooth'
         })
     }
 
-    const autoScroll = (direction: 'left' | 'right') => {
-        setScrollInterval(setInterval(() => {
-            if (!slider?.current) return
+    const getScrollWidth = () => {
+        const card = slider?.current?.children[0] ?? null
+        if (!card) return 450
 
-            slider.current.scrollLeft = direction === 'left'
-                ? slider.current.scrollLeft - 2.5
-                : slider.current.scrollLeft + 2.5
-        }, 10))
-    }
-
-    const stopAutoScroll = () => {
-        if (scrollInterval) {
-            clearInterval(scrollInterval)
-            setScrollInterval(null)
-        }
+        const cardMargin = parseInt(window.getComputedStyle(card).marginRight) ?? 0
+        const cardWidth = card.clientWidth + cardMargin
+        const sliderWidth = slider?.current?.clientWidth ?? 1
+        return Math.floor(sliderWidth / cardWidth) * cardWidth
     }
 
     const listenToScroll = () => {
@@ -82,12 +67,12 @@ const Slider = ({ className, items }: Props) => {
             {items}
         </div>
         <div className="controls absolute w-full flex justify-between h-full -top-1 pointer-events-none">
-            <SliderControl direction="left" onClick={scrollLeft} className={cn(
+            <SliderControl direction="left" onClick={() => scroll('left')} className={cn(
                 ['left', 'none'].includes(scrollPosition) && 'opacity-0 pointer-events-none'
-            )} onMouseEnter={() => autoScroll('left')} onMouseLeave={stopAutoScroll}/>
-            <SliderControl direction="right" onClick={scrollRight} className={cn(
+            )} /> {/*onMouseEnter={() => autoScroll('left')} onMouseLeave={stopAutoScroll}/>*/}
+            <SliderControl direction="right" onClick={() => scroll('right')} className={cn(
                 ['right', 'none'].includes(scrollPosition) && 'opacity-0 pointer-events-none'
-            )} onMouseEnter={() => autoScroll('right')} onMouseLeave={stopAutoScroll}/>
+            )} /> {/*onMouseEnter={() => autoScroll('right')} onMouseLeave={stopAutoScroll}/>*/}
         </div>
     </div>
 }
@@ -95,8 +80,8 @@ const Slider = ({ className, items }: Props) => {
 const SliderControl = ({ direction, onClick, className, onMouseEnter, onMouseLeave }: {
     direction: 'left' | 'right',
     onClick: () => void,
-    onMouseEnter: () => void,
-    onMouseLeave: () => void,
+    onMouseEnter?: () => void,
+    onMouseLeave?: () => void,
     className?: string
 }) => {
     return <span className={cn(
@@ -109,3 +94,24 @@ const SliderControl = ({ direction, onClick, className, onMouseEnter, onMouseLea
 }
 
 export default Slider
+
+
+/*
+const [scrollInterval, setScrollInterval] = useState<NodeJS.Timeout | null>(null)
+    
+const autoScroll = (direction: 'left' | 'right') => {
+    setScrollInterval(setInterval(() => {
+        if (!slider?.current) return
+
+        slider.current.scrollLeft = direction === 'left'
+            ? slider.current.scrollLeft - 2.5
+            : slider.current.scrollLeft + 2.5
+    }, 10))
+}
+
+const stopAutoScroll = () => {
+    if (scrollInterval) {
+        clearInterval(scrollInterval)
+        setScrollInterval(null)
+    }
+}*/

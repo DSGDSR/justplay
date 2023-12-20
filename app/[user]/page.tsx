@@ -19,7 +19,6 @@ export async function generateMetadata({ params: { user } }: UserPageRequest): P
 }
 
 export default async function Page({ params: { user: username } }: UserPageRequest) {
-
     const { rows } = await db.sql`SELECT * FROM users WHERE username = ${username}`
     const user = rows[0]?.id ? await clerkClient.users.getUser(rows[0].id) : null
 

@@ -2,7 +2,8 @@ import { ListActions, ListStates, ListTypes } from '@/lib/enums';
 import {
     HttpResponse,
     ListNameSchemma,
-    MissingBodyError
+    MissingBodyError,
+    slugify
 } from '@/lib/utils'
 import { VercelPoolClient, db } from '@vercel/postgres'
 import { NextRequest } from 'next/server'
@@ -14,9 +15,10 @@ const createList = async (userId: string, name: string, client: VercelPoolClient
     try {
         parse(ListNameSchemma, name);
 
-        const { rowCount } = await client.query('INSERT INTO list (user_id, name) VALUES ($1, $2);', [
+        const { rowCount } = await client.query('INSERT INTO list (user_id, name, slug) VALUES ($1, $2, $3);', [
             userId,
-            name
+            name,
+            slugify(name)
         ]);
 
         if (rowCount > 0) {
@@ -52,14 +54,14 @@ const deleteList = async (
 
 const getLists = async (userId: string, client: VercelPoolClient): Promise<Response> => {
     if (!userId) return HttpResponse(null, false, MissingBodyError)
-    const { rows } = await client.query('SELECT * FROM list WHERE user_id = $1', [userId])
+    const { rows } = await client.query('SELECT * FROM list WHERE user_id = $1;', [userId])
 
     return HttpResponse(rows, true)
 }
 
 const getAll = async (userId: string, client: VercelPoolClient): Promise<Response> => {
     if (!userId) return HttpResponse(null, false, MissingBodyError)
-    const { rows } = await client.query('SELECT * FROM list_item WHERE user_id = $1;', [userId])
+    const { rows } = await client.query('SELECT * FROM list_item WHERE user_id = $1 ORDER BY created_at DESC;', [userId])
 
     return HttpResponse({
         [ListTypes.Favorite]: rows.filter((list) => list.list_type === ListTypes.Favorite),

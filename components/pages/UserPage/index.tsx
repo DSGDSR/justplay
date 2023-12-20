@@ -1,4 +1,5 @@
 import AsideSection from '@/components/AsideSection'
+import CustomListsSection from '@/components/CustomLists'
 import ExternalAccounts from '@/components/ExternalAccounts'
 import GamesList from '@/components/GamesList'
 import { ListTypes } from '@/lib/enums'
@@ -39,8 +40,14 @@ export default async function UserPage({ user, listedGames }: Props) {
                     list={lastFavorite}
                     listedGames={listedGames}
                     sectionName="Favorite games"
-                    link={lastFavorite.length > 3 ? `/${user}/favorites` : undefined}
+                    link={lastFavorite.length > 3 ? `/${user.username}/favorites` : undefined}
                 />
+
+                { listedGames?.[ListTypes.Custom]?.length ? <CustomListsSection
+                    userId={user.id}
+                    isSection={true}
+                    listedGames={listedGames?.[ListTypes.Custom]}
+                /> : <></> }
             </div>
             <aside style={{ flex: '0 0 320px' }} >
                 <AsideSection
@@ -53,7 +60,7 @@ export default async function UserPage({ user, listedGames }: Props) {
 
                 <AsideSection
                     title="Want to play"
-                    link={`/${user}/playlist`}
+                    link={`/${user.username}/playlist`}
                     linkText={
                         listedGames?.[ListTypes.Playlist] && listedGames?.[ListTypes.Playlist].length > 4
                             ? listedGames?.[ListTypes.Playlist].length : undefined
@@ -61,15 +68,15 @@ export default async function UserPage({ user, listedGames }: Props) {
                 >
                     <GamesList
                         list={wantToPlay}
-                        listedGames={listedGames}
-                        link={`/${user}/playlist`}
+                        listedGames={null}
+                        link={`/${user.username}/playlist`}
                         variant='compact'
                     />
                 </AsideSection>
 
                 <AsideSection
                     title="Finished games"
-                    link={`/${user}/finished`}
+                    link={`/${user.username}/finished`}
                     linkText={
                         listedGames?.[ListTypes.Finished] && listedGames?.[ListTypes.Finished].length > 4
                             ? listedGames?.[ListTypes.Finished].length : undefined
@@ -77,8 +84,8 @@ export default async function UserPage({ user, listedGames }: Props) {
                 >
                     <GamesList
                         list={finished}
-                        listedGames={listedGames}
-                        link={`/${user}/finished`}
+                        listedGames={null}
+                        link={`/${user.username}/finished`}
                         variant='compact'
                     />
                 </AsideSection>

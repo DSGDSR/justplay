@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -12,7 +12,7 @@ import { Button } from './Button'
 import { List, ListsItemsResponse } from '@/lib/models/lists'
 import { Checkbox } from './Checkbox'
 import X from './icons/X'
-import { ListNameSchemma, cn } from '@/lib/utils'
+import { ListNameSchemma, cn, slugify } from '@/lib/utils'
 import { parse, flatten, ValiError } from 'valibot'
 import { useToast } from '@/hooks/use-toast'
 import { addToList, createList, getLists, removeFromList } from '@/services/lists'
@@ -33,11 +33,12 @@ const ListsDialog = ({ trigger, userId, gameId, gamesListed }: Props) => {
     const [loading, setLoading] = useState<boolean>(false)
     const { error } = useToast()
 
-    const updateLists = () => {
+    const updateLists = (callback?: () => void) => {
         if (!userId) return
 
         getLists(userId).then(lists => {
             if (lists?.data) setLists(lists.data)
+            callback?.()
         })
     }
 
@@ -98,7 +99,7 @@ const ListsDialog = ({ trigger, userId, gameId, gamesListed }: Props) => {
                     toggleList={toggleList}
                     isAdded={!!listedGames?.[ListTypes.Custom]?.find(l => l.game === gameId && l.custom_list_id === list.id) ?? false}
                 />) }
-                <CreateList onCreate={updateLists} userId={userId} />
+                <CreateList setLoading={setLoading} onCreate={(c) => updateLists(c)} userId={userId} lists={lists}/>
 
                 { /* LOADING PLACEHOLDER */ }
                 <div className={cn('hidden h-full w-full absolute z-[1] bg-background opacity-70 top-0 left-0 justify-center items-center', loading && 'flex')}>
@@ -127,9 +128,11 @@ const ListItem = ({ list, toggleList, isAdded }: {
     </div>
 }
 
-const CreateList = ({ onCreate, userId }: {
-    onCreate: () => void
+const CreateList = ({ onCreate, userId, setLoading, lists }: {
+    setLoading: Dispatch<SetStateAction<boolean>>
+    onCreate: (callback: () => void) => void
     userId: string
+    lists: List[]
 }) => {
     const nameInput = useRef<HTMLInputElement>(null)
     const [open, setOpen] = useState(false)
@@ -141,12 +144,20 @@ const CreateList = ({ onCreate, userId }: {
 
         if (!validateName(name)) return
 
-        const lists = await createList(userId, name)
-        if (lists) {
-            setOpen(false)
-            nameInput.current.value = ''
-            onCreate()
+        if (lists.find(l => l.name === name || l.slug === slugify(name))) {
+            error('You already have a list with that name.')
+            return
         }
+
+        setLoading(true)
+        await createList(userId, name)
+        onCreate(() => {
+            setOpen(false)
+            if (nameInput.current) {
+                nameInput.current.value = ''
+            }
+            setLoading(false)
+        })
     }
 
     const validateName = (name: string): boolean => {

@@ -24,6 +24,7 @@ import Spinner from './icons/Spinner'
 import { ListsItemsResponse, ListsState } from '@/lib/models/lists'
 import ListsDialog from './ListsDialog'
 import { toggleList } from '@/services/lists'
+import Skeleton from './Skeleton'
 
 const DEFAULT_LIST = (state = ListStates.Inactive): ListsState => ({
     [ListTypes.Favorite]: state,
@@ -176,5 +177,12 @@ const WarningDialog = ({ open, onOpenChange, updateList }: {
         </AlertDialogContent>
     </AlertDialog>
 }
+
+export const GameActionsSkeleton = () => <div className="flex flex-wrap gap-3.5">
+    <Skeleton className="h-16 flex flex-grow" />
+    <Skeleton className="h-16 flex flex-grow" />
+    <Skeleton className="h-16 flex flex-grow" />
+    <Skeleton className="h-16 md:h-12 flex flex-grow md:basis-full" />
+</div>
 
 export default GameActions
