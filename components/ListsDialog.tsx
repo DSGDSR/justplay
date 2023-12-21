@@ -150,14 +150,17 @@ const CreateList = ({ onCreate, userId, setLoading, lists }: {
         }
 
         setLoading(true)
-        await createList(userId, name)
-        onCreate(() => {
-            setOpen(false)
-            if (nameInput.current) {
-                nameInput.current.value = ''
-            }
-            setLoading(false)
-        })
+        createList(userId, name)
+            .then(() => {
+                onCreate(() => {
+                    setOpen(false)
+                    if (nameInput.current) {
+                        nameInput.current.value = ''
+                    }
+                })
+            })
+            .catch(() => error('Something went wrong, please try again later'))
+            .finally(() => setLoading(false))
     }
 
     const validateName = (name: string): boolean => {

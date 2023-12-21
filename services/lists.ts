@@ -3,11 +3,11 @@ import { List, ListsItemsResponse } from '@/lib/models/lists'
 import { IHttpResponse } from '@/lib/models/response'
 import { HttpResponse, ResponseError, apiUrl } from '@/lib/utils'
 
-export const deleteList = async (listId: number): Promise<IHttpResponse<List[]> | null> => {
+export const deleteList = async (userId: string, listId: number): Promise<IHttpResponse<List[]> | null> => {
     return await fetch('/api/lists', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: ListActions.DeleteList, listId })
+        body: JSON.stringify({ action: ListActions.DeleteList, listId, userId })
     }).then(res => res.json()).catch(() => null)
 }
 

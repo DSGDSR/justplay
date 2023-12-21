@@ -3,8 +3,10 @@ import {
     HttpResponse,
     ListNameSchemma,
     MissingBodyError,
+    UnauthorizedError,
     slugify
 } from '@/lib/utils'
+import { auth } from '@clerk/nextjs';
 import { VercelPoolClient, db } from '@vercel/postgres'
 import { NextRequest } from 'next/server'
 import { parse, ValiError, flatten } from 'valibot'
@@ -139,7 +141,11 @@ const remove = async (
 export async function POST(_request: NextRequest) {
     const client = await db.connect()
     const { userId, gameId, listId, listType, action, name } = await _request.json()
-    if (!action) return HttpResponse(null, false, MissingBodyError)
+    if (!action || !userId) return HttpResponse(null, false, MissingBodyError)
+    const { userId: clerkUser } = auth();
+
+    const restrictedActions = [ListActions.AddGame, ListActions.RemoveGame, ListActions.DeleteList, ListActions.CreateList]
+    if (restrictedActions.includes(action) && clerkUser !== userId) return HttpResponse(null, false, UnauthorizedError)
 
     const actions: Record<ListActions, () => Promise<Response>> = {
         [ListActions.AddGame]: () => add(userId, gameId, listId, listType, client),

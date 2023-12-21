@@ -1,5 +1,10 @@
 import { IHttpError } from '../models/error'
 
+export const UnauthorizedError: IHttpError = {
+    status: 401,
+    message: 'Unauthorized'
+}
+
 export const MissingBodyError: IHttpError = {
     status: 400,
     message: 'Bad request: missing body'
