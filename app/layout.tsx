@@ -7,7 +7,8 @@ import { Suspense } from 'react'
 import { TooltipProvider } from '@/components/Tooltip'
 import { Toaster } from '@/components/toaster'
 import { clerkTheme } from '@/styles/clerk-theme'
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from 'nextjs-toploader'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -35,6 +36,8 @@ export default function RootLayout({
               </Suspense>
             </main>
             <Toaster />
+
+            <SpeedInsights/>
             {
               /*<Script
               async
