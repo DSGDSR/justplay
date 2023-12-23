@@ -1,38 +1,32 @@
 'use client'
 
 import { List, ListItem } from '@/lib/models/lists'
-import { getLists } from '@/services/lists'
-import { useEffect, useState } from 'react'
 import Section from './Section'
 import GamesList from './GamesList'
 import { usePathname } from 'next/navigation'
+import useCustomLists from '@/hooks/use-custom-lists'
+import { IGame } from '@/lib/models/game'
 
 interface Props {
     userId: string
     title?: string
     isSection?: boolean
     listedGames: ListItem[]
+    preloadedGames?: IGame[]
 }
 
-const CustomListsSection = ({ userId, listedGames, isSection, title = 'Custom lists' }: Props) => {
-    const [lists, setLists] = useState<List[]>([])
-
-    useEffect(() => {
-        if (!userId) return
-
-        getLists(userId).then(lists => {
-            if (lists?.data) setLists(lists.data)
-        })
-    }, [userId])
+const CustomListsSection = ({ userId, listedGames, isSection, title = 'Custom lists', preloadedGames }: Props) => {
+    const { customLists } = useCustomLists(userId)
 
     return isSection ? <Section title={title}>
-        <CustomLists lists={lists} listedGames={listedGames} />
-    </Section> : <CustomLists lists={lists} listedGames={listedGames} />
+        <CustomLists lists={customLists} listedGames={listedGames} preloadedGames={preloadedGames} />
+    </Section> : <CustomLists lists={customLists} listedGames={listedGames} preloadedGames={preloadedGames} />
 }
 
-const CustomLists = ({ lists, listedGames }: {
+const CustomLists = ({ lists, listedGames, preloadedGames }: {
     lists: List[]
     listedGames: ListItem[]
+    preloadedGames?: IGame[]
 }) => {
     const pathname = usePathname()
 

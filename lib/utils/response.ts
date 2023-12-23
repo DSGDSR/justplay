@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 import { IHttpError } from '../models/error';
+import { IHttpResponse } from '../models/response';
 
 export const HttpResponse = (
     data: any,
     success = true,
     error: IHttpError | null = null
-): NextResponse => NextResponse.json({
+): NextResponse<IHttpResponse> => NextResponse.json({
     data,
     success,
     error,

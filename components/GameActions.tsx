@@ -45,7 +45,7 @@ const GameActions = ({ gameId, lists, mode = 'page', className }: Props) => {
     const { info, error } = useToast()
     const [listWarning, setListWarning] = useState(false)
     const [listsStates, setListsStates] = useState<ListsState>(DEFAULT_LIST(ListStates.Loading))
-    
+
     useEffect(() => {
         setListsStates(lists ? {
             [ListTypes.Favorite]: lists[ListTypes.Favorite].filter(l => l.game === gameId).length ? ListStates.Active : ListStates.Inactive,
@@ -139,7 +139,7 @@ const GameActions = ({ gameId, lists, mode = 'page', className }: Props) => {
                         <PlaylistAdd />
                     </ListButton>
                 </div>
-            } userId={userId} gameId={gameId} gamesListed={lists} /> : <></> }
+            } userId={userId!} gameId={gameId} gamesListed={lists} /> : <></> }
         </div>
     </div>
 }

@@ -1,7 +1,10 @@
+
+import Activity from '@/components/Activity'
 import AsideSection from '@/components/AsideSection'
 import CustomListsSection from '@/components/CustomLists'
 import ExternalAccounts from '@/components/ExternalAccounts'
 import GamesList from '@/components/GamesList'
+import Section from '@/components/Section'
 import { ListTypes } from '@/lib/enums'
 import { ListsItemsResponse } from '@/lib/models/lists'
 import { User } from '@clerk/nextjs/server'
@@ -17,6 +20,15 @@ export default async function UserPage({ user, listedGames }: Props) {
     const lastFavorite = listedGames?.[ListTypes.Favorite]?.slice(0, 4) ?? []
     const finished = listedGames?.[ListTypes.Finished]?.slice(0, 4) ?? []
     const wantToPlay = listedGames?.[ListTypes.Playlist]?.slice(0, 4) ?? []
+
+    const activity = listedGames ? [
+        ...listedGames?.[ListTypes.Favorite] ?? [],
+        ...listedGames?.[ListTypes.Playlist] ?? [],
+        ...listedGames?.[ListTypes.Finished] ?? [],
+        ...listedGames?.[ListTypes.Custom] ?? []
+    ].sort((a, b) => {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    }).slice(0, 5) : []
 
     return <section className="container relative py-16 flex flex-col gap-14">
         <div className="flex gap-10">
@@ -36,6 +48,12 @@ export default async function UserPage({ user, listedGames }: Props) {
 
         <main className="flex gap-10 md:gap-12 flex-col md:flex-row">
             <div style={{ flex: '1 1 0' }} className="flex flex-col gap-10 sm:gap-12">
+                { activity.length ? 
+                    <Section title="Activity">
+                        <Activity activity={activity} limit={5} userId={user.id}/>
+                    </Section>
+                : <></> }
+
                 <GamesList
                     list={lastFavorite}
                     listedGames={listedGames}

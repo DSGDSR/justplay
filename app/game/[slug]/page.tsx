@@ -37,8 +37,8 @@ const GamePageSkeleton = () => {
     return <>
         <ThumbSkeleton />
         <section className="container game-page relative -top-[13.75rem] sm:-top-[13.5rem] md:-top-[19rem]">
-            <header className="flex gap-8 flex-row-reverse md:flex-row h-[17rem] justify-end sm:h-72 md:justify-normal md:h-auto">
-                <div className="flex-grow-0 flex-shrink-0 [flex-basis:152px;] sm:[flex-basis:186px;] md:[flex-basis:280px;] self-end">
+            <header className="flex gap-10 flex-row-reverse md:flex-row h-[17rem] justify-end sm:h-72 md:justify-normal md:h-auto">
+                <div className="flex-grow-0 flex-shrink-0 [flex-basis:152px;] sm:[flex-basis:186px;] md:[flex-basis:260px;] self-end">
                     <figure className="shadow-md w-full">
                         <CoverSkeleton />
                     </figure>
@@ -60,8 +60,8 @@ const GamePageSkeleton = () => {
                 </div>
             </header>
 
-            <main className="flex gap-10 md:gap-12 mt-20 sm:mt-24 md:mt-3.5 flex-col-reverse md:flex-row">
-                <aside style={{ flex: '0 0 280px' }}>
+            <main className="flex gap-10 mt-20 sm:mt-24 md:mt-3.5 flex-col-reverse md:flex-row">
+                <aside style={{ flex: '0 0 260px' }}>
                     <div className="hidden md:block">
                         <GameActionsSkeleton />
                     </div>

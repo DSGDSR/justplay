@@ -17,7 +17,7 @@ const Section = ({ children, title, className, pre, linkText, linkUrl, ...props 
   <section className={cn('flex flex-col gap-3.5', className)} {...props}>
     { pre ?? <></> }
     { title ? <hgroup className='flex justify-between items-center'>
-      <h3 className="text-base lg:text-lg uppercase font-bold text-slate-400">
+      <h3 className={cn('text-base lg:text-lg uppercase font-bold text-slate-400', linkUrl && 'hover:text-slate-500')}>
         { linkUrl ? <Link href={linkUrl}>{title}</Link> : title }
       </h3>
       { (linkUrl && linkText) ? <Link href={linkUrl} className='text-xs lg:text-sm uppercase text-slate-400 hover:text-primary'>{linkText}</Link> : <></> }

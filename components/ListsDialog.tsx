@@ -1,6 +1,6 @@
 'use client'
 
-import { Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState } from 'react'
+import { Dispatch, ReactNode, SetStateAction, useRef, useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -15,34 +15,24 @@ import X from './icons/X'
 import { ListNameSchemma, cn, slugify } from '@/lib/utils'
 import { parse, flatten, ValiError } from 'valibot'
 import { useToast } from '@/hooks/use-toast'
-import { addToList, createList, getLists, removeFromList } from '@/services/lists'
+import { addToList, createList, removeFromList } from '@/services/lists'
 import { ListTypes } from '@/lib/enums'
 import Spinner from './icons/Spinner'
 import { IHttpResponse } from '@/lib/models/response'
+import useCustomLists from '@/hooks/use-custom-lists'
 
 interface Props {
     gamesListed: ListsItemsResponse | null
     trigger: ReactNode
-    userId: string | null | undefined
+    userId: string
     gameId: number
 }
 
 const ListsDialog = ({ trigger, userId, gameId, gamesListed }: Props) => {
-    const [lists, setLists] = useState<List[]>([])
+    const { customLists, updateCustomLists } = useCustomLists(userId)
     const [listedGames, setListedGames] = useState<ListsItemsResponse | null>(gamesListed)
     const [loading, setLoading] = useState<boolean>(false)
     const { error } = useToast()
-
-    const updateLists = (callback?: () => void) => {
-        if (!userId) return
-
-        getLists(userId).then(lists => {
-            if (lists?.data) setLists(lists.data)
-            callback?.()
-        })
-    }
-
-    useEffect(() => updateLists(), [userId])
 
     const updateListedGames = (gamesResponse: IHttpResponse<ListsItemsResponse | null> | null) => {
         if (!gamesResponse?.data) {
@@ -93,13 +83,18 @@ const ListsDialog = ({ trigger, userId, gameId, gamesListed }: Props) => {
             </DialogHeader>
 
             <main className="relative flex flex-col border-2 rounded-md border-slate-800 border-dashed p-1 gap-1 mt-3 overflow-hidden">
-                { lists?.map(list => <ListItem
+                { customLists?.map(list => <ListItem
                     key={list.id}
                     list={list}
                     toggleList={toggleList}
                     isAdded={!!listedGames?.[ListTypes.Custom]?.find(l => l.game === gameId && l.custom_list_id === list.id) ?? false}
                 />) }
-                <CreateList setLoading={setLoading} onCreate={(c) => updateLists(c)} userId={userId} lists={lists}/>
+                <CreateList
+                    setLoading={setLoading}
+                    onCreate={(c) => updateCustomLists(c)}
+                    userId={userId}
+                    lists={customLists}
+                />
 
                 { /* LOADING PLACEHOLDER */ }
                 <div className={cn('hidden h-full w-full absolute z-[1] bg-background opacity-70 top-0 left-0 justify-center items-center', loading && 'flex')}>

@@ -2,13 +2,12 @@
 
 import { IGame } from '@/lib/models/game'
 import { ListItem, ListsItemsResponse } from '@/lib/models/lists'
-import { getGamesList } from '@/services/game'
-import { useEffect, useState } from 'react'
 import GameCard, { GameCardPlaceholder } from './GameCard'
 import Skeleton from './Skeleton'
 import Section from './Section'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import useGamesList from '@/hooks/use-games-list'
 
 interface Props {
     variant?: 'list' | 'compact'
@@ -19,21 +18,15 @@ interface Props {
 }
 
 const GamesList = ({ variant = 'list', list, listedGames, sectionName, link }: Props) => {
-    const [games, setGames] = useState<IGame[] | null>(null)
-
-    useEffect(() => {
-        if (!list || !list.length) {
-            setGames([])
-        } else {
-            getGamesList(list.map(f => f.game))
-                .then((res) => setGames(res.data?.length ? res.data.sort((a, b) => {
-                    const aIndex = list.findIndex(f => f.game === a.id)
-                    const bIndex = list.findIndex(f => f.game === b.id)
-                    return variant === 'list' ? aIndex - bIndex : bIndex - aIndex
-                }) : []))
-                .catch(() => setGames([]))
+    const games = useGamesList(
+        list.map(l => l.game),
+        (a, b) => {
+            // TODO: This is a temporary solution to avoid the games being sorted by the order they were added to the list
+            const aIndex = list.findIndex(f => f.game === a.id)
+            const bIndex = list.findIndex(f => f.game === b.id)
+            return variant === 'compact' ? aIndex - bIndex : bIndex - aIndex
         }
-    }, [])
+    )
 
     return sectionName ? <Section title={sectionName} linkUrl={link} linkText='Show all'>
         <GamesListContent list={list} games={games} listedGames={listedGames} />
@@ -52,7 +45,7 @@ const GamesListContent = ({ games, list, listedGames }: {
         (!games && list.length)
             ? <>{ Array(list.length).fill(true).map((_, idx) => <Skeleton className={'aspect-[9/12] w-[25%]'} key={`gl_skel_${idx}`} />) }</>
             : (games && games.length && list.length) ?
-                games.map(game => <GameCard
+                [...games ?? [], ...Array(4).fill(null)].slice(0,4).reverse().map(game => <GameCard
                     key={game.id}
                     game={game}
                     className={'!w-[25%]'}

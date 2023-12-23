@@ -16,4 +16,5 @@ export interface ListItem {
     list_type: ListTypes
     custom_list_id: string | null
     game: number
+    created_at: string
 }
