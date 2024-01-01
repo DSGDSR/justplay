@@ -45,12 +45,12 @@ const GamesListContent = ({ games, list, listedGames }: {
         (!games && list.length)
             ? <>{ Array(list.length).fill(true).map((_, idx) => <Skeleton className={'aspect-[9/12] w-[25%]'} key={`gl_skel_${idx}`} />) }</>
             : (games && games.length && list.length) ?
-                [...games ?? [], ...Array(4).fill(null)].slice(0,4).reverse().map(game => <GameCard
+                [...games ?? []].slice(0,4).reverse().map(game => game ? <GameCard
                     key={game.id}
                     game={game}
                     className={'!w-[25%]'}
                     lists={listedGames}
-                />) : <span className="opacity-60 text-sm">No games added yet.</span>
+                /> : <></>) : <span className="opacity-60 text-sm">No games added yet.</span>
     }
 </div>
 

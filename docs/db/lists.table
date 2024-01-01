@@ -10,6 +10,7 @@ CREATE TABLE list (
 );
 
 CREATE TABLE list_item (
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v7() NOT NULL,
   user_id VARCHAR(40) NOT NULL,
   list_type INTEGER NOT NULL,
   custom_list_id uuid,
@@ -17,6 +18,16 @@ CREATE TABLE list_item (
   created_at TIMESTAMP DEFAULT NOW() NOT NULL,
   FOREIGN KEY(custom_list_id) REFERENCES custom_list(id)
 );
+
+CREATE INDEX list_item_user_id
+ON list_item (user_id);
+CREATE INDEX list_item_custom_list_id
+ON list_item (custom_list_id);
+
+CREATE INDEX list_slug
+ON list (slug);
+CREATE INDEX list_user_id
+ON list (user_id);
 
 -- insert
 INSERT INTO list_item VALUES ('user_2WizmKftDxBOxnginqYAidmOJ9J', 1, null, 150);
