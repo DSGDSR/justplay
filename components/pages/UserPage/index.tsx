@@ -50,7 +50,7 @@ export default async function UserPage({ user, listedGames }: Props) {
             <div style={{ flex: '1 1 0' }} className="flex flex-col gap-10 sm:gap-12">
                 { activity.length ? 
                     <Section title="Activity">
-                        <Activity activity={activity} limit={5} userId={user.id}/>
+                        <Activity user={user} activity={activity} limit={5}/>
                     </Section>
                 : <></> }
 
