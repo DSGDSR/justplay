@@ -1,9 +1,9 @@
 /* eslint-disable-next-line */
-export interface ComponentsProps {}
+export interface ComponentsProps { }
 
 export function Components(props: ComponentsProps) {
   return (
-    <div>
+    <div className="animate-spin">
       <h1>Welcome to Components!</h1>
     </div>
   );

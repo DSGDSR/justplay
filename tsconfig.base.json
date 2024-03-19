@@ -12,11 +12,17 @@
     "module": "esnext",
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@wheretoplay/components": ["libs/components/src/index.ts"],
-      "@wheretoplay/shared": ["libs/shared/src/index.ts"]
+      "@wheretoplay/components": ["./libs/components/src/index.ts"],
+      "@wheretoplay/shared/interfaces": ["./libs/shared/src/lib/interfaces/index.ts"],
+      "@wheretoplay/shared/enums": ["./libs/shared/src/lib/enums/index.ts"],
+      "@wheretoplay/shared/utils": ["./libs/shared/src/lib/utils/index.ts"],
+      "@wheretoplay/shared/testing": ["./libs/shared/src/lib/testing/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
