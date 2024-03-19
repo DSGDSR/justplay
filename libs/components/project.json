@@ -1,0 +1,26 @@
+{
+  "name": "components",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/components/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project components --web",
+  "targets": {
+    "ui": {
+      "targets": {
+        "storybook": {
+          "executor": "@nx/storybook:storybook",
+          "options": {
+            "port": 4400,
+            "configDir": "libs/components/.storybook"
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    }
+  }
+}
