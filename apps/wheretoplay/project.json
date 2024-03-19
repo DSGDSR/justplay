@@ -1,0 +1,9 @@
+{
+  "name": "wheretoplay",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/wheretoplay",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project wheretoplay --web",
+  "targets": {}
+}
