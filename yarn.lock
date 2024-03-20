@@ -2876,6 +2876,13 @@
     "@storybook/global" "^5.0.0"
     ts-dedent "^2.0.0"
 
+"@storybook/addon-themes@^8.0.2":
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-themes/-/addon-themes-8.0.2.tgz#312c1ad2b4b567a81be1e1465e5f2f72f4fdb0dd"
+  integrity sha512-qSc2CJFmAs6J1wB5zy5/sPUFFW0x/F52KvVzESmlBV7FEJlRm20d0qaSQFbPjjrfzOf9OSjxsx+W4ZX1dVGuvQ==
+  dependencies:
+    ts-dedent "^2.0.0"
+
 "@storybook/addon-toolbars@8.0.2":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@storybook/addon-toolbars/-/addon-toolbars-8.0.2.tgz#1db42b87e3561bdd32447d68281699f008008372"
@@ -14282,6 +14289,11 @@ tailwind-merge@^2.2.2:
   integrity sha512-tWANXsnmJzgw6mQ07nE3aCDkCK4QdT3ThPMCzawoYA2Pws7vSTCvz3Vrjg61jVUGfFZPJzxEP+NimbcW+EdaDw==
   dependencies:
     "@babel/runtime" "^7.24.0"
+
+tailwindcss-animate@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/tailwindcss-animate/-/tailwindcss-animate-1.0.7.tgz#318b692c4c42676cc9e67b19b78775742388bef4"
+  integrity sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==
 
 tailwindcss@3.2.7:
   version "3.2.7"
