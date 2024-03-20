@@ -12,8 +12,9 @@ import { Kbd } from '../Kbd'
 import { Spinner } from '../icons'
 import { NextResponse } from 'next/server'
 
+export type TSearchMethod = (query: string, fastSearch?: boolean, limit?: number) => NextResponse<IHttpResponse<IGameSearch[]>>
 export interface SearchProps {
-    onSearch: (query: string, fastSearch?: boolean, limit?: number) => NextResponse<IHttpResponse<IGameSearch[]>>
+    onSearch: TSearchMethod
 }
 
 export const Search = ({ onSearch }: SearchProps) => {

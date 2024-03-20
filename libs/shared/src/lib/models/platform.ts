@@ -3,14 +3,14 @@ export interface IPlatform {
     name: string
     slug: string
     abbreviation: string
-    alternative_name: string
+    alternative_name?: string
     category: number
     platform_logo: number
-    platform_family: number
-    summary: string
+    platform_family?: number
+    summary?: string
     url: string
     versions: number[]
-    websites: number[]
+    websites?: number[]
 }
 
 export interface IGroupedPlatforms {

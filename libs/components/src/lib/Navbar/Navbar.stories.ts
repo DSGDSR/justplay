@@ -1,20 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Search, SearchMobile } from '.'
+import { Navbar } from '.'
 import { getSearchMock } from '@wheretoplay/shared/testing';
 
-const meta: Meta<typeof Search> = {
-    component: Search,
+const meta: Meta<typeof Navbar> = {
+    component: Navbar,
     tags: ['autodocs'],
-    title: 'Components/Search',
+    title: 'Components/Navbar',
     args: {
         onSearch: getSearchMock
     }
 };
 export default meta;
-type Story = StoryObj<typeof Search>;
+type Story = StoryObj<typeof Navbar>;
 
-export const Default: Story = {};
+export const Default: Story = {
+    parameters: {
+        layout: 'fullscreen'
+    }
+};
 
 export const Mobile: Story = {
     parameters: {
@@ -22,10 +26,5 @@ export const Mobile: Story = {
         viewport: {
             defaultViewport: 'mobile1',
         },
-    },
-    render() {
-        return <div className='mt-3 px-2'>
-            <SearchMobile onSearch={getSearchMock} />
-        </div>
     }
 };

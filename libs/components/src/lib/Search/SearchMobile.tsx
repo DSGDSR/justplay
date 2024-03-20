@@ -10,7 +10,7 @@ import { SearchProps } from '.';
 
 const ID = 'mobile-search-input'
 
-export const MobileSearch = ({ onSearch }: SearchProps) => {
+export const SearchMobile = ({ onSearch }: SearchProps) => {
     const [isSearching, setIsSearching] = useState(false)
     const [isFocused, setIsFocused] = useState(false)
     const [games, setGames] = useState<IGameSearch[] | null>(null)
