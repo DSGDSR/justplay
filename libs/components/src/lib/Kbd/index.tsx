@@ -1,4 +1,5 @@
 import { cn } from "@wheretoplay/shared/utils";
+import { Fragment } from "react";
 
 interface KbdProps {
     keys: any[];
@@ -8,7 +9,7 @@ interface KbdProps {
 export const Kbd = ({ keys, className }: KbdProps) => {
     return <div className={cn('text-xs flex gap-1 items-center text-muted-foreground', className)}>
         {keys.map((key, index) => {
-            return <><KbdKey>{key}</KbdKey>{index !== keys.length - 1 ? '+' : null}</>
+            return <Fragment key={index}><KbdKey>{key}</KbdKey>{index !== keys.length - 1 ? '+' : null}</Fragment>
         })}
     </div>
 }

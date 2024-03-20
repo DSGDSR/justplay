@@ -1,1 +1,7 @@
 export * from './Carousel'
+export * from './Badge'
+export * from './Button'
+export * from './Dialog'
+export * from './Kbd'
+export * from './Search'
+export * from './icons'

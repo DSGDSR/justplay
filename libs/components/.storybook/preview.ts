@@ -11,4 +11,9 @@ export default {
             defaultTheme: 'light',
         }),
     ],
+    parameters: {
+        viewport: {
+            defaultViewport: 'reponsive',
+        },
+    },
 };
