@@ -1,4 +1,4 @@
-import { IScreenshot } from "../interfaces"
+import { IScreenshot } from "../models"
 
 export const mockScreenshot = (opts?: {
     alpha?: boolean,

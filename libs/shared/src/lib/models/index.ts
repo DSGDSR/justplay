@@ -1,0 +1,7 @@
+export * from './media'
+export * from './platform'
+export * from './cover'
+export * from './list'
+export * from './genre'
+export * from './company'
+export * from './game'

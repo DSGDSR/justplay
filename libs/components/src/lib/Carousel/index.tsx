@@ -1,4 +1,4 @@
-import { IScreenshot } from '@wheretoplay/shared/interfaces'
+import { IScreenshot } from '@wheretoplay/shared/models'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'

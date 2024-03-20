@@ -2,7 +2,7 @@ import { cn } from "@wheretoplay/shared/utils";
 
 interface KbdProps {
     keys: any[];
-    className: string
+    className?: string
 }
 
 export const Kbd = ({ keys, className }: KbdProps) => {
