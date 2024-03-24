@@ -1,18 +1,10 @@
 import { IGroupedPlatforms, IPlatform } from '@wheretoplay/shared/models';
 import { ReactNode } from 'react';
-import Windows from '../icons/platforms/Windows';
-import Mac from '../icons/platforms/Mac';
 import { Tooltip, TooltipTrigger, TooltipContent } from '../Tooltip';
-import Linux from '../icons/platforms/Linux';
-import Android from '../icons/platforms/Android';
-import PlayStation from '../icons/platforms/PlayStation';
-import Xbox from '../icons/platforms/Xbox';
-import NintendoSwitch from '../icons/platforms/Switch';
 import { cn, formatList } from '@wheretoplay/shared/utils';
-import GameCube from '../icons/platforms/GameCube';
-import Wii from '../icons/platforms/Wii';
-import WiiU from '../icons/platforms/WiiU';
 import { Platform } from '@wheretoplay/shared/enums';
+import { Android, GameCube, Linux, Mac, PlayStation, Wii, WiiU, Windows, Xbox } from '../icons/platforms';
+import NintendoSwitch from '../icons/platforms/Switch';
 
 interface PlatformsProps {
     platforms: IPlatform[];

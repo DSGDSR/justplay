@@ -80,10 +80,10 @@ export interface IExternalGame {
     id: number
     category: Service
     game: number
-    name: string
+    name?: string
     uid: string
-    url: string
-    year: number
+    url?: string
+    year?: number
 }
 
 export interface IGameSearch {
