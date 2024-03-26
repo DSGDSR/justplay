@@ -2,7 +2,7 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "buildCommand": "npx nx run components:build-storybook --skip-nx-cache",
     "devCommand": "npx nx run components:storybook --skip-nx-cache",
-    "installCommand": "yarn install",
+    "installCommand": "cd ../../ && yarn install",
     "framework": null,
     "outputDirectory": "./storybook-static",
     "github": {
