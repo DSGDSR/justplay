@@ -2,7 +2,7 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "buildCommand": "npm run build:components",
     "devCommand": "npm run run:components",
-    "installCommand": "npm install",
+    "installCommand": "yarn install",
     "framework": null,
     "outputDirectory": "./libs/components/storybook-static",
     "github": {
