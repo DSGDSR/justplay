@@ -19,6 +19,22 @@
               "quiet": true
             }
           }
+        },
+        "build-storybook": {
+          "executor": "@nx/storybook:build",
+          "outputs": [
+            "{options.outputDir}"
+          ],
+          "options": {
+            "outputDir": "dist/storybook",
+            "configDir": "libs/components/.storybook",
+            "docsMode": true
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
         }
       }
     }

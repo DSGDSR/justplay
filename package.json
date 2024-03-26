@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "nx": "nx",
-    "components": "nx run components:storybook"
+    "run:components": "nx run components:storybook",
+    "build:components": "nx run components:build-storybook"
   },
   "private": true,
   "dependencies": {
