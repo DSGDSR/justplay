@@ -72,3 +72,12 @@
         /* Firefox */
     }
 }
+
+/* TRAILER */
+.lty-playbtn {
+    background-color: transparent !important;
+}
+.lty-playbtn::before {
+    border-width: 30px 0 30px 46px !important;
+    /*border-color: transparent transparent transparent hsl(var(--secondary)) !important;*/
+}
