@@ -1,2 +1,2 @@
-export * from './Spinner'
-export * from './DefaultThumb'
+export * from './Spinner';
+export * from './DefaultThumb';

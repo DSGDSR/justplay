@@ -1,8 +1,4 @@
 {
-    "exportall.config.relExclusion": [
-        "/libs/shared/src/lib/interfaces/media.ts"
-    ],
-    "exportall.config.folderListener": [
-        "/libs/shared/src/lib/interfaces"
-    ]
+  "exportall.config.relExclusion": ["/libs/shared/src/lib/interfaces/media.ts"],
+  "exportall.config.folderListener": ["/libs/shared/src/lib/interfaces"]
 }

@@ -1,4 +1,4 @@
-const plugin = require('tailwindcss/plugin')
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
   darkMode: ['selector'],
@@ -82,7 +82,7 @@ module.exports = {
           }),
         },
         { values: theme('textShadow') }
-      )
+      );
     }),
   ],
-}
+};

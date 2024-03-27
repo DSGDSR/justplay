@@ -1,30 +1,28 @@
-'use client'
+'use client';
 
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { cn } from '@wheretoplay/shared/utils'
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+import { cn } from '@wheretoplay/shared/utils';
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react';
 
-const TooltipProvider = TooltipPrimitive.Provider
+const TooltipProvider = TooltipPrimitive.Provider;
 
 interface TooltipProps extends TooltipPrimitive.TooltipProps {
-  className?: string
+  className?: string;
 }
 
 const Tooltip = (props: TooltipProps) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
-    <TooltipPrimitive.Root
-      open={open}
-      onOpenChange={setOpen}
-      {...props}
-    >
-      <div onClick={() => setOpen(true)} className={props.className}>{props.children}</div>
+    <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props}>
+      <div onClick={() => setOpen(true)} className={props.className}>
+        {props.children}
+      </div>
     </TooltipPrimitive.Root>
-  )
-}
+  );
+};
 
-const TooltipTrigger = TooltipPrimitive.Trigger
+const TooltipTrigger = TooltipPrimitive.Trigger;
 
 const TooltipContent = forwardRef<
   ElementRef<typeof TooltipPrimitive.Content>,
@@ -39,7 +37,7 @@ const TooltipContent = forwardRef<
     )}
     {...props}
   />
-))
-TooltipContent.displayName = TooltipPrimitive.Content.displayName
+));
+TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

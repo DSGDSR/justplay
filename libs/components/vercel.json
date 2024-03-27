@@ -1,11 +1,11 @@
 {
-    "$schema": "https://openapi.vercel.sh/vercel.json",
-    "buildCommand": "npx nx run components:build-storybook --skip-nx-cache",
-    "devCommand": "npx nx run components:storybook --skip-nx-cache",
-    "installCommand": "cd ../../ && yarn install",
-    "framework": null,
-    "outputDirectory": "./storybook-static",
-    "github": {
-        "enabled": true
-    }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npx nx run components:build-storybook --skip-nx-cache",
+  "devCommand": "npx nx run components:storybook --skip-nx-cache",
+  "installCommand": "cd ../../ && yarn install",
+  "framework": null,
+  "outputDirectory": "./storybook-static",
+  "github": {
+    "enabled": true
+  }
 }

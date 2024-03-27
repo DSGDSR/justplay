@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import * as AlertPrimitive from '@radix-ui/react-alert-dialog'
-import { cn } from '@wheretoplay/shared/utils'
-import { buttonVariants } from '../Button'
+import * as React from 'react';
+import * as AlertPrimitive from '@radix-ui/react-alert-dialog';
+import { cn } from '@wheretoplay/shared/utils';
+import { buttonVariants } from '../Button';
 
-const Alert = AlertPrimitive.Root
+const Alert = AlertPrimitive.Root;
 
-const AlertTrigger = AlertPrimitive.Trigger
+const AlertTrigger = AlertPrimitive.Trigger;
 
-const AlertPortal = AlertPrimitive.Portal
+const AlertPortal = AlertPrimitive.Portal;
 
 const AlertOverlay = React.forwardRef<
   React.ElementRef<typeof AlertPrimitive.Overlay>,
@@ -23,8 +23,8 @@ const AlertOverlay = React.forwardRef<
     {...props}
     ref={ref}
   />
-))
-AlertOverlay.displayName = AlertPrimitive.Overlay.displayName
+));
+AlertOverlay.displayName = AlertPrimitive.Overlay.displayName;
 
 const AlertContent = React.forwardRef<
   React.ElementRef<typeof AlertPrimitive.Content>,
@@ -41,73 +41,42 @@ const AlertContent = React.forwardRef<
       {...props}
     />
   </AlertPortal>
-))
-AlertContent.displayName = AlertPrimitive.Content.displayName
+));
+AlertContent.displayName = AlertPrimitive.Content.displayName;
 
-const AlertHeader = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      'flex flex-col space-y-2 text-center sm:text-left',
-      className
-    )}
-    {...props}
-  />
-)
-AlertHeader.displayName = 'AlertHeader'
+const AlertHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('flex flex-col space-y-2 text-center sm:text-left', className)} {...props} />
+);
+AlertHeader.displayName = 'AlertHeader';
 
-const AlertFooter = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
-      className
-    )}
-    {...props}
-  />
-)
-AlertFooter.displayName = 'AlertFooter'
+const AlertFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)} {...props} />
+);
+AlertFooter.displayName = 'AlertFooter';
 
 const AlertTitle = React.forwardRef<
   React.ElementRef<typeof AlertPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof AlertPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <AlertPrimitive.Title
-    ref={ref}
-    className={cn('text-lg font-semibold', className)}
-    {...props}
-  />
-))
-AlertTitle.displayName = AlertPrimitive.Title.displayName
+  <AlertPrimitive.Title ref={ref} className={cn('text-lg font-semibold', className)} {...props} />
+));
+AlertTitle.displayName = AlertPrimitive.Title.displayName;
 
 const AlertDescription = React.forwardRef<
   React.ElementRef<typeof AlertPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof AlertPrimitive.Description>
 >(({ className, ...props }, ref) => (
-  <AlertPrimitive.Description
-    ref={ref}
-    className={cn('text-sm text-muted-foreground', className)}
-    {...props}
-  />
-))
-AlertDescription.displayName =
-  AlertPrimitive.Description.displayName
+  <AlertPrimitive.Description ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
+));
+AlertDescription.displayName = AlertPrimitive.Description.displayName;
 
 const AlertAction = React.forwardRef<
   React.ElementRef<typeof AlertPrimitive.Action>,
   React.ComponentPropsWithoutRef<typeof AlertPrimitive.Action>
 >(({ className, ...props }, ref) => (
-  <AlertPrimitive.Action
-    ref={ref}
-    className={cn(buttonVariants(), className)}
-    {...props}
-  />
-))
-AlertAction.displayName = AlertPrimitive.Action.displayName
+  <AlertPrimitive.Action ref={ref} className={cn(buttonVariants(), className)} {...props} />
+));
+AlertAction.displayName = AlertPrimitive.Action.displayName;
 
 const AlertCancel = React.forwardRef<
   React.ElementRef<typeof AlertPrimitive.Cancel>,
@@ -115,15 +84,11 @@ const AlertCancel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertPrimitive.Cancel
     ref={ref}
-    className={cn(
-      buttonVariants({ variant: 'outline' }),
-      'mt-2 sm:mt-0',
-      className
-    )}
+    className={cn(buttonVariants({ variant: 'outline' }), 'mt-2 sm:mt-0', className)}
     {...props}
   />
-))
-AlertCancel.displayName = AlertPrimitive.Cancel.displayName
+));
+AlertCancel.displayName = AlertPrimitive.Cancel.displayName;
 
 export {
   Alert,
@@ -137,4 +102,4 @@ export {
   AlertDescription,
   AlertAction,
   AlertCancel,
-}
+};
